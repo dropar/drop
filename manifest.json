@@ -1,0 +1,91 @@
+{
+  "name": "Drop",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "lang": "en-US",
+  "dir": "ltr",
+  "background_color": "#E8065C",
+  "theme_color": "#29337C",
+  "description": "A progressive AR and VR capable digital asset renderer",
+  "icons": [{
+    "src": "./public/assets/images/Icon[48]48.png",
+    "sizes": "48x48",
+    "type": "image/png"
+  },
+  {
+    "src": "./public/assets/images/Icon[size]20.png",
+    "sizes": "20x20",
+    "type": "image/png"
+  },
+  {
+    "src": "./public/assets/images/Icon[size]29.png",
+    "sizes": "29x29",
+    "type": "image/png"
+  },
+  {
+    "src": "./public/assets/images/Icon[size]40.png",
+    "sizes": "40x40",
+    "type": "image/png"
+  },
+  {
+    "src": "./public/assets/images/Icon[size]58.png",
+    "sizes": "58x58",
+    "type": "image/png"
+  },
+  {
+    "src": "./public/assets/images/Icon[size]60.png",
+    "sizes": "60x60",
+    "type": "image/png"
+  },
+  {
+    "src": "./public/assets/images/Icon[size]76.png",
+    "sizes": "76x76",
+    "type": "image/png"
+  },
+  {
+    "src": "./public/assets/images/Icon[size]80.png",
+    "sizes": "80x80",
+    "type": "image/png"
+  },
+  {
+    "src": "./public/assets/images/Icon[size]87.png",
+    "sizes": "87x87",
+    "type": "image/png"
+  },
+  {
+    "src": "./public/assets/images/Icon[size]120.png",
+    "sizes": "120x120",
+    "type": "image/png"
+  },
+  {
+    "src": "./public/assets/images/Icon[size]152.png",
+    "sizes": "152x152",
+    "type": "image/png"
+  },
+  {
+    "src": "./public/assets/images/Icon[size]167.png",
+    "sizes": "167x167",
+    "type": "image/png"
+  },
+  {
+    "src": "./public/assets/images/Icon[size]180.png",
+    "sizes": "180x180",
+    "type": "image/png"
+  },
+  {
+    "src": "./public/assets/images/Icon[size]512.png",
+    "sizes": "512x512",
+    "type": "image/png"
+  },
+  {
+    "src": "./public/assets/images/Icon[size]1024.png",
+    "sizes": "1024x1024",
+    "type": "image/png"
+  }],
+  "serviceworker": {
+    "src": "serviceWorker.js",
+    "scope": "/",
+    "update_via_cache": "none"
+  }
+}

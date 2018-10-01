@@ -95,9 +95,9 @@ const createApp = () => {
     res.sendFile(path.resolve(__dirname, '..', 'serviceWorker.js'))
   })
 
-  app.use('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '..', 'public/index.html'))
-  })
+  app.get("/", (req, res) => {
+    res.sendFile(path.resolve(__dirname, '..', 'public/index.html'))
+  });
 
   // error handling endware
   app.use((err, req, res, next) => {
