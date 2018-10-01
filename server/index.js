@@ -95,9 +95,9 @@ const createApp = () => {
     res.sendFile(path.resolve(__dirname, '..', 'serviceWorker.js'))
   })
 
-  app.use('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '..', 'public/index.html'))
-  })
+  app.get("/", (req, res) => {
+    res.sendFile(path.resolve(__dirname, '..', 'public/index.html'))
+  });
 
   // error handling endware
   app.use((err, req, res, next) => {
@@ -118,7 +118,14 @@ const startListening = () => {
   require('./socket')(io)
 }
 
-const syncDb = () => db.sync()
+let syncDb;
+
+if (process.env.NODE_ENV === 'production') {
+  syncDb = () => db.sync();
+}
+else {
+  syncDb = () => db.sync({force:true})
+}
 
 async function bootApp() {
   await sessionStore.sync()
