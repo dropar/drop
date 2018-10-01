@@ -9,6 +9,7 @@
     <!-- Origin Trial Token, feature = WebVR (For Chrome M62+), origin = https://webxrexperiments.com, expires = 2018-05-01 -->
     <meta http-equiv="origin-trial" data-feature="WebVR (For Chrome M62+)" data-expires="2018-05-01" content="ArKeZe0EK5eAEXO1K+Uj07h/yA2ylN8xwt+12LVV8ReELbePVTiSBRd4GYOnKzHpFktLh/nkPafQFDuvMhVX4goAAABseyJvcmlnaW4iOiJodHRwczovL3dlYnhyZXhwZXJpbWVudHMuY29tOjQ0MyIsImZlYXR1cmUiOiJXZWJWUjEuMU02MiIsImV4cGlyeSI6MTUyNTE3ODYwNywiaXNTdWJkb21haW4iOnRydWV9">    <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
     <script src="vendor/aframe-master-custom.js"></script>
+    <script src="//cdn.rawgit.com/donmccurdy/aframe-extras/v4.2.0/dist/aframe-extras.min.js"></script>
     <!-- <script src="https://rawgit.com/aframevr/aframe/master/dist/aframe-master.js"></script> -->
     <!-- <script src="https://aframe.io/releases/0.7.0/aframe.min.js"></script> -->
     <script src="vendor/three.xr.js"></script>
@@ -50,11 +51,12 @@
                   <a-assets>
                     <img id="skymap" src="assets/images/sky.jpg" crossorigin="anonymous">
                     <img id="floor" src="assets/images/floor.jpg" crossorigin="anonymous">
-                  </a-assets>
+                  <!-- </a-assets>
 
-                  <a-assets>
+                  <a-assets> -->
                       <a-asset-item id="fs-obj" src="assets/models/fs.obj" crossorigin="anonymous"></a-asset-item>
                       <a-asset-item id="fs-mtl" src="assets/models/fs.mtl" crossorigin="anonymous"></a-asset-item>
+                      <a-asset-item id="tree" src="https://poly.googleapis.com/downloads/5OP5JSQZZn-/bH019e0GhVf/tmp1435adba.gltf" crossorigin="anonymous"></a-asset-item>
                     </a-assets>
 
 
@@ -78,9 +80,9 @@
                   <!-- Meshes -->
 
                   <a-entity class="collidable" id="meshContainer" position="0 0.75 -1.25">
-                    <a-entity id="geo0" obj-model="obj: #fs-obj; mtl: #fs-mtl" material="color: #66ca9c" visible="true" scale="0.25 0.25 0.25" ></a-entity>
+                    <!-- <a-entity id="geo0" obj-model="obj: #fs-obj; mtl: #fs-mtl" material="color: #66ca9c" visible="false" scale="0.25 0.25 0.25" ></a-entity> -->
                     <!-- <a-entity id="geo2" geometry="primitive: box; width: 0.5; height: 0.5; depth: 0.5" material="color: #66ca9c" rotation="0 30 0" visible="false"></a-entity> -->
-                    <a-entity id="geo1" geometry="primitive: sphere; radius: 0.35" material="color: #66ca9c" visible="false"></a-entity>
+                    <!-- <a-entity id="geo1" geometry="primitive: sphere; radius: 0.35" material="color: #66ca9c" visible="false"></a-entity> -->
                     <!-- <a-entity id="geo2" geometry="primitive: cone; radiusBottom: 0.35; height: 0.5; segmentsRadial: 4" rotation="0 15 0" material="color: #66ca9c" visible="false" ></a-entity> -->
                   </a-entity>
 
