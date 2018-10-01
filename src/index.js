@@ -3,6 +3,7 @@ require('./components/intersect-color-change.js');
 require('./components/store-controls.js');
 require('./components/test-component-2');
 require('./systems/store.js');
+require('./systems/myLoader.js');
 
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', function() {
