@@ -118,7 +118,14 @@ const startListening = () => {
   require('./socket')(io)
 }
 
-const syncDb = () => db.sync()
+let syncDb;
+
+if (process.env.NODE_ENV === 'production') {
+  syncDb = () => db.sync();
+}
+else {
+  syncDb = () => db.sync({force:true})
+}
 
 async function bootApp() {
   await sessionStore.sync()
