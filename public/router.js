@@ -2,6 +2,10 @@
   // window.addEventListener('load', function() {
 
   // getElementById wrapper
+const loginJS = require('../src/components/login.js');
+
+console.log(loginJS);
+
   function $id(id) {
     return document.getElementById(id);
   }
@@ -10,12 +14,24 @@
   // then set its contents to the html of the parent element
   function loadHTML(url, id) {
     console.log('loadHTML')
-    req = new XMLHttpRequest();
-    req.open('GET', url);
-    req.send();
-    req.onload = () => {
-      $id(id).innerHTML = req.responseText;
-    };
+    return new Promise((resolve, reject) => {
+      const req = new XMLHttpRequest();
+      console.log('req', req);
+      req.open('GET', url);
+      req.onload = () => {
+        $id(id).innerHTML = req.responseText;
+        if (req.status >= 200 || req.status < 300) {
+          resolve(req.response)
+        }
+        else {
+          reject({
+            status: req.status,
+            statusText: req.statusText
+          })
+        }
+      };
+      req.send();
+    })
   }
 
   // use #! to hash
@@ -26,15 +42,22 @@
     'firstroute': () => { loadHTML('./templates/first.html', 'view'); },
     'secondroute': () => { loadHTML('./templates/second.html', 'view'); },
     'thirdroute': () => { loadHTML('./templates/third.html', 'view'); },
+    'login': () => {
+      loadHTML('./templates/login.html', 'view')
+      .then(() => {
+        loginJS.submitLoginForm();
+      });
+    }
     '/assets/:id': () => { loadHTML('./templates/singleAsset.html', 'view'); },
   });
 
   // set the default route
-  router.on(() => { $id('view').innerHTML = '<h2>Here by default</h2>'; });
+  router.on(() => { loadHTML('./templates/first.html', 'view'); });
 
   // set the 404 route
   router.notFound((query) => { $id('view').innerHTML = '<h3>Couldn\'t find the page you\'re looking for...</h3>'; });
 
   router.resolve();
 // });
+
 
