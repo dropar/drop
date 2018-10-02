@@ -17,11 +17,12 @@ router.get('/', async (req, res, next) => {
   }
 })
 
-router.get('/:id/assets', async (req, res, next) => {
-  const targetUser = req.user.id;
+router.get('/:userId/assets', async (req, res, next) => {
+  const targetUser = req.params.userId;
   try {
     const userAssets = await Asset.findAll({
-      where: {userId: targetUser}
+      where: {userId: targetUser},
+      attributes: ['thumbnail', 'name']
     })
     res.json(userAssets)
   } catch (err) {

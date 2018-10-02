@@ -10,7 +10,10 @@ assetsDiv.addEventListener('load', () => {
 })
 
 userAssets.forEach((asset) => {
-  const userAssetNode = document.createElement('p')
-  userAssetNode.innerText = asset.name;
-  assetsDiv.appendChild(userAssetNode)
+  const userAssetName = document.createElement('p')
+  userAssetName.innerText = asset.name;
+  const userAssetImg = new Image(100, 100);
+  userAssetImg.src = asset.thumbnail;
+  assetsDiv.appendChild(userAssetName);
+  assetsDiv.appendChild(userAssetImg);
 })
