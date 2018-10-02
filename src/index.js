@@ -4,6 +4,7 @@ require('./components/store-controls.js');
 require('./components/test-component-2');
 require('./systems/store.js');
 require('./systems/myLoader.js');
+// require('./router.js');
 
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', function() {
@@ -16,3 +17,4 @@ if ('serviceWorker' in navigator) {
     })
   })
 }
+
