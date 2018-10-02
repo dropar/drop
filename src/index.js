@@ -4,6 +4,7 @@ require('./components/store-controls.js');
 require('./components/test-component-2');
 require('./systems/singleAsset.js');
 require('./systems/assetLoader.js');
+require('./components/login.js');
 // require('./router.js');
 
 if ('serviceWorker' in navigator) {
