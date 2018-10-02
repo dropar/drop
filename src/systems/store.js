@@ -155,7 +155,7 @@ AFRAME.registerSystem('store', { // register a component named store
         document.getElementById('productName').style.display = 'none';
         document.getElementById('price').style.display = 'none';
         document.getElementById('comments').style.display = 'none';
-        document.getElementById('thumbs').classList.add('ar');
+        // document.getElementById('thumbs').classList.add('ar');
         document.getElementById('buttonCart').classList.add('ar');
         document.getElementById('footer').style.display = 'none';
 
@@ -201,7 +201,7 @@ AFRAME.registerSystem('store', { // register a component named store
         document.getElementById('productName').style.display = 'block';
         document.getElementById('price').style.display = 'block';
         document.getElementById('comments').style.display = 'block';
-        document.getElementById('thumbs').classList.remove('ar');
+        // document.getElementById('thumbs').classList.remove('ar');
         document.getElementById('buttonCart').classList.remove('ar');
         document.getElementById('container').classList.remove('ar');
         document.getElementById('footer').style.display = 'block';
@@ -244,87 +244,87 @@ AFRAME.registerSystem('store', { // register a component named store
   // function to add click handlers to DOM elements
   addEvents: function () {
     this.isAdded = false;
-    this.thumbSelected = 2;
-    this.shapeSelected = 0;
-    this.colorSelected = 0;
-    document.getElementById('thumb0').addEventListener('click', this.thumb0Clicked.bind(this));
-    document.getElementById('thumb1').addEventListener('click', this.thumb1Clicked.bind(this));
-    document.getElementById('thumb2').addEventListener('click', this.thumb2Clicked.bind(this));
+    // this.thumbSelected = 2;
+    // this.shapeSelected = 0;
+    // this.colorSelected = 0;
+    // document.getElementById('thumb0').addEventListener('click', this.thumb0Clicked.bind(this));
+    // document.getElementById('thumb1').addEventListener('click', this.thumb1Clicked.bind(this));
+    // document.getElementById('thumb2').addEventListener('click', this.thumb2Clicked.bind(this));
 
-    this.shape0Clicked = this.shape0Clicked.bind(this);
-    this.shape1Clicked = this.shape1Clicked.bind(this);
-    this.shape2Clicked = this.shape2Clicked.bind(this);
-    document.getElementById('shape0').addEventListener('click', this.shape0Clicked.bind(this));
-    document.getElementById('shape1').addEventListener('click', this.shape1Clicked.bind(this));
-    document.getElementById('shape2').addEventListener('click', this.shape2Clicked.bind(this));
+    // this.shape0Clicked = this.shape0Clicked.bind(this);
+    // this.shape1Clicked = this.shape1Clicked.bind(this);
+    // this.shape2Clicked = this.shape2Clicked.bind(this);
+    // document.getElementById('shape0').addEventListener('click', this.shape0Clicked.bind(this));
+    // document.getElementById('shape1').addEventListener('click', this.shape1Clicked.bind(this));
+    // document.getElementById('shape2').addEventListener('click', this.shape2Clicked.bind(this));
 
-    this.color0Clicked = this.color0Clicked.bind(this);
-    this.color1Clicked = this.color1Clicked.bind(this);
-    this.color2Clicked = this.color2Clicked.bind(this);
-    document.getElementById('color0').addEventListener('click', this.color0Clicked.bind(this));
-    document.getElementById('color1').addEventListener('click', this.color1Clicked.bind(this));
-    document.getElementById('color2').addEventListener('click', this.color2Clicked.bind(this));
+    // this.color0Clicked = this.color0Clicked.bind(this);
+    // this.color1Clicked = this.color1Clicked.bind(this);
+    // this.color2Clicked = this.color2Clicked.bind(this);
+    // document.getElementById('color0').addEventListener('click', this.color0Clicked.bind(this));
+    // document.getElementById('color1').addEventListener('click', this.color1Clicked.bind(this));
+    // document.getElementById('color2').addEventListener('click', this.color2Clicked.bind(this));
 
     this.buttonCartClicked = this.buttonCartClicked.bind(this);
     document.getElementById('buttonCart').addEventListener('click', this.buttonCartClicked);
   },
 
-  thumb0Clicked: function (evt) {
-    console.log('--- thumb0Clicked')
+  // thumb0Clicked: function (evt) {
+  //   console.log('--- thumb0Clicked')
 
-    // remove class from prev selection
-    this.removeSelected();
+  //   // remove class from prev selection
+  //   this.removeSelected();
 
-    // add selected class to new selection
-    document.getElementById('thumb0').classList.add('selected');
+  //   // add selected class to new selection
+  //   document.getElementById('thumb0').classList.add('selected');
 
-    // replace magic window with static image by
-    // removing the a-frame scene element and
-    // setting background of div container, ie "content3d" to image.
-    // document.getElementsByTagName('a-scene') selects all a-frame elements
-    // could do document.querySelector('a-scene') if only one i think.
-    document.getElementsByTagName('a-scene')[0].style.display = 'none';
-    document.getElementById('content3D').style.background = 'url(assets/images/product-' + this.shapeSelected + '-' + this.colorSelected + '-0.png) no-repeat center #ffffff';
+  //   // replace magic window with static image by
+  //   // removing the a-frame scene element and
+  //   // setting background of div container, ie "content3d" to image.
+  //   // document.getElementsByTagName('a-scene') selects all a-frame elements
+  //   // could do document.querySelector('a-scene') if only one i think.
+  //   document.getElementsByTagName('a-scene')[0].style.display = 'none';
+  //   document.getElementById('content3D').style.background = 'url(assets/images/product-' + this.shapeSelected + '-' + this.colorSelected + '-0.png) no-repeat center #ffffff';
 
-    // update state
-    this.thumbSelected = 0;
-  },
-  thumb1Clicked: function (evt) {
-    this.removeSelected();
-    document.getElementById('thumb1').classList.add('selected');
-    document.getElementsByTagName('a-scene')[0].style.display = 'none';
-    document.getElementById('content3D').style.background = 'url(assets/images/product-' + this.shapeSelected + '-0-1.png) no-repeat center #ffffff';
-    this.thumbSelected = 1;
-  },
-  thumb2Clicked: function (evt) {
-    this.removeSelected();
-    document.getElementById('content3D').style.background = 'none';
-    document.getElementsByTagName('a-scene')[0].style.display = 'block';
-    document.getElementById('thumb2').classList.add('selected');
-    this.thumbSelected = 2;
-  },
+  //   // update state
+  //   this.thumbSelected = 0;
+  // },
+  // thumb1Clicked: function (evt) {
+  //   this.removeSelected();
+  //   document.getElementById('thumb1').classList.add('selected');
+  //   document.getElementsByTagName('a-scene')[0].style.display = 'none';
+  //   document.getElementById('content3D').style.background = 'url(assets/images/product-' + this.shapeSelected + '-0-1.png) no-repeat center #ffffff';
+  //   this.thumbSelected = 1;
+  // },
+  // thumb2Clicked: function (evt) {
+  //   this.removeSelected();
+  //   document.getElementById('content3D').style.background = 'none';
+  //   document.getElementsByTagName('a-scene')[0].style.display = 'block';
+  //   document.getElementById('thumb2').classList.add('selected');
+  //   this.thumbSelected = 2;
+  // },
 
   // remove "selected" class from cur selected thumb, (so can select smth else)
-  removeSelected: function () {
-    document.getElementById('thumb' + this.thumbSelected).classList.remove('selected');
-  },
+  // removeSelected: function () {
+  //   document.getElementById('thumb' + this.thumbSelected).classList.remove('selected');
+  // },
 
-  shape0Clicked: function (evt) {
+  // shape0Clicked: function (evt) {
 
-    // update visibilties for ar and magic window
-    this.changeShape(0);
+  //   // update visibilties for ar and magic window
+  //   this.changeShape(0);
 
-    // update 3d plane controller for vr
-    document.querySelector('#shapeBar-vr').getAttribute('position').x = -0.75;
-  },
-  shape1Clicked: function (evt) {
-    this.changeShape(1);
-    document.querySelector('#shapeBar-vr').getAttribute('position').x = -0.5;
-  },
-  shape2Clicked: function (evt) {
-    this.changeShape(2);
-    document.querySelector('#shapeBar-vr').getAttribute('position').x = -0.25;
-  },
+  //   // update 3d plane controller for vr
+  //   document.querySelector('#shapeBar-vr').getAttribute('position').x = -0.75;
+  // },
+  // shape1Clicked: function (evt) {
+  //   this.changeShape(1);
+  //   document.querySelector('#shapeBar-vr').getAttribute('position').x = -0.5;
+  // },
+  // shape2Clicked: function (evt) {
+  //   this.changeShape(2);
+  //   document.querySelector('#shapeBar-vr').getAttribute('position').x = -0.25;
+  // },
   changeShape: function (i) {
 
     // reset visibility to false for all objects
@@ -342,43 +342,43 @@ AFRAME.registerSystem('store', { // register a component named store
     document.getElementById('shape' + i).classList.add('optionSelected');
 
     // update thumbnails to display selected shape
-    this.updateThumbs();
+    // this.updateThumbs();
   },
 
-  color0Clicked: function (evt) {
-    this.changeColor(0);
-    document.querySelector('#colorBar-vr').getAttribute('position').x = 0.25;
-  },
-  color1Clicked: function (evt) {
-    this.changeColor(1);
-    document.querySelector('#colorBar-vr').getAttribute('position').x = 0.5;
-  },
-  color2Clicked: function (evt) {
-    this.changeColor(2);
-    document.querySelector('#colorBar-vr').getAttribute('position').x = 0.75;
-  },
-  changeColor: function (i) {
-    document.getElementById('color' + this.colorSelected).classList.remove('optionSelected');
-    document.querySelector('#geo0').setAttribute('material', 'color', this.colorArr[i]);
-    document.querySelector('#geo1').setAttribute('material', 'color', this.colorArr[i]);
-    document.querySelector('#geo2').setAttribute('material', 'color', this.colorArr[i]);
-    document.getElementById('color' + i).classList.add('optionSelected');
-    this.colorSelected = i;
-    this.updateThumbs();
-    this.flatMaterials(); // why do this everytime color changes <-------------------???
-  },
+  // color0Clicked: function (evt) {
+  //   this.changeColor(0);
+  //   document.querySelector('#colorBar-vr').getAttribute('position').x = 0.25;
+  // },
+  // color1Clicked: function (evt) {
+  //   this.changeColor(1);
+  //   document.querySelector('#colorBar-vr').getAttribute('position').x = 0.5;
+  // },
+  // color2Clicked: function (evt) {
+  //   this.changeColor(2);
+  //   document.querySelector('#colorBar-vr').getAttribute('position').x = 0.75;
+  // },
+  // changeColor: function (i) {
+  //   document.getElementById('color' + this.colorSelected).classList.remove('optionSelected');
+  //   document.querySelector('#geo0').setAttribute('material', 'color', this.colorArr[i]);
+  //   document.querySelector('#geo1').setAttribute('material', 'color', this.colorArr[i]);
+  //   document.querySelector('#geo2').setAttribute('material', 'color', this.colorArr[i]);
+  //   document.getElementById('color' + i).classList.add('optionSelected');
+  //   this.colorSelected = i;
+  //   // this.updateThumbs();
+  //   this.flatMaterials(); // why do this everytime color changes <-------------------???
+  // },
 
   // update thumbnails to display selected shape and color
-  updateThumbs: function () {
-    document.querySelector('#thumb0').querySelector('img').src = 'assets/images/thumbs-' + this.shapeSelected + '-' + this.colorSelected + '-0.png';
-    document.querySelector('#thumb1').querySelector('img').src = 'assets/images/thumbs-' + this.shapeSelected + '-0-1.png';
-    document.querySelector('#thumb2').querySelector('img').src = 'assets/images/thumbs-' + this.shapeSelected + '-' + this.colorSelected + '-2.png';
-    if (this.thumbSelected === 0) {
-      document.getElementById('content3D').style.background = 'url(assets/images/product-' + this.shapeSelected + '-' + this.colorSelected + '-0.png) no-repeat center #ffffff';
-    } else if (this.thumbSelected === 1) {
-      document.getElementById('content3D').style.background = 'url(assets/images/product-' + this.shapeSelected + '-0-1.png) no-repeat center #ffffff';
-    }
-  },
+  // updateThumbs: function () {
+  //   document.querySelector('#thumb0').querySelector('img').src = 'assets/images/thumbs-' + this.shapeSelected + '-' + this.colorSelected + '-0.png';
+  //   document.querySelector('#thumb1').querySelector('img').src = 'assets/images/thumbs-' + this.shapeSelected + '-0-1.png';
+  //   document.querySelector('#thumb2').querySelector('img').src = 'assets/images/thumbs-' + this.shapeSelected + '-' + this.colorSelected + '-2.png';
+  //   if (this.thumbSelected === 0) {
+  //     document.getElementById('content3D').style.background = 'url(assets/images/product-' + this.shapeSelected + '-' + this.colorSelected + '-0.png) no-repeat center #ffffff';
+  //   } else if (this.thumbSelected === 1) {
+  //     document.getElementById('content3D').style.background = 'url(assets/images/product-' + this.shapeSelected + '-0-1.png) no-repeat center #ffffff';
+  //   }
+  // },
 
   buttonCartClicked: function () {
     if (this.isAdded) {
@@ -470,33 +470,33 @@ AFRAME.registerSystem('store', { // register a component named store
       position: '0.06 0.2 0',
       parent: containerUI
     });
-    this.addImage({
-      id: 'shape0-vr',
-      src: 'shape0',
-      size: 0.25,
-      position: '-0.75 0 0.01',
-      collidable: true,
-      onclick: this.shape0Clicked,
-      parent: containerUI
-    });
-    this.addImage({
-      id: 'shape1-vr',
-      src: 'shape1',
-      size: 0.25,
-      position: '-0.5 0 0.01',
-      collidable: true,
-      onclick: this.shape1Clicked,
-      parent: containerUI
-    });
-    this.addImage({
-      id: 'shape2-vr',
-      src: 'shape2',
-      size: 0.25,
-      position: '-0.25 0 0.01',
-      collidable: true,
-      onclick: this.shape2Clicked,
-      parent: containerUI
-    });
+    // this.addImage({
+    //   id: 'shape0-vr',
+    //   src: 'shape0',
+    //   size: 0.25,
+    //   position: '-0.75 0 0.01',
+    //   collidable: true,
+    //   onclick: this.shape0Clicked,
+    //   parent: containerUI
+    // });
+    // this.addImage({
+    //   id: 'shape1-vr',
+    //   src: 'shape1',
+    //   size: 0.25,
+    //   position: '-0.5 0 0.01',
+    //   collidable: true,
+    //   onclick: this.shape1Clicked,
+    //   parent: containerUI
+    // });
+    // this.addImage({
+    //   id: 'shape2-vr',
+    //   src: 'shape2',
+    //   size: 0.25,
+    //   position: '-0.25 0 0.01',
+    //   collidable: true,
+    //   onclick: this.shape2Clicked,
+    //   parent: containerUI
+    // });
     this.addPlane({
       id: 'shapeBar-vr',
       width: 0.2,
@@ -515,33 +515,33 @@ AFRAME.registerSystem('store', { // register a component named store
       position: '1.06 0.2 0',
       parent: containerUI
     });
-    this.addImage({
-      id: 'color0-vr',
-      src: 'color0',
-      size: 0.25,
-      position: '0.25 0 0.01',
-      collidable: true,
-      onclick: this.color0Clicked,
-      parent: containerUI
-    });
-    this.addImage({
-      id: 'color1-vr',
-      src: 'color1',
-      size: 0.25,
-      position: '0.5 0 0.01',
-      collidable: true,
-      onclick: this.color1Clicked,
-      parent: containerUI
-    });
-    this.addImage({
-      id: 'color2-vr',
-      src: 'color2',
-      size: 0.25,
-      position: '0.75 0 0.01',
-      collidable: true,
-      onclick: this.color2Clicked,
-      parent: containerUI
-    });
+    // this.addImage({
+    //   id: 'color0-vr',
+    //   src: 'color0',
+    //   size: 0.25,
+    //   position: '0.25 0 0.01',
+    //   collidable: true,
+    //   onclick: this.color0Clicked,
+    //   parent: containerUI
+    // });
+    // this.addImage({
+    //   id: 'color1-vr',
+    //   src: 'color1',
+    //   size: 0.25,
+    //   position: '0.5 0 0.01',
+    //   collidable: true,
+    //   onclick: this.color1Clicked,
+    //   parent: containerUI
+    // });
+    // this.addImage({
+    //   id: 'color2-vr',
+    //   src: 'color2',
+    //   size: 0.25,
+    //   position: '0.75 0 0.01',
+    //   collidable: true,
+    //   onclick: this.color2Clicked,
+    //   parent: containerUI
+    // });
     this.addPlane({
       id: 'colorBar-vr',
       width: 0.2,
