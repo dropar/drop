@@ -49,7 +49,7 @@ console.log(loginJS);
       .then(() => {
         loginJS.submitLoginForm();
       });
-    }
+    },
     '/assets/:id': () => { loadHTML('./templates/singleAsset.html', 'view'); },
   });
 
