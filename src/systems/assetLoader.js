@@ -1,18 +1,31 @@
 // import axios from 'axios'
 const axios = require('axios');
 
-AFRAME.registerSystem('myLoader', {
+AFRAME.registerSystem('assetLoader', {
   init: function () {
     console.log("--- init loader");
+
+    // -- STATE --
+    this.currentAsset = {
+      id: 1,
+      name: 'spaceCat',
+      modelUrl: 'https://poly.googleapis.com/v1/assets?key=AIzaSyDbAkOgCpfiweD3ZQ3_ZyR0UBEqD17ZBs4`'
+    };
+    this.userAssets = [];
 
     var self = this;
     this.sceneEl.addEventListener('loaded', function () { // inits for after scene loaded
       console.log('--- gltfloader loaded event')
-      self.loadAllAssets();
+      // self.loadAssetById();
+      // self.loadAllUserAssets();
       self.loadGeometry();
     });
   },
-  loadAllAssets: async function () {
+  loadAssetById: async function () {
+    const {data: asset} = await axios.get(`/api/asset/${this.currentAsset.id}`);
+  },
+  loadAllUserAssets: async function () {
+    // tbd: replace this with
     const {data: assets} = await axios.get(`https://poly.googleapis.com/v1/assets?key=AIzaSyDbAkOgCpfiweD3ZQ3_ZyR0UBEqD17ZBs4`)
     console.log(assets);
   },
