@@ -48,6 +48,7 @@ console.log(loginJS);
         loginJS.submitLoginForm();
       });
     }
+    '/assets/:id': () => { loadHTML('./templates/singleAsset.html', 'view'); },
   });
 
   // set the default route

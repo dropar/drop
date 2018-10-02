@@ -302,7 +302,7 @@ a{
   }
 }
 
-#productOptions,
+/* #productOptions, */
 #thumbs {
   display: none;
 }
