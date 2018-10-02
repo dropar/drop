@@ -2,6 +2,7 @@
 require('./components/intersect-color-change.js');
 require('./components/store-controls.js');
 require('./components/test-component-2');
+require('./components/login.js');
 require('./systems/store.js');
 require('./systems/myLoader.js');
 // require('./router.js');
