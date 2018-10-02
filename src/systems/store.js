@@ -244,26 +244,6 @@ AFRAME.registerSystem('store', { // register a component named store
   // function to add click handlers to DOM elements
   addEvents: function () {
     this.isAdded = false;
-    // this.thumbSelected = 2;
-    // this.shapeSelected = 0;
-    // this.colorSelected = 0;
-    // document.getElementById('thumb0').addEventListener('click', this.thumb0Clicked.bind(this));
-    // document.getElementById('thumb1').addEventListener('click', this.thumb1Clicked.bind(this));
-    // document.getElementById('thumb2').addEventListener('click', this.thumb2Clicked.bind(this));
-
-    // this.shape0Clicked = this.shape0Clicked.bind(this);
-    // this.shape1Clicked = this.shape1Clicked.bind(this);
-    // this.shape2Clicked = this.shape2Clicked.bind(this);
-    // document.getElementById('shape0').addEventListener('click', this.shape0Clicked.bind(this));
-    // document.getElementById('shape1').addEventListener('click', this.shape1Clicked.bind(this));
-    // document.getElementById('shape2').addEventListener('click', this.shape2Clicked.bind(this));
-
-    // this.color0Clicked = this.color0Clicked.bind(this);
-    // this.color1Clicked = this.color1Clicked.bind(this);
-    // this.color2Clicked = this.color2Clicked.bind(this);
-    // document.getElementById('color0').addEventListener('click', this.color0Clicked.bind(this));
-    // document.getElementById('color1').addEventListener('click', this.color1Clicked.bind(this));
-    // document.getElementById('color2').addEventListener('click', this.color2Clicked.bind(this));
 
     this.buttonCartClicked = this.buttonCartClicked.bind(this);
     document.getElementById('buttonCart').addEventListener('click', this.buttonCartClicked);
@@ -403,12 +383,7 @@ AFRAME.registerSystem('store', { // register a component named store
     this.isAdded = !this.isAdded;
   },
 
-  // change shading to flat for all objects
-  flatMaterials: function () {
-    // document.querySelector('#geo0').getObject3D('mesh').material.flatShading = true;
-    // document.querySelector('#geo1').getObject3D('mesh').material.flatShading = true;
-    //document.querySelector('#geo2').getObject3D('mesh').material.flatShading = true;
-  },
+
 
 
   /* --- VR STORE PANEL --- */
