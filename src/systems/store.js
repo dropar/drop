@@ -100,9 +100,6 @@ AFRAME.registerSystem('store', { // register a component named store
       // this.sceneEl.setAttribute('ar-mode-ui', {enabled: false});
       // this.sceneEl.setAttribute('vr-mode-ui', {enabled: false});
 
-      // set all object shading to flat
-      self.flatMaterials();
-
       // dynamicaly add store panel
       self.addStorePanel();
       //self.loadGeometry();
