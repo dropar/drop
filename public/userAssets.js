@@ -5,7 +5,7 @@ const assetsDiv = document.getElementById('user-assets');
 const userId = this.user.id;
 let userAssets;
 assetsDiv.addEventListener('load', () => {
-  userAssets = axios.get(`/users/${userId}/assets`)
+  userAssets = axios.get(`api/users/${userId}/assets`)
   return userAssets;
 })
 
