@@ -15,6 +15,7 @@
     <script src="vendor/three.xr.js"></script>
     <script src="vendor/aframe-xr.js"></script>
     <script src="vendor/aframe-input-mapping-component.js"></script>
+    <script src="vendor/navigo.js"></script>
     <script src="build.js"></script>
     <link rel="stylesheet" href="css/main.css">
     <link rel="icon" type="image/png" href="favicon-32x32.png" sizes="32x32">
@@ -26,6 +27,12 @@
     <link rel="apple-touch-icon" sizes="150x150" href='/apple-touch-icon150.png'>
   </head>
   <body>
+  <!-- <div id="testNav">
+      <a href="#" onclick="onNavItemClick('/test1'); return false;">test 1</a>
+      <a href="#" onclick="onNavItemClick('/test2'); return false;">test 2</a>
+  </div>
+  <div id="testContent">i'm a test</div> -->
+  <div id="view">view</div>
   <div id="arui">
       <div id="arui-step1">
           <div id="arui-device-icon"><img src="assets/images/device-icon.png"/></div>
@@ -166,5 +173,8 @@
         Click on the <a href="https://github.com/mozilla/webxr-polyfill">blog entry</a> to know more
       </div> -->
     </div>
+
+    <script src="router.js"></script>
+    <!-- <script src="//unpkg.com/navigo@6"></script> -->
   </body>
 </html>

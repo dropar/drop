@@ -1,3 +1,6 @@
+// import axios from 'axios'
+const axios = require('axios');
+
 AFRAME.registerSystem('myLoader', {
   init: function () {
     console.log("--- init loader");
@@ -5,8 +8,13 @@ AFRAME.registerSystem('myLoader', {
     var self = this;
     this.sceneEl.addEventListener('loaded', function () { // inits for after scene loaded
       console.log('--- gltfloader loaded event')
+      self.loadAllAssets();
       self.loadGeometry();
     });
+  },
+  loadAllAssets: async function () {
+    const {data: assets} = await axios.get(`https://poly.googleapis.com/v1/assets?key=AIzaSyDbAkOgCpfiweD3ZQ3_ZyR0UBEqD17ZBs4`)
+    console.log(assets);
   },
   addGltfAsset: function (params) {
     var assets = document.querySelector('a-assets');
