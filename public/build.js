@@ -6181,36 +6181,39 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 // import axios from 'axios'
 var axios = __webpack_require__(84);
 
-AFRAME.registerSystem('myLoader', {
+AFRAME.registerSystem('assetLoader', {
   init: function init() {
-    console.log("--- init loader");
+    console.log("--- init loader"); // -- STATE --
+
+    this.currentAsset = 1;
+    this.userAssets = [];
     var self = this;
     this.sceneEl.addEventListener('loaded', function () {
       // inits for after scene loaded
-      console.log('--- gltfloader loaded event');
-      self.loadAllAssets();
+      console.log('--- gltfloader loaded event'); // self.loadAssetById();
+
+      self.loadAllUserAssets();
       self.loadGeometry();
     });
   },
-  loadAllAssets: function () {
-    var _loadAllAssets = _asyncToGenerator(
+  loadAssetById: function () {
+    var _loadAssetById = _asyncToGenerator(
     /*#__PURE__*/
     regeneratorRuntime.mark(function _callee() {
-      var _ref, assets;
+      var _ref, asset;
 
       return regeneratorRuntime.wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
               _context.next = 2;
-              return axios.get("https://poly.googleapis.com/v1/assets?key=AIzaSyDbAkOgCpfiweD3ZQ3_ZyR0UBEqD17ZBs4");
+              return axios.get("/api/asset/".concat(this.currentAsset));
 
             case 2:
               _ref = _context.sent;
-              assets = _ref.data;
-              console.log(assets);
+              asset = _ref.data;
 
-            case 5:
+            case 4:
             case "end":
               return _context.stop();
           }
@@ -6218,8 +6221,38 @@ AFRAME.registerSystem('myLoader', {
       }, _callee, this);
     }));
 
-    return function loadAllAssets() {
-      return _loadAllAssets.apply(this, arguments);
+    return function loadAssetById() {
+      return _loadAssetById.apply(this, arguments);
+    };
+  }(),
+  loadAllUserAssets: function () {
+    var _loadAllUserAssets = _asyncToGenerator(
+    /*#__PURE__*/
+    regeneratorRuntime.mark(function _callee2() {
+      var _ref2, assets;
+
+      return regeneratorRuntime.wrap(function _callee2$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              _context2.next = 2;
+              return axios.get("https://poly.googleapis.com/v1/assets?key=AIzaSyDbAkOgCpfiweD3ZQ3_ZyR0UBEqD17ZBs4");
+
+            case 2:
+              _ref2 = _context2.sent;
+              assets = _ref2.data;
+              console.log(assets);
+
+            case 5:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, _callee2, this);
+    }));
+
+    return function loadAllUserAssets() {
+      return _loadAllUserAssets.apply(this, arguments);
     };
   }(),
   addGltfAsset: function addGltfAsset(params) {
@@ -6263,7 +6296,7 @@ AFRAME.registerSystem('myLoader', {
 "use strict";
 
 
-AFRAME.registerSystem('store', {
+AFRAME.registerSystem('singleAsset', {
   // register a component named store
   init: function init() {
     console.log("--- init FRAME.registerSystem('store', {...}"); // mapping for mapping inputs to application-specific actions.

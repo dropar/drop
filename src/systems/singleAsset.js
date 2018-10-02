@@ -1,4 +1,4 @@
-AFRAME.registerSystem('store', { // register a component named store
+AFRAME.registerSystem('singleAsset', { // register a component named store
   init: function () {
     console.log("--- init FRAME.registerSystem('store', {...}")
 
