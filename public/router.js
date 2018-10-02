@@ -25,7 +25,10 @@
     // 'view' is the id of the div element inside which we render the HTML
     'firstroute': () => { loadHTML('./templates/first.html', 'view'); },
     'secondroute': () => { loadHTML('./templates/second.html', 'view'); },
-    'thirdroute': () => { loadHTML('./templates/third.html', 'view'); }
+    'thirdroute': () => { loadHTML('./templates/third.html', 'view'); },
+    'userAssets': () => {
+      loadHTML('./templates/userAssets.html', 'view')
+    }
   });
 
   // set the default route

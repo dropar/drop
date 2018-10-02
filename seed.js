@@ -22,46 +22,40 @@ const users = [
 
 const assets = [
   {
-    id: 1,
-    name: 'lemon',
-    price: 44,
-    description: 'lemon pills'
+    name: 'space cat',
+    thumbnail: 'spacecat.png',
+    assetUrl: 'spacecat.obj'
   },
   {
-    id: 2,
-    name: 'apple',
-    price: 3,
-    description: 'apple pills'
+    name: 'earth cat',
+    thumbnail: 'spacecat.png',
+    assetUrl: 'spacecat.obj'
   },
   {
-    id: 3,
-    name: 'yams',
-    price: 55,
-    description: 'yams pills'
+    name: 'space dog',
+    thumbnail: 'spacecat.png',
+    assetUrl: 'spacecat.obj'
   },
   {
-    id: 4,
-    name: 'potato',
-    price: 76,
-    description: 'potato pills'
+    name: 'earth dog',
+    thumbnail: 'spacecat.png',
+    assetUrl: 'spacecat.obj'
   },
   {
-    id: 5,
-    name: 'orange',
-    price: 32,
-    description: 'orange pills'
+    name: 'space mouse',
+    thumbnail: 'spacecat.png',
+    assetUrl: 'spacecat.obj'
   },
   {
-    id: 6,
-    name: 'dog food',
-    price: 56,
-    description: 'dog food'
+    name: 'earth mouse',
+    thumbnail: 'spacecat.png',
+    assetUrl: 'spacecat.obj'
   }
 ]
 
 const seed = () =>
   Promise.all(users.map(user => User.create(user))).then(() =>
-    Promise.all(products.map(product => Product.create(product)))
+    Promise.all(assets.map(asset => Asset.create(asset)))
   )
 
 const main = () => {
