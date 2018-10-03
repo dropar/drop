@@ -3,6 +3,7 @@
 
   // getElementById wrapper
 const loginJS = require('../src/components/login.js');
+const assetQuery = require('../src/components/userAssets')
 
 console.log(loginJS);
 
@@ -43,6 +44,11 @@ console.log(loginJS);
     'firstroute': () => { loadHTML('./templates/first.html', 'view'); },
     'secondroute': () => { loadHTML('./templates/second.html', 'view'); },
     'thirdroute': () => { loadHTML('./templates/third.html', 'view'); },
+    'userAssets': () => {
+      loadHTML('./templates/userAssets.html', 'view').then(() => {
+        assetQuery.getUserAssets();
+      })
+    },
     'assets/:id': () => { loadHTML('./templates/singleAsset.html', 'view'); },
     'login': () => {
       loadHTML('./templates/login.html', 'view')
