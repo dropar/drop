@@ -3,6 +3,7 @@
 
   // getElementById wrapper
 const loginJS = require('../src/components/login.js');
+const getAllAssets = require('../src/controllers/allAssets')
 
 console.log(loginJS);
 
@@ -51,6 +52,8 @@ console.log(loginJS);
       });
     },
     '/assets/:id': () => { loadHTML('./templates/singleAsset.html', 'view'); },
+    '/assets': () => { loadHTML('./templates/allAssets.html','view')
+       .then(() => getAllAssets())}
   });
 
   // set the default route
