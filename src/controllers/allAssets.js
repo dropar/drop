@@ -55,7 +55,7 @@ module.exports = {
             // displayName.setAttribute('id', 'display-name')
             // document.getElementById('display-name').innerHTML = `${asset.displayName}`
 
-        let authorName = document.createTextNode(`by ${asset.authorName}`)
+        let authorName = document.createTextNode(` by ${asset.authorName}`)
         // ('h2')
             // authorName.setAttribute('id', 'author-name')
             // document.getElementById('author-name').innerHTML = `by ${asset.authorName}`
