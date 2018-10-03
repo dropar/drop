@@ -7,6 +7,10 @@ const allAssets = require('../src/controllers/allAssets')
 
 
 console.log(loginJS);
+const { submitLoginForm }= require('../src/components/login');
+const assetQuery = require('../src/components/userAssets');
+const { submitSignUpForm } = require('../src/components/signup');
+const assetFetcher = require('../src/components/assetFetcher.js');
 
   function $id(id) {
     return document.getElementById(id);
@@ -15,10 +19,8 @@ console.log(loginJS);
   // asyncrhonously fetch the html template partial from the file directory,
   // then set its contents to the html of the parent element
   function loadHTML(url, id) {
-    console.log('loadHTML')
     return new Promise((resolve, reject) => {
       const req = new XMLHttpRequest();
-      console.log('req', req);
       req.open('GET', url);
       req.onload = () => {
         $id(id).innerHTML = req.responseText;
@@ -52,13 +54,19 @@ console.log(loginJS);
     'login': () => {
       loadHTML('./templates/login.html', 'view')
       .then(() => {
-        loginJS.submitLoginForm();
+        submitLoginForm();
       });
     },
     'assets/:id': () => { loadHTML('./templates/singleAsset.html', 'view'); },
-  })
 
 
+    'signup': () => {
+      loadHTML('./templates/signup.html', 'view')
+      .then(() => {
+        submitSignUpForm();
+      })
+    }
+  });
 
   // set the default route
   router.on(() => { loadHTML('./templates/first.html', 'view'); });
@@ -68,5 +76,9 @@ console.log(loginJS);
 
   router.resolve();
 // });
+
+module.exports = {
+  router
+}
 
 
