@@ -46,9 +46,11 @@ console.log(loginJS);
     'secondroute': () => { loadHTML('./templates/second.html', 'view'); },
     'thirdroute': () => { loadHTML('./templates/third.html', 'view'); },
     'assets/:id': (params) => {
-      // assetFetcher.fetchcurrentAsset(params.id);
-      // assetFetcher.fetchUserAssets(window.user.id);
-      loadHTML('./templates/singleAsset.html', 'view');
+      assetFetcher.fetchCurrentAsset(params.id)
+      .then(() => {
+        // assetFetcher.fetchUserAssets(window.user.id);
+        loadHTML('./templates/singleAsset.html', 'view');
+      })
     },
     'userAssets': () => {
       loadHTML('./templates/userAssets.html', 'view').then(() => {

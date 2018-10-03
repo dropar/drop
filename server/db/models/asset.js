@@ -28,7 +28,7 @@ const Asset = db.define('asset', {
     allowNull: false
   },
   category: {
-    type: Sequelize.ENUM('Architecture', 'Art', 'Food', 'Nature', 'Objects', 'People', 'Other'),
+    type: Sequelize.ENUM('Architecture', 'Art', 'Food', 'Nature', 'Objects', 'People', 'Scenes', 'Technology','Transport', 'Other'),
     allowNull: false
   }
 })
