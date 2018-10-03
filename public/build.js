@@ -3896,22 +3896,23 @@ var axios = __webpack_require__(44);
 
 module.exports = {
   submitLoginForm: function submitLoginForm() {
-    console.log('login page inside');
     var submitButton = document.getElementById('login-submit');
-    var email = document.getElementById('email');
-    console.log('email', email);
-    console.log("submit-button", submitButton);
     submitButton.addEventListener('click', function (event) {
       event.preventDefault();
-      console.log('submitted'); // const email = document.getElementById('email');
+      var email = document.getElementById('email');
+      var password = document.getElementById('password'); //login post request
 
-      var password = document.getElementById('password');
-      console.log(email.value, password.value); //login post request
-
-      axios.post('/login', {
-        email: email.value,
-        password: password.value
-      });
+      try {
+        axios.post('/auth/login', {
+          email: email.value,
+          password: password.value
+        }).then(function (res) {
+          window.user = res.data;
+          console.log('user', window.user);
+        });
+      } catch (err) {
+        console.error(err);
+      }
     });
   }
 };

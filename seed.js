@@ -3,19 +3,23 @@ const {User, Asset} = require('./server/db/models');
  const users = [
   {
     name: 'john',
-    email: 'hanseok87@gmail.com'
+    email: 'hanseok87@gmail.com',
+    password: '123'
   },
   {
     name: 'frank',
-    email: 'andy@gmail.com'
+    email: 'andy@gmail.com',
+    password: '456'
   },
   {
     name: 'josh',
-    email: 'mina@gmail.com'
+    email: 'mina@gmail.com',
+    password: 'abc'
   },
   {
     name: 'ryan',
-    email: 'ryan@gmail.com'
+    email: 'ryan@gmail.com',
+    password: '123456'
   }
 ]
  const assets = [
