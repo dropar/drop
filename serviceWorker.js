@@ -2,7 +2,6 @@ const CACHE_NAME = 'my-site-cache-v1';
 var urlsToCache = [
   '/',
   '/css/main.css',
-  '/build.js',
   '/favicon-16x16.png',
   '/favicon-32x32.png',
   '/favicon.ico',
@@ -85,15 +84,23 @@ self.addEventListener('install', function(event) {
 });
 
 self.addEventListener('fetch', function(event) {
-  event.respondWith(
-    caches.match(event.request)
-    .then(function(response) {
-      if (response) {
-        return response;
+  console.log('href', location.href);
+  fetch(event.request)
+  .then(response => {
+    if (response.status !== 200) {
+      if (!location.href.startsWith('http://localhost:8080')) {
+        event.respondWith(
+          caches.match(event.request)
+          .then(function(response) {
+            if (response) {
+              return response;
+            }
+            return fetch(event.request);
+          })
+          .catch(err => console.log(err))
+        )
       }
-      return fetch(event.request);
-    })
-    .catch(err => console.log(err))
-  )
+    }
+  })
 })
 
