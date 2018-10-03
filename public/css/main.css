@@ -306,3 +306,21 @@ a{
 #thumbs {
   display: none;
 }
+
+
+/*assets-main-container*/
+.assets-main-container {
+  display: grid;
+  grid-template-columns: 100px 1oopx 100px;
+  grid-template-rows: 100px 100px
+}
+
+.assets-main {
+  display: grid;
+
+}
+
+.asset-thumbnail {
+  max-height: 150px;
+  max-width: 150px;
+}

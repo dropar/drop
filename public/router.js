@@ -2,6 +2,11 @@
   // window.addEventListener('load', function() {
 
   // getElementById wrapper
+const loginJS = require('../src/components/login.js');
+const allAssets = require('../src/controllers/allAssets')
+
+
+console.log(loginJS);
 const { submitLoginForm }= require('../src/components/login');
 const assetQuery = require('../src/components/userAssets');
 const { submitSignUpForm } = require('../src/components/signup');
@@ -34,30 +39,27 @@ const assetFetcher = require('../src/components/assetFetcher.js');
   }
 
   // use #! to hash
+  //change back
   const router = new Navigo(null, true, '#!');
   // const router = new Navigo();
-  console.log(router);
+  console.log('ROUTER-',router);
   router.on({
     // 'view' is the id of the div element inside which we render the HTML
+    'assets': () => {
+      loadHTML('./templates/allAssets.html','view')
+       .then(() => {allAssets.getAllAssets()})},
     'firstroute': () => { loadHTML('./templates/first.html', 'view'); },
     'secondroute': () => { loadHTML('./templates/second.html', 'view'); },
     'thirdroute': () => { loadHTML('./templates/third.html', 'view'); },
-    'assets/:id': (params) => {
-      // assetFetcher.fetchcurrentAsset(params.id);
-      // assetFetcher.fetchUserAssets(window.user.id);
-      loadHTML('./templates/singleAsset.html', 'view');
-    },
-    'userAssets': () => {
-      loadHTML('./templates/userAssets.html', 'view').then(() => {
-        assetQuery.getUserAssets();
-      })
-    },
     'login': () => {
       loadHTML('./templates/login.html', 'view')
       .then(() => {
         submitLoginForm();
       });
     },
+    'assets/:id': () => { loadHTML('./templates/singleAsset.html', 'view'); },
+
+
     'signup': () => {
       loadHTML('./templates/signup.html', 'view')
       .then(() => {
