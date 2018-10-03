@@ -5,6 +5,7 @@
 const { submitLoginForm }= require('../src/components/login');
 const assetQuery = require('../src/components/userAssets');
 const { submitSignUpForm } = require('../src/components/signup');
+const assetFetcher = require('../src/components/assetFetcher.js');
 
   function $id(id) {
     return document.getElementById(id);
@@ -41,12 +42,16 @@ const { submitSignUpForm } = require('../src/components/signup');
     'firstroute': () => { loadHTML('./templates/first.html', 'view'); },
     'secondroute': () => { loadHTML('./templates/second.html', 'view'); },
     'thirdroute': () => { loadHTML('./templates/third.html', 'view'); },
+    'assets/:id': (params) => {
+      // assetFetcher.fetchcurrentAsset(params.id);
+      // assetFetcher.fetchUserAssets(window.user.id);
+      loadHTML('./templates/singleAsset.html', 'view');
+    },
     'userAssets': () => {
       loadHTML('./templates/userAssets.html', 'view').then(() => {
         assetQuery.getUserAssets();
       })
     },
-    'assets/:id': () => { loadHTML('./templates/singleAsset.html', 'view'); },
     'login': () => {
       loadHTML('./templates/login.html', 'view')
       .then(() => {
