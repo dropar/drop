@@ -6304,27 +6304,57 @@ module.exports = {
     var _getAllAssets = _asyncToGenerator(
     /*#__PURE__*/
     regeneratorRuntime.mark(function _callee() {
-      var res, allAssetsFromAPI, allAssetsArray, allAssetsView;
+      var isGLTF, isLowPoly, assetUrlFilter, validAssets, res, allAssetsFromAPI, allAssetsView;
       return regeneratorRuntime.wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              _context.prev = 0;
-              _context.next = 3;
+              isGLTF = function isGLTF(asset) {
+                console.log("asset -->", asset);
+                console.log("asset.format.filter --->", asset.formats.filter(function (format) {
+                  return format.formatType === "GLTF";
+                }));
+                return asset.formats.filter(function (format) {
+                  return format.formatType === "GLTF";
+                }).length > 0;
+              };
+
+              isLowPoly = function isLowPoly(asset) {
+                return asset.formats.filter(function (asset) {
+                  return asset.formatComplexity.triangleCount < 100000;
+                }).length > 0;
+              };
+
+              assetUrlFilter = function assetUrlFilter(asset) {
+                return asset.formats.filter(function (asset) {
+                  return asset.formatType === "GLTF";
+                })[0].root.url;
+              };
+
+              validAssets = [];
+              _context.prev = 4;
+              _context.next = 7;
               return axios.get('https://poly.googleapis.com/v1/assets?key=AIzaSyDbAkOgCpfiweD3ZQ3_ZyR0UBEqD17ZBs4');
 
-            case 3:
+            case 7:
               res = _context.sent;
               allAssetsFromAPI = res.data.assets;
-              allAssetsArray = allAssetsFromAPI.map(function (asset) {
-                return {
-                  displayName: asset.displayName,
-                  authorName: asset.authorName,
-                  thumbnailUrl: asset.thumbnail.url
-                };
+              allAssetsFromAPI.forEach(function (asset) {
+                console.log(isGLTF(asset));
+
+                if (isGLTF(asset) && isLowPoly(asset)) {
+                  validAssets.push({
+                    displayName: asset.displayName,
+                    authorName: asset.authorName,
+                    thumbnailUrl: asset.thumbnail.url,
+                    id: asset.name,
+                    assetUrl: assetUrlFilter(asset)
+                  });
+                }
               });
+              console.log("valid assets --->", validAssets);
               allAssetsView = document.getElementById('all-assets-view');
-              allAssetsArray.forEach(function (asset) {
+              validAssets.forEach(function (asset) {
                 var newDiv = document.createElement('div');
                 var assetThumbnail = document.createElement('img');
                 assetThumbnail.setAttribute('src', "".concat(asset.thumbnailUrl));
@@ -6341,20 +6371,20 @@ module.exports = {
                 newDiv.appendChild(authorName);
                 allAssetsView.appendChild(newDiv);
               });
-              _context.next = 13;
+              _context.next = 18;
               break;
 
-            case 10:
-              _context.prev = 10;
-              _context.t0 = _context["catch"](0);
+            case 15:
+              _context.prev = 15;
+              _context.t0 = _context["catch"](4);
               console.error(_context.t0);
 
-            case 13:
+            case 18:
             case "end":
               return _context.stop();
           }
         }
-      }, _callee, this, [[0, 10]]);
+      }, _callee, this, [[4, 15]]);
     }));
 
     return function getAllAssets() {
