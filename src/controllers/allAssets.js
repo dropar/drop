@@ -28,11 +28,11 @@ module.exports = {
 
 
 
-    validAssets.forEach((asset) => {
-        async function (){
-            await axios.post('/assets', asset)
-        }
-    })
+    // validAssets.forEach((asset) => {
+    //     async function (){
+    //         await axios.post('/assets', asset)
+    //     }
+    // })
 
 
 
