@@ -29,5 +29,4 @@ const Asset = db.define('asset', {
   }
 })
 
-module.exports = Asset;
-
+module.exports = Asset

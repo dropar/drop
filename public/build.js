@@ -3896,22 +3896,23 @@ var axios = __webpack_require__(46);
 
 module.exports = {
   submitLoginForm: function submitLoginForm() {
-    console.log('login page inside');
     var submitButton = document.getElementById('login-submit');
-    var email = document.getElementById('email');
-    console.log('email', email);
-    console.log("submit-button", submitButton);
     submitButton.addEventListener('click', function (event) {
       event.preventDefault();
-      console.log('submitted'); // const email = document.getElementById('email');
+      var email = document.getElementById('email');
+      var password = document.getElementById('password'); //login post request
 
-      var password = document.getElementById('password');
-      console.log(email.value, password.value); //login post request
-
-      axios.post('/login', {
-        email: email.value,
-        password: password.value
-      });
+      try {
+        axios.post('/auth/login', {
+          email: email.value,
+          password: password.value
+        }).then(function (res) {
+          window.user = res.data;
+          console.log('user', window.user);
+        });
+      } catch (err) {
+        console.error(err);
+      }
     });
   }
 };
@@ -5205,7 +5206,11 @@ global._babelPolyfill = true;
 // getElementById wrapper
 var loginJS = __webpack_require__(90);
 
+<<<<<<< HEAD
 var assetFetcher = __webpack_require__(141);
+=======
+var assetQuery = __webpack_require__(144);
+>>>>>>> 7ddf3758b015cb137401b521b6af03a3b6213b21
 
 console.log(loginJS);
 
@@ -5254,15 +5259,27 @@ router.on({
   'thirdroute': function thirdroute() {
     loadHTML('./templates/third.html', 'view');
   },
+<<<<<<< HEAD
   'assets/:id': function assetsId(params) {
     // assetFetcher.fetchcurrentAsset(params.id);
     // assetFetcher.fetchUserAssets(window.user.id);
+=======
+  'userAssets': function userAssets() {
+    loadHTML('./templates/userAssets.html', 'view').then(function () {
+      assetQuery.getUserAssets();
+    });
+  },
+  'assets/:id': function assetsId() {
+>>>>>>> 7ddf3758b015cb137401b521b6af03a3b6213b21
     loadHTML('./templates/singleAsset.html', 'view');
   },
   'login': function login() {
     loadHTML('./templates/login.html', 'view').then(function () {
       loginJS.submitLoginForm();
     });
+  },
+  '/assets/:id': function assetsId() {
+    loadHTML('./templates/singleAsset.html', 'view');
   }
 }); // set the default route
 
@@ -5286,8 +5303,11 @@ __webpack_require__(142);
 
 __webpack_require__(143);
 
+<<<<<<< HEAD
 __webpack_require__(144);
 
+=======
+>>>>>>> 7ddf3758b015cb137401b521b6af03a3b6213b21
 __webpack_require__(146);
 
 __webpack_require__(145);
@@ -6376,6 +6396,38 @@ grabData();
 "use strict";
 
 
+var _this = void 0;
+
+var axios = __webpack_require__(44);
+
+module.exports = {
+  getUserAssets: function getUserAssets() {
+    var mainDiv = document.getElementById('view');
+    var assetsDiv = document.getElementById('user-assets');
+    var userId = _this.user.id;
+    var userAssets = [];
+    assetsDiv.addEventListener('load', function () {
+      userAssets = axios.get("api/users/".concat(userId, "/assets"));
+    });
+    var assetsHTML = userAssets.forEach(function (asset) {
+      var userAssetName = document.createElement('p');
+      userAssetName.innerText = asset.name;
+      var userAssetImg = new Image(100, 100);
+      userAssetImg.src = asset.thumbnail;
+      assetsDiv.appendChild(userAssetName);
+      assetsDiv.appendChild(userAssetImg);
+    });
+    mainDiv.appendChild(assetsHTML);
+  }
+};
+
+/***/ }),
+/* 145 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } } function _next(value) { step("next", value); } function _throw(err) { step("throw", err); } _next(); }); }; }
 
 // import axios from 'axios'
@@ -6391,6 +6443,15 @@ AFRAME.registerSystem('assetLoader', {
     // };
     // this.userAssets = [];
 
+<<<<<<< HEAD
+=======
+    this.currentAsset = {
+      id: 1,
+      name: 'spaceCat',
+      modelUrl: 'https://poly.googleapis.com/v1/assets?key=AIzaSyDbAkOgCpfiweD3ZQ3_ZyR0UBEqD17ZBs4`'
+    };
+    this.userAssets = [];
+>>>>>>> 7ddf3758b015cb137401b521b6af03a3b6213b21
     var self = this;
     this.sceneEl.addEventListener('loaded', function () {
       // inits for after scene loaded
@@ -6411,7 +6472,11 @@ AFRAME.registerSystem('assetLoader', {
           switch (_context.prev = _context.next) {
             case 0:
               _context.next = 2;
+<<<<<<< HEAD
               return axios.get("/api/asset/".concat(id));
+=======
+              return axios.get("/api/asset/".concat(this.currentAsset.id));
+>>>>>>> 7ddf3758b015cb137401b521b6af03a3b6213b21
 
             case 2:
               _ref = _context.sent;

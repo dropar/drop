@@ -4,6 +4,7 @@
   // getElementById wrapper
 const loginJS = require('../src/components/login.js');
 const assetFetcher = require('../src/components/assetFetcher.js');
+const assetQuery = require('../src/components/userAssets')
 
 console.log(loginJS);
 
@@ -48,6 +49,11 @@ console.log(loginJS);
       // assetFetcher.fetchcurrentAsset(params.id);
       // assetFetcher.fetchUserAssets(window.user.id);
       loadHTML('./templates/singleAsset.html', 'view');
+    },
+    'userAssets': () => {
+      loadHTML('./templates/userAssets.html', 'view').then(() => {
+        assetQuery.getUserAssets();
+      })
     },
     'login': () => {
       loadHTML('./templates/login.html', 'view')
