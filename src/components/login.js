@@ -2,6 +2,7 @@ const axios = require('axios');
 
 module.exports = {
   submitLoginForm: () => {
+    const environment = window.location.href.startsWith('http://localhost:8080') ? 'development' : 'production';
     const submitButton = document.getElementById('login-submit');
     submitButton.addEventListener('click', event => {
       event.preventDefault();
@@ -17,6 +18,10 @@ module.exports = {
         .then(res => {
           window.user = res.data;
           console.log('user', window.user);
+          if (environment === 'production') {
+            window.location.href = 'https://dropar.herokuapp.com/?#!userAssets'
+          }
+          else window.location.href = 'http://localhost:8080/?#!userAssets'
         })
 
       }
