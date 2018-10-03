@@ -29,3 +29,19 @@ router.get('/:userId/assets', async (req, res, next) => {
     next(err)
   }
 })
+
+router.post('/:userId/assets', async (req, res, next) => {
+  if (req.user.id == req.params.userId) {
+    try {
+      const user = await User.findById(req.params.id)
+      const { googleApiId, displayName, authorName, assetUrl, triangleCount, thumbnailUrl } = req.body;
+      const newAsset = await user.addAsset({
+        googleApiId, displayName, authorName, assetUrl, triangleCount, thumbnailUrl
+      });
+      res.status(201).json(newAsset);
+    }
+    catch(err) {
+      next(err);
+    }
+  }
+})

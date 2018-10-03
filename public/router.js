@@ -2,11 +2,7 @@
   // window.addEventListener('load', function() {
 
   // getElementById wrapper
-const loginJS = require('../src/components/login.js');
 const allAssets = require('../src/controllers/allAssets')
-
-
-console.log(loginJS);
 const { submitLoginForm }= require('../src/components/login');
 const assetQuery = require('../src/components/userAssets');
 const { submitSignUpForm } = require('../src/components/signup');
@@ -51,13 +47,6 @@ const assetFetcher = require('../src/components/assetFetcher.js');
     'firstroute': () => { loadHTML('./templates/first.html', 'view'); },
     'secondroute': () => { loadHTML('./templates/second.html', 'view'); },
     'thirdroute': () => { loadHTML('./templates/third.html', 'view'); },
-    'assets/:id': (params) => {
-      assetFetcher.fetchCurrentAsset(params.id)
-      .then(() => {
-        // assetFetcher.fetchUserAssets(window.user.id);
-        loadHTML('./templates/singleAsset.html', 'view');
-      })
-    },
     'userAssets': () => {
       loadHTML('./templates/userAssets.html', 'view').then(() => {
         assetQuery.getUserAssets();
@@ -70,8 +59,6 @@ const assetFetcher = require('../src/components/assetFetcher.js');
       });
     },
     'assets/:id': () => { loadHTML('./templates/singleAsset.html', 'view'); },
-
-
     'signup': () => {
       loadHTML('./templates/signup.html', 'view')
       .then(() => {
