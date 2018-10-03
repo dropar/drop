@@ -2,7 +2,6 @@ const CACHE_NAME = 'my-site-cache-v1';
 var urlsToCache = [
   '/',
   '/css/main.css',
-  '/build.js',
   '/favicon-16x16.png',
   '/favicon-32x32.png',
   '/favicon.ico',
@@ -85,15 +84,17 @@ self.addEventListener('install', function(event) {
 });
 
 self.addEventListener('fetch', function(event) {
-  event.respondWith(
-    caches.match(event.request)
-    .then(function(response) {
-      if (response) {
-        return response;
-      }
-      return fetch(event.request);
-    })
-    .catch(err => console.log(err))
-  )
+  if (window.location.href.startsWith('https://dropar.herokuapp.com')) {
+    event.respondWith(
+      caches.match(event.request)
+      .then(function(response) {
+        if (response) {
+          return response;
+        }
+        return fetch(event.request);
+      })
+      .catch(err => console.log(err))
+    )
+  }
 })
 
