@@ -7,14 +7,13 @@ const Asset = db.define('asset', {
     allowNull: false
   },
   thumbnail: {
-    type: Sequelize.TEXT,
+    type: Sequelize.STRING,
     allowNull: false
   },
   assetUrl: {
-    type: Sequelize.TEXT,
+    type: Sequelize.STRING,
     allowNull: false
   }
 })
 
-module.exports = Asset;
-
+module.exports = Asset
