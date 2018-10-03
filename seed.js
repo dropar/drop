@@ -24,35 +24,24 @@ const {User, Asset} = require('./server/db/models');
 ]
  const assets = [
   {
-    name: 'space cat',
-    thumbnail: 'spacecat.png',
-    assetUrl: 'spacecat.obj'
+    id: '5OP5JSQZZn-',
+    displayName: 'Galactic Cat',
+    authorName: '3Donimus',
+    triangleCount: 817584,
+    assetUrl: 'https://poly.googleapis.com/downloads/5OP5JSQZZn-/bH019e0GhVf/tmp1435adba.gltf',
+    thumbnailUrl: 'https://lh3.googleusercontent.com/gVNS2NSKIHwtmOuA29F4dZjHsvmxAzLL9bqXInKx1GemsUopXY8NT37nkC3FnlEP',
+    category: 'Architecture',
   },
   {
-    name: 'earth cat',
-    thumbnail: 'spacecat.png',
-    assetUrl: 'spacecat.obj'
+    id: '6kCzvvxTOej',
+    displayName: 'Van Goghs The wheatfield',
+    authorName: 'Tekano Bob',
+    triangleCount: 378856,
+    assetUrl: "https://poly.googleapis.com/downloads/6kCzvvxTOej/0ItsFgHRVS-/tmp2388f4d8.gltf",
+    thumbnailUrl: "https://lh3.googleusercontent.com/PtNvfeGKuoa0t7zagntX_SJotkR_NrwL-6ZKqluknrfMzN1Hv7QEIz8GpPu90lw",
+    category: 'Art',
   },
-  {
-    name: 'space dog',
-    thumbnail: 'spacecat.png',
-    assetUrl: 'spacecat.obj'
-  },
-  {
-    name: 'earth dog',
-    thumbnail: 'spacecat.png',
-    assetUrl: 'spacecat.obj'
-  },
-  {
-    name: 'space mouse',
-    thumbnail: 'spacecat.png',
-    assetUrl: 'spacecat.obj'
-  },
-  {
-    name: 'earth mouse',
-    thumbnail: 'spacecat.png',
-    assetUrl: 'spacecat.obj'
-  }
+
 ]
  const seed = () =>
   Promise.all(users.map(user => User.create(user))).then(() =>

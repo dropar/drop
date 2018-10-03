@@ -51,6 +51,18 @@ const assetFetcher = require('../src/components/assetFetcher.js');
     'firstroute': () => { loadHTML('./templates/first.html', 'view'); },
     'secondroute': () => { loadHTML('./templates/second.html', 'view'); },
     'thirdroute': () => { loadHTML('./templates/third.html', 'view'); },
+    'assets/:id': (params) => {
+      assetFetcher.fetchCurrentAsset(params.id)
+      .then(() => {
+        // assetFetcher.fetchUserAssets(window.user.id);
+        loadHTML('./templates/singleAsset.html', 'view');
+      })
+    },
+    'userAssets': () => {
+      loadHTML('./templates/userAssets.html', 'view').then(() => {
+        assetQuery.getUserAssets();
+      })
+    },
     'login': () => {
       loadHTML('./templates/login.html', 'view')
       .then(() => {
