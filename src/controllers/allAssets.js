@@ -8,6 +8,7 @@ module.exports = {
       ('https://poly.googleapis.com/v1/assets?key=AIzaSyDbAkOgCpfiweD3ZQ3_ZyR0UBEqD17ZBs4');
 
       const allAssetsFromAPI = res.data.assets;
+      console.log(`res.data.assets--->`,allAssetsFromAPI)
 
       const allAssetsArray = allAssetsFromAPI.map(asset => ({
         displayName: asset.displayName,
