@@ -2,6 +2,7 @@ const router = require('express').Router()
 const Asset = require('../db/models/asset')
 module.exports = router
 
+// get asset by id
 router.get('/:assetId', async (req, res, next) => {
   console.log(Asset)
   try {
