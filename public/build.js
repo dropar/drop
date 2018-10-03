@@ -2107,6 +2107,7 @@ module.exports = {
           email: email.value,
           password: password.value
         }).then(function (res) {
+          console.log('res', res);
           window.user = res.data;
           console.log('user', window.user);
 
