@@ -2,16 +2,29 @@ const Sequelize = require('sequelize')
 const db = require('../db')
 
 const Asset = db.define('asset', {
-  name: {
-    type: Sequelize.STRING,
+  id: { // name
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    primaryKey: true,
+  },
+  displayName: { // displayName
+    type: Sequelize.INTEGER,
     allowNull: false
   },
-  thumbnail: {
-    type: Sequelize.STRING,
+  authorName: {
+    type: Sequelize.TEXT,
+    allowNull: true
+  },
+  triangleCount: { // asset.formats[].formatComplexity.triangleCount
+    type: Sequelize.INTEGER,
+    allowNull: true,
+  },
+  assetUrl: { // asset.formats[].root.url
+    type: Sequelize.TEXT,
     allowNull: false
   },
-  assetUrl: {
-    type: Sequelize.STRING,
+  thumbnailUrl: { // thumbnail.url
+    type: Sequelize.TEXT,
     allowNull: false
   }
 })

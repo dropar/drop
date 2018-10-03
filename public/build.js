@@ -630,7 +630,7 @@ module.exports = __webpack_require__(8) ? function (object, key, value) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // to indexed object, toObject with fallback for non-array-like ES3 strings
-var IObject = __webpack_require__(45);
+var IObject = __webpack_require__(44);
 var defined = __webpack_require__(24);
 module.exports = function (it) {
   return IObject(defined(it));
@@ -676,7 +676,7 @@ module.exports = function (method, arg) {
 // 5 -> Array#find
 // 6 -> Array#findIndex
 var ctx = __webpack_require__(23);
-var IObject = __webpack_require__(45);
+var IObject = __webpack_require__(44);
 var toObject = __webpack_require__(16);
 var toLength = __webpack_require__(9);
 var asc = __webpack_require__(157);
@@ -718,7 +718,7 @@ module.exports = function (TYPE, $create) {
 /* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var pIE = __webpack_require__(46);
+var pIE = __webpack_require__(45);
 var createDesc = __webpack_require__(34);
 var toIObject = __webpack_require__(15);
 var toPrimitive = __webpack_require__(28);
@@ -1613,12 +1613,6 @@ module.exports = function (it, TYPE) {
 /* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(124);
-
-/***/ }),
-/* 45 */
-/***/ (function(module, exports, __webpack_require__) {
-
 // fallback for non-array-like ES3 and non-enumerable old V8 strings
 var cof = __webpack_require__(22);
 // eslint-disable-next-line no-prototype-builtins
@@ -1628,11 +1622,17 @@ module.exports = Object('z').propertyIsEnumerable(0) ? Object : function (it) {
 
 
 /***/ }),
-/* 46 */
+/* 45 */
 /***/ (function(module, exports) {
 
 exports.f = {}.propertyIsEnumerable;
 
+
+/***/ }),
+/* 46 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(124);
 
 /***/ }),
 /* 47 */
@@ -3892,7 +3892,7 @@ module.exports = function bind(fn, thisArg) {
 "use strict";
 
 
-var axios = __webpack_require__(44);
+var axios = __webpack_require__(46);
 
 module.exports = {
   submitLoginForm: function submitLoginForm() {
@@ -3967,7 +3967,7 @@ module.exports = [].copyWithin || function copyWithin(target /* = 0 */, start /*
 
 var aFunction = __webpack_require__(21);
 var toObject = __webpack_require__(16);
-var IObject = __webpack_require__(45);
+var IObject = __webpack_require__(44);
 var toLength = __webpack_require__(9);
 
 module.exports = function (that, callbackfn, aLen, memo, isRight) {
@@ -4404,9 +4404,9 @@ module.exports.f = function (C) {
 // 19.1.2.1 Object.assign(target, source, ...)
 var getKeys = __webpack_require__(33);
 var gOPS = __webpack_require__(53);
-var pIE = __webpack_require__(46);
+var pIE = __webpack_require__(45);
 var toObject = __webpack_require__(16);
-var IObject = __webpack_require__(45);
+var IObject = __webpack_require__(44);
 var $assign = Object.assign;
 
 // should work with symbols and should have deterministic property order (V8 bug)
@@ -4509,7 +4509,7 @@ module.exports = function (object, names) {
 
 var getKeys = __webpack_require__(33);
 var toIObject = __webpack_require__(15);
-var isEnum = __webpack_require__(46).f;
+var isEnum = __webpack_require__(45).f;
 module.exports = function (isEntries) {
   return function (it) {
     var O = toIObject(it);
@@ -5206,7 +5206,11 @@ global._babelPolyfill = true;
 // getElementById wrapper
 var loginJS = __webpack_require__(90);
 
+<<<<<<< HEAD
+var assetFetcher = __webpack_require__(141);
+=======
 var assetQuery = __webpack_require__(144);
+>>>>>>> 7ddf3758b015cb137401b521b6af03a3b6213b21
 
 console.log(loginJS);
 
@@ -5255,12 +5259,18 @@ router.on({
   'thirdroute': function thirdroute() {
     loadHTML('./templates/third.html', 'view');
   },
+<<<<<<< HEAD
+  'assets/:id': function assetsId(params) {
+    // assetFetcher.fetchcurrentAsset(params.id);
+    // assetFetcher.fetchUserAssets(window.user.id);
+=======
   'userAssets': function userAssets() {
     loadHTML('./templates/userAssets.html', 'view').then(function () {
       assetQuery.getUserAssets();
     });
   },
   'assets/:id': function assetsId() {
+>>>>>>> 7ddf3758b015cb137401b521b6af03a3b6213b21
     loadHTML('./templates/singleAsset.html', 'view');
   },
   'login': function login() {
@@ -5289,12 +5299,15 @@ router.resolve(); // });
 "use strict";
 
 
-__webpack_require__(141);
-
 __webpack_require__(142);
 
 __webpack_require__(143);
 
+<<<<<<< HEAD
+__webpack_require__(144);
+
+=======
+>>>>>>> 7ddf3758b015cb137401b521b6af03a3b6213b21
 __webpack_require__(146);
 
 __webpack_require__(145);
@@ -6174,6 +6187,91 @@ module.exports = function spread(callback) {
 "use strict";
 
 
+var _this = void 0;
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } } function _next(value) { step("next", value); } function _throw(err) { step("throw", err); } _next(); }); }; }
+
+// -- STATE --
+var currentAsset = {
+  id: 1,
+  name: 'spaceCat',
+  modelUrl: 'https://poly.googleapis.com/v1/assets?key=AIzaSyDbAkOgCpfiweD3ZQ3_ZyR0UBEqD17ZBs4`'
+};
+var userAssets = [];
+module.exports = {
+  fetchcurrentAsset: function () {
+    var _fetchcurrentAsset = _asyncToGenerator(
+    /*#__PURE__*/
+    regeneratorRuntime.mark(function _callee(assetId) {
+      var _ref, asset;
+
+      return regeneratorRuntime.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              _context.next = 2;
+              return axios.get("/api/assets/".concat(assetId, "/"));
+
+            case 2:
+              _ref = _context.sent;
+              asset = _ref.data;
+              // update state
+              _this.currentAsset = asset;
+
+            case 5:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee, this);
+    }));
+
+    return function fetchcurrentAsset(_x) {
+      return _fetchcurrentAsset.apply(this, arguments);
+    };
+  }(),
+  fetchUserAssets: function () {
+    var _fetchUserAssets = _asyncToGenerator(
+    /*#__PURE__*/
+    regeneratorRuntime.mark(function _callee2(userId) {
+      var _ref2, assets;
+
+      return regeneratorRuntime.wrap(function _callee2$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              _context2.next = 2;
+              return axios.get("/api/assets/");
+
+            case 2:
+              _ref2 = _context2.sent;
+              assets = _ref2.data;
+              // filter by user here
+              // ...
+              // update state
+              _this.userAssets = assets;
+
+            case 5:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, _callee2, this);
+    }));
+
+    return function fetchUserAssets(_x2) {
+      return _fetchUserAssets.apply(this, arguments);
+    };
+  }()
+};
+
+/***/ }),
+/* 142 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
 /* global AFRAME */
 
 /**
@@ -6208,7 +6306,7 @@ AFRAME.registerComponent('intersect-color-change', {
 });
 
 /***/ }),
-/* 142 */
+/* 143 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6236,7 +6334,7 @@ AFRAME.registerComponent('store-controls', {
 });
 
 /***/ }),
-/* 143 */
+/* 144 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6244,7 +6342,7 @@ AFRAME.registerComponent('store-controls', {
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } } function _next(value) { step("next", value); } function _throw(err) { step("throw", err); } _next(); }); }; }
 
-var axios = __webpack_require__(44);
+var axios = __webpack_require__(46);
 
 console.log("HELLLLLLLLLLLLLOOOOOOOO");
 
@@ -6292,7 +6390,7 @@ function () {
 grabData();
 
 /***/ }),
-/* 144 */
+/* 145 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6333,18 +6431,27 @@ module.exports = {
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } } function _next(value) { step("next", value); } function _throw(err) { step("throw", err); } _next(); }); }; }
 
 // import axios from 'axios'
-var axios = __webpack_require__(44);
+var axios = __webpack_require__(46);
 
 AFRAME.registerSystem('assetLoader', {
   init: function init() {
-    console.log("--- init loader"); // -- STATE --
+    console.log("--- init loader"); // // -- STATE --
+    // this.currentAsset = {
+    //   id: 1,
+    //   name: 'spaceCat',
+    //   modelUrl: 'https://poly.googleapis.com/v1/assets?key=AIzaSyDbAkOgCpfiweD3ZQ3_ZyR0UBEqD17ZBs4`'
+    // };
+    // this.userAssets = [];
 
+<<<<<<< HEAD
+=======
     this.currentAsset = {
       id: 1,
       name: 'spaceCat',
       modelUrl: 'https://poly.googleapis.com/v1/assets?key=AIzaSyDbAkOgCpfiweD3ZQ3_ZyR0UBEqD17ZBs4`'
     };
     this.userAssets = [];
+>>>>>>> 7ddf3758b015cb137401b521b6af03a3b6213b21
     var self = this;
     this.sceneEl.addEventListener('loaded', function () {
       // inits for after scene loaded
@@ -6357,7 +6464,7 @@ AFRAME.registerSystem('assetLoader', {
   loadAssetById: function () {
     var _loadAssetById = _asyncToGenerator(
     /*#__PURE__*/
-    regeneratorRuntime.mark(function _callee() {
+    regeneratorRuntime.mark(function _callee(id) {
       var _ref, asset;
 
       return regeneratorRuntime.wrap(function _callee$(_context) {
@@ -6365,13 +6472,19 @@ AFRAME.registerSystem('assetLoader', {
           switch (_context.prev = _context.next) {
             case 0:
               _context.next = 2;
+<<<<<<< HEAD
+              return axios.get("/api/asset/".concat(id));
+=======
               return axios.get("/api/asset/".concat(this.currentAsset.id));
+>>>>>>> 7ddf3758b015cb137401b521b6af03a3b6213b21
 
             case 2:
               _ref = _context.sent;
               asset = _ref.data;
+              // uidpate state
+              this.currentAsset = asset;
 
-            case 4:
+            case 5:
             case "end":
               return _context.stop();
           }
@@ -6379,7 +6492,7 @@ AFRAME.registerSystem('assetLoader', {
       }, _callee, this);
     }));
 
-    return function loadAssetById() {
+    return function loadAssetById(_x) {
       return _loadAssetById.apply(this, arguments);
     };
   }(),
@@ -6421,7 +6534,6 @@ AFRAME.registerSystem('assetLoader', {
     item.setAttribute('crossorigin', "anonymous");
     assets.appendChild(item);
   },
-  // <a-entity id="geo1" gltf-model-legacy="#tree" visible="true"></a-entity>
   addGltfEntity: function addGltfEntity(params) {
     var container = document.querySelector('#meshContainer');
     var geo = document.createElement('a-entity');
@@ -6431,7 +6543,6 @@ AFRAME.registerSystem('assetLoader', {
     geo.setAttribute('visible', params.visible);
     container.appendChild(geo);
   },
-  // <a-entity id="geo0" obj-model="obj: #fs-obj; mtl: #fs-mtl" material="color: #66ca9c" visible="true" scale="0.25 0.25 0.25" ></a-entity>
   loadGeometry: function loadGeometry() {
     console.log('--- load geo');
     this.addGltfAsset({
@@ -6444,7 +6555,19 @@ AFRAME.registerSystem('assetLoader', {
       visible: true // url: 'https://poly.googleapis.com/downloads/5OP5JSQZZn-/bH019e0GhVf/tmp1435adba.gltf',
 
     });
-  }
+  } // loadGeometry: function () {
+  //   this.addGltfAsset({
+  //     id: currentAsset.id,
+  //     name: currentAsset.name,
+  //     modelUrl: currentAsset.modelUrl
+  //   })
+  //   this.addGltfEntity({
+  //     id: 'curGeo',
+  //     assetId: `#${currentAsset.id}`,
+  //     visible: true
+  //   })
+  // }
+
 });
 
 /***/ }),
@@ -7349,7 +7472,7 @@ module.exports = function (hint) {
 // all enumerable object keys, includes symbols
 var getKeys = __webpack_require__(33);
 var gOPS = __webpack_require__(53);
-var pIE = __webpack_require__(46);
+var pIE = __webpack_require__(45);
 module.exports = function (it) {
   var result = getKeys(it);
   var getSymbols = gOPS.f;
@@ -7697,7 +7820,7 @@ var toIObject = __webpack_require__(15);
 var arrayJoin = [].join;
 
 // fallback for not array-like strings
-$export($export.P + $export.F * (__webpack_require__(45) != Object || !__webpack_require__(17)(arrayJoin)), 'Array', {
+$export($export.P + $export.F * (__webpack_require__(44) != Object || !__webpack_require__(17)(arrayJoin)), 'Array', {
   join: function join(separator) {
     return arrayJoin.call(toIObject(this), separator === undefined ? ',' : separator);
   }
@@ -9982,7 +10105,7 @@ if (!USE_NATIVE) {
   $GOPD.f = $getOwnPropertyDescriptor;
   $DP.f = $defineProperty;
   __webpack_require__(31).f = gOPNExt.f = $getOwnPropertyNames;
-  __webpack_require__(46).f = $propertyIsEnumerable;
+  __webpack_require__(45).f = $propertyIsEnumerable;
   __webpack_require__(53).f = $getOwnPropertySymbols;
 
   if (DESCRIPTORS && !__webpack_require__(29)) {
@@ -10638,7 +10761,7 @@ module.exports = g;
 
 __webpack_require__(121);
 __webpack_require__(84);
-__webpack_require__(44);
+__webpack_require__(46);
 __webpack_require__(123);
 module.exports = __webpack_require__(122);
 
