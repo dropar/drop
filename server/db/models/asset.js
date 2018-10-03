@@ -3,12 +3,12 @@ const db = require('../db')
 
 const Asset = db.define('asset', {
   id: { // name
-    type: Sequelize.INTEGER,
+    type: Sequelize.STRING,
     allowNull: false,
     primaryKey: true,
   },
   displayName: { // displayName
-    type: Sequelize.INTEGER,
+    type: Sequelize.STRING,
     allowNull: false
   },
   authorName: {
@@ -25,6 +25,10 @@ const Asset = db.define('asset', {
   },
   thumbnailUrl: { // thumbnail.url
     type: Sequelize.TEXT,
+    allowNull: false
+  },
+  category: {
+    type: Sequelize.ENUM('Architecture', 'Art', 'Food', 'Nature', 'Objects', 'People', 'Other'),
     allowNull: false
   }
 })
