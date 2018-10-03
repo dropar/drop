@@ -2,11 +2,10 @@
   // window.addEventListener('load', function() {
 
   // getElementById wrapper
-const loginJS = require('../src/components/login.js');
+const { submitLoginForm }= require('../src/components/login');
+const assetQuery = require('../src/components/userAssets');
+const { submitSignUpForm } = require('../src/components/signup');
 const assetFetcher = require('../src/components/assetFetcher.js');
-const assetQuery = require('../src/components/userAssets')
-
-console.log(loginJS);
 
   function $id(id) {
     return document.getElementById(id);
@@ -15,10 +14,8 @@ console.log(loginJS);
   // asyncrhonously fetch the html template partial from the file directory,
   // then set its contents to the html of the parent element
   function loadHTML(url, id) {
-    console.log('loadHTML')
     return new Promise((resolve, reject) => {
       const req = new XMLHttpRequest();
-      console.log('req', req);
       req.open('GET', url);
       req.onload = () => {
         $id(id).innerHTML = req.responseText;
@@ -58,8 +55,14 @@ console.log(loginJS);
     'login': () => {
       loadHTML('./templates/login.html', 'view')
       .then(() => {
-        loginJS.submitLoginForm();
+        submitLoginForm();
       });
+    },
+    'signup': () => {
+      loadHTML('./templates/signup.html', 'view')
+      .then(() => {
+        submitSignUpForm();
+      })
     }
   });
 
@@ -71,5 +74,9 @@ console.log(loginJS);
 
   router.resolve();
 // });
+
+module.exports = {
+  router
+}
 
 

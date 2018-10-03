@@ -10,8 +10,7 @@ module.exports = {
     '@babel/polyfill', //enables async-await
     './node_modules/regenerator-runtime/runtime.js',
     './node_modules/axios',
-    './src/index.js',
-    './public/router.js'
+    './src/index.js'
   ],
   output: {
     path: __dirname,
