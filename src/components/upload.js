@@ -13,10 +13,12 @@ module.exports = {
 
       //upload post request
       try {
-        // axios.post(`/users/${window.user.id}/assets`)
-        // .then(() => {
+        axios.post(`/users/${window.user.id}/assets`, {
+          displayName, authorName, assetUrl, thumbnailUrl
+        })
+        .then(() => {
 
-        // })
+        })
       }
       catch(err) {
         console.error(err);
