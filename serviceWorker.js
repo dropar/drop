@@ -84,7 +84,8 @@ self.addEventListener('install', function(event) {
 });
 
 self.addEventListener('fetch', function(event) {
-  if (window.location.href.startsWith('https://dropar.herokuapp.com')) {
+  console.log('href', location.href);
+  if (!location.href.startsWith('http://localhost:8080')) {
     event.respondWith(
       caches.match(event.request)
       .then(function(response) {
