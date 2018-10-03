@@ -5205,7 +5205,7 @@ global._babelPolyfill = true;
 // getElementById wrapper
 var loginJS = __webpack_require__(90);
 
-var getAllAssets = __webpack_require__(144);
+var allAssets = __webpack_require__(144);
 
 console.log(loginJS);
 
@@ -5238,13 +5238,19 @@ function loadHTML(url, id) {
     req.send();
   });
 } // use #! to hash
+//change back
 
 
 var router = new Navigo(null, true, '#!'); // const router = new Navigo();
 
-console.log(router);
+console.log('ROUTER-', router);
 router.on({
   // 'view' is the id of the div element inside which we render the HTML
+  'assets': function assets() {
+    loadHTML('./templates/allAssets.html', 'view').then(function () {
+      allAssets.getAllAssets();
+    });
+  },
   'firstroute': function firstroute() {
     loadHTML('./templates/first.html', 'view');
   },
@@ -5254,21 +5260,13 @@ router.on({
   'thirdroute': function thirdroute() {
     loadHTML('./templates/third.html', 'view');
   },
-  'assets/:id': function assetsId() {
-    loadHTML('./templates/singleAsset.html', 'view');
-  },
   'login': function login() {
     loadHTML('./templates/login.html', 'view').then(function () {
       loginJS.submitLoginForm();
     });
   },
-  '/assets/:id': function assetsId() {
+  'assets/:id': function assetsId() {
     loadHTML('./templates/singleAsset.html', 'view');
-  },
-  '/assets': function assets() {
-    loadHTML('./templates/allAssets.html', 'view').then(function () {
-      return getAllAssets();
-    });
   }
 }); // set the default route
 
@@ -6301,63 +6299,69 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 var axios = __webpack_require__(44);
 
-var getAllAssets =
-/*#__PURE__*/
-function () {
-  var _ref = _asyncToGenerator(
-  /*#__PURE__*/
-  regeneratorRuntime.mark(function _callee() {
-    var res, allAssets, allAssetsArray, allAssetsView, newDiv;
-    return regeneratorRuntime.wrap(function _callee$(_context) {
-      while (1) {
-        switch (_context.prev = _context.next) {
-          case 0:
-            _context.prev = 0;
-            _context.next = 3;
-            return axios.get('https://poly.googleapis.com/v1/assets?key=AIzaSyDbAkOgCpfiweD3ZQ3_ZyR0UBEqD17ZBs4');
+module.exports = {
+  getAllAssets: function () {
+    var _getAllAssets = _asyncToGenerator(
+    /*#__PURE__*/
+    regeneratorRuntime.mark(function _callee() {
+      var res, allAssetsFromAPI, allAssetsArray, allAssetsView;
+      return regeneratorRuntime.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              _context.prev = 0;
+              _context.next = 3;
+              return axios.get('https://poly.googleapis.com/v1/assets?key=AIzaSyDbAkOgCpfiweD3ZQ3_ZyR0UBEqD17ZBs4');
 
-          case 3:
-            res = _context.sent;
-            allAssets = res.data.assets;
-            allAssetsArray = allAssets.map(function (asset) {
-              return {
-                displayName: asset.displayName,
-                authorName: asset.authorName,
-                thumbnailUrl: asset.thumbnail.url
-              };
-            });
-            allAssetsView = document.getElementById('all-assets-view');
-            newDiv = document.createElement('div');
-            allAssetsArray.forEach(function (asset) {
-              var assetThumbnail = document.createElement('img');
-              assetThumbnail.setAttribute('src', "".concat(asset.thumbnail.url));
-              var displayName = document.createTextNode("".concat(asset.displayName));
-              var authorName = document.createTextNode("by ".concat(asset.authorName));
-              newDiv.appendChild(displayName, authorName, assetThumbnail);
-            });
-            allAssetsView.appendChild(newDiv);
-            _context.next = 15;
-            break;
+            case 3:
+              res = _context.sent;
+              allAssetsFromAPI = res.data.assets;
+              allAssetsArray = allAssetsFromAPI.map(function (asset) {
+                return {
+                  displayName: asset.displayName,
+                  authorName: asset.authorName,
+                  thumbnailUrl: asset.thumbnail.url
+                };
+              });
+              allAssetsView = document.getElementById('all-assets-view');
+              allAssetsArray.forEach(function (asset) {
+                var newDiv = document.createElement('div');
+                var assetThumbnail = document.createElement('img');
+                assetThumbnail.setAttribute('src', "".concat(asset.thumbnailUrl));
+                var displayName = document.createTextNode("".concat(asset.displayName)); // ('h4')
+                // displayName.setAttribute('id', 'display-name')
+                // document.getElementById('display-name').innerHTML = `${asset.displayName}`
 
-          case 12:
-            _context.prev = 12;
-            _context.t0 = _context["catch"](0);
-            console.error(_context.t0);
+                var authorName = document.createTextNode("by ".concat(asset.authorName)); // ('h2')
+                // authorName.setAttribute('id', 'author-name')
+                // document.getElementById('author-name').innerHTML = `by ${asset.authorName}`
 
-          case 15:
-          case "end":
-            return _context.stop();
+                newDiv.appendChild(displayName);
+                newDiv.appendChild(assetThumbnail);
+                newDiv.appendChild(authorName);
+                allAssetsView.appendChild(newDiv);
+              });
+              _context.next = 13;
+              break;
+
+            case 10:
+              _context.prev = 10;
+              _context.t0 = _context["catch"](0);
+              console.error(_context.t0);
+
+            case 13:
+            case "end":
+              return _context.stop();
+          }
         }
-      }
-    }, _callee, this, [[0, 12]]);
-  }));
+      }, _callee, this, [[0, 10]]);
+    }));
 
-  return function getAllAssets() {
-    return _ref.apply(this, arguments);
-  };
-}();
-
-module.exports = getAllAssets;
+    return function getAllAssets() {
+      return _getAllAssets.apply(this, arguments);
+    };
+  }()
+};
 
 /***/ }),
 /* 145 */

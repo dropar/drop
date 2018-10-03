@@ -3,7 +3,8 @@
 
   // getElementById wrapper
 const loginJS = require('../src/components/login.js');
-const getAllAssets = require('../src/controllers/allAssets')
+const allAssets = require('../src/controllers/allAssets')
+
 
 console.log(loginJS);
 
@@ -36,25 +37,28 @@ console.log(loginJS);
   }
 
   // use #! to hash
+  //change back
   const router = new Navigo(null, true, '#!');
   // const router = new Navigo();
-  console.log(router);
+  console.log('ROUTER-',router);
   router.on({
     // 'view' is the id of the div element inside which we render the HTML
+    'assets': () => {
+      loadHTML('./templates/allAssets.html','view')
+       .then(() => {allAssets.getAllAssets()})},
     'firstroute': () => { loadHTML('./templates/first.html', 'view'); },
     'secondroute': () => { loadHTML('./templates/second.html', 'view'); },
     'thirdroute': () => { loadHTML('./templates/third.html', 'view'); },
-    'assets/:id': () => { loadHTML('./templates/singleAsset.html', 'view'); },
     'login': () => {
       loadHTML('./templates/login.html', 'view')
       .then(() => {
         loginJS.submitLoginForm();
       });
     },
-    '/assets/:id': () => { loadHTML('./templates/singleAsset.html', 'view'); },
-    '/assets': () => { loadHTML('./templates/allAssets.html','view')
-       .then(() => getAllAssets())}
-  });
+    'assets/:id': () => { loadHTML('./templates/singleAsset.html', 'view'); },
+  })
+
+
 
   // set the default route
   router.on(() => { loadHTML('./templates/first.html', 'view'); });
