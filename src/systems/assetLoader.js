@@ -5,13 +5,13 @@ AFRAME.registerSystem('assetLoader', {
   init: function () {
     console.log("--- init loader");
 
-    // -- STATE --
-    this.currentAsset = {
-      id: 1,
-      name: 'spaceCat',
-      modelUrl: 'https://poly.googleapis.com/v1/assets?key=AIzaSyDbAkOgCpfiweD3ZQ3_ZyR0UBEqD17ZBs4`'
-    };
-    this.userAssets = [];
+    // // -- STATE --
+    // this.currentAsset = {
+    //   id: 1,
+    //   name: 'spaceCat',
+    //   modelUrl: 'https://poly.googleapis.com/v1/assets?key=AIzaSyDbAkOgCpfiweD3ZQ3_ZyR0UBEqD17ZBs4`'
+    // };
+    // this.userAssets = [];
 
     var self = this;
     this.sceneEl.addEventListener('loaded', function () { // inits for after scene loaded
@@ -21,8 +21,11 @@ AFRAME.registerSystem('assetLoader', {
       self.loadGeometry();
     });
   },
-  loadAssetById: async function () {
-    const {data: asset} = await axios.get(`/api/asset/${this.currentAsset.id}`);
+  loadAssetById: async function (id) {
+    // fetch asset from db
+    const {data: asset} = await axios.get(`/api/asset/${id}`);
+    // uidpate state
+    this.currentAsset = asset;
   },
   loadAllUserAssets: async function () {
     // tbd: replace this with
@@ -37,7 +40,6 @@ AFRAME.registerSystem('assetLoader', {
     item.setAttribute('crossorigin', "anonymous");
     assets.appendChild(item);
   },
-  // <a-entity id="geo1" gltf-model-legacy="#tree" visible="true"></a-entity>
   addGltfEntity: function (params) {
     var container = document.querySelector('#meshContainer');
     var geo = document.createElement('a-entity');
@@ -47,7 +49,6 @@ AFRAME.registerSystem('assetLoader', {
     geo.setAttribute('visible', params.visible);
     container.appendChild(geo);
   },
-  // <a-entity id="geo0" obj-model="obj: #fs-obj; mtl: #fs-mtl" material="color: #66ca9c" visible="true" scale="0.25 0.25 0.25" ></a-entity>
   loadGeometry: function () {
     console.log('--- load geo')
     this.addGltfAsset({
@@ -61,4 +62,16 @@ AFRAME.registerSystem('assetLoader', {
       // url: 'https://poly.googleapis.com/downloads/5OP5JSQZZn-/bH019e0GhVf/tmp1435adba.gltf',
     })
   },
+  // loadGeometry: function () {
+  //   this.addGltfAsset({
+  //     id: currentAsset.id,
+  //     name: currentAsset.name,
+  //     modelUrl: currentAsset.modelUrl
+  //   })
+  //   this.addGltfEntity({
+  //     id: 'curGeo',
+  //     assetId: `#${currentAsset.id}`,
+  //     visible: true
+  //   })
+  // }
 });
