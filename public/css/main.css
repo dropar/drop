@@ -306,3 +306,14 @@ a{
 #thumbs {
   display: none;
 }
+
+
+/*assets-main-container*/
+.assets-main-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.assets-main {
+  flex-direction: column;
+}
