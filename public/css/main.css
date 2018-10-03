@@ -310,10 +310,17 @@ a{
 
 /*assets-main-container*/
 .assets-main-container {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: 100px 1oopx 100px;
+  grid-template-rows: 100px 100px
 }
 
 .assets-main {
-  flex-direction: column;
+  display: grid;
+
+}
+
+.asset-thumbnail {
+  max-height: 150px;
+  max-width: 150px;
 }

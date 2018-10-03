@@ -6297,33 +6297,27 @@ grabData();
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } } function _next(value) { step("next", value); } function _throw(err) { step("throw", err); } _next(); }); }; }
 
-var axios = __webpack_require__(44);
+var axios = __webpack_require__(44); //API Filters =
+//orderBy = BEST NEWEST OLDEST
+//
+
 
 module.exports = {
   getAllAssets: function () {
     var _getAllAssets = _asyncToGenerator(
     /*#__PURE__*/
     regeneratorRuntime.mark(function _callee() {
-      var isGLTF, isLowPoly, assetUrlFilter, validAssets, res, allAssetsFromAPI, allAssetsView;
+      var isGLTF, assetUrlFilter, validAssets, res, allAssetsFromAPI, allAssetsView;
       return regeneratorRuntime.wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
               isGLTF = function isGLTF(asset) {
-                console.log("asset -->", asset);
-                console.log("asset.format.filter --->", asset.formats.filter(function (format) {
-                  return format.formatType === "GLTF";
-                }));
                 return asset.formats.filter(function (format) {
                   return format.formatType === "GLTF";
                 }).length > 0;
-              };
+              }; // const isLowPoly = asset => (asset.formats.filter(asset => asset.formatComplexity.triangleCount < 100000).length > 0);
 
-              isLowPoly = function isLowPoly(asset) {
-                return asset.formats.filter(function (asset) {
-                  return asset.formatComplexity.triangleCount < 100000;
-                }).length > 0;
-              };
 
               assetUrlFilter = function assetUrlFilter(asset) {
                 return asset.formats.filter(function (asset) {
@@ -6332,17 +6326,16 @@ module.exports = {
               };
 
               validAssets = [];
-              _context.prev = 4;
-              _context.next = 7;
-              return axios.get('https://poly.googleapis.com/v1/assets?key=AIzaSyDbAkOgCpfiweD3ZQ3_ZyR0UBEqD17ZBs4');
+              _context.prev = 3;
+              _context.next = 6;
+              return axios.get('https://poly.googleapis.com/v1/assets?key=AIzaSyDbAkOgCpfiweD3ZQ3_ZyR0UBEqD17ZBs4&pageSize=100&maxComplexity=MEDIUM');
 
-            case 7:
+            case 6:
               res = _context.sent;
               allAssetsFromAPI = res.data.assets;
               allAssetsFromAPI.forEach(function (asset) {
-                console.log(isGLTF(asset));
-
-                if (isGLTF(asset) && isLowPoly(asset)) {
+                // && isLowPoly(asset) insert into below if and uncomment above function to restore to original filter
+                if (isGLTF(asset)) {
                   validAssets.push({
                     displayName: asset.displayName,
                     authorName: asset.authorName,
@@ -6358,6 +6351,7 @@ module.exports = {
                 var newDiv = document.createElement('div');
                 var assetThumbnail = document.createElement('img');
                 assetThumbnail.setAttribute('src', "".concat(asset.thumbnailUrl));
+                assetThumbnail.setAttribute('class', 'asset-thumbnail');
                 var displayName = document.createTextNode("".concat(asset.displayName)); // ('h4')
                 // displayName.setAttribute('id', 'display-name')
                 // document.getElementById('display-name').innerHTML = `${asset.displayName}`
@@ -6371,20 +6365,20 @@ module.exports = {
                 newDiv.appendChild(authorName);
                 allAssetsView.appendChild(newDiv);
               });
-              _context.next = 18;
+              _context.next = 17;
               break;
 
-            case 15:
-              _context.prev = 15;
-              _context.t0 = _context["catch"](4);
+            case 14:
+              _context.prev = 14;
+              _context.t0 = _context["catch"](3);
               console.error(_context.t0);
 
-            case 18:
+            case 17:
             case "end":
               return _context.stop();
           }
         }
-      }, _callee, this, [[4, 15]]);
+      }, _callee, this, [[3, 14]]);
     }));
 
     return function getAllAssets() {
