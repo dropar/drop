@@ -16,6 +16,7 @@ module.exports = {
           password: password.value
         })
         .then(res => {
+          console.log('res', res);
           window.user = res.data;
           console.log('user', window.user);
           if (environment === 'production') {

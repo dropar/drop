@@ -2107,6 +2107,7 @@ module.exports = {
           email: email.value,
           password: password.value
         }).then(function (res) {
+          console.log('res', res);
           window.user = res.data;
           console.log('user', window.user);
 
@@ -6545,7 +6546,7 @@ module.exports = {
                 // displayName.setAttribute('id', 'display-name')
                 // document.getElementById('display-name').innerHTML = `${asset.displayName}`
 
-                var authorName = document.createTextNode("by ".concat(asset.authorName)); // ('h2')
+                var authorName = document.createTextNode(" by ".concat(asset.authorName)); // ('h2')
                 // authorName.setAttribute('id', 'author-name')
                 // document.getElementById('author-name').innerHTML = `by ${asset.authorName}`
 
