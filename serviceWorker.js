@@ -85,17 +85,22 @@ self.addEventListener('install', function(event) {
 
 self.addEventListener('fetch', function(event) {
   console.log('href', location.href);
-  if (!location.href.startsWith('http://localhost:8080')) {
-    event.respondWith(
-      caches.match(event.request)
-      .then(function(response) {
-        if (response) {
-          return response;
-        }
-        return fetch(event.request);
-      })
-      .catch(err => console.log(err))
-    )
-  }
+  fetch(event.request)
+  .then(response => {
+    if (response.status !== 200) {
+      if (!location.href.startsWith('http://localhost:8080')) {
+        event.respondWith(
+          caches.match(event.request)
+          .then(function(response) {
+            if (response) {
+              return response;
+            }
+            return fetch(event.request);
+          })
+          .catch(err => console.log(err))
+        )
+      }
+    }
+  })
 })
 
