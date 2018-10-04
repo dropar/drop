@@ -2,12 +2,6 @@ const Sequelize = require('sequelize')
 const db = require('../db')
 
 const Asset = db.define('asset', {
-<<<<<<< Updated upstream
-  googleApiId: { // name
-    type: Sequelize.STRING,
-  },
-=======
->>>>>>> Stashed changes
   displayName: { // displayName
     type: Sequelize.STRING,
     allowNull: false
@@ -24,11 +18,10 @@ const Asset = db.define('asset', {
     type: Sequelize.TEXT,
     allowNull: false
   },
-<<<<<<< Updated upstream
   category: {
     type: Sequelize.ENUM('Architecture', 'Art', 'Food', 'Nature', 'Objects', 'People', 'Scenes', 'Technology','Transport', 'Other', 'N/A'),
     allowNull: false
-=======
+  },
   googleApiId: { // name
     type: Sequelize.INTEGER,
     allowNull: true
@@ -36,7 +29,6 @@ const Asset = db.define('asset', {
   triangleCount: { // asset.formats[].formatComplexity.triangleCount
     type: Sequelize.INTEGER,
     allowNull: true,
->>>>>>> Stashed changes
   }
 })
 
