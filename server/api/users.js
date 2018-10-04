@@ -31,6 +31,7 @@ router.get('/:userId/assets', async (req, res, next) => {
 })
 
 router.post('/:userId/assets', async (req, res, next) => {
+  console.log('req.body', req.body);
   if (req.user.id == req.params.userId) {
     try {
       const user = await User.findById(parseInt(req.user.id));
