@@ -24,6 +24,7 @@ router.post('/', async(req,res,next) => {
       assetUrl: req.body.assetUrl,
       category: req.body.category
     })
+    console.log(`this error lives in the assets post route`)
     res.status(201).json('Assets have posted')
   } catch (error) {
     next(error)

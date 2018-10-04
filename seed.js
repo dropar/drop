@@ -1,117 +1,81 @@
-const db = require('./server/db/db');
-const {User, Asset} = require('./server/db/models');
- const users = [
+const db = require("./server/db/db");
+const { User, Asset } = require("./server/db/models");
+const axios = require("axios");
+
+const users = [
   {
-    name: 'john',
-    email: 'hanseok87@gmail.com',
-    password: '123'
+    name: "john",
+    email: "hanseok87@gmail.com",
+    password: "123"
   },
   {
-    name: 'frank',
-    email: 'andy@gmail.com',
-    password: '456'
+    name: "frank",
+    email: "andy@gmail.com",
+    password: "456"
   },
   {
-    name: 'josh',
-    email: 'mina@gmail.com',
-    password: 'abc'
+    name: "josh",
+    email: "mina@gmail.com",
+    password: "abc"
   },
   {
-    name: 'ryan',
-    email: 'ryan@gmail.com',
-    password: '123456'
+    name: "ryan",
+    email: "ryan@gmail.com",
+    password: "123456"
   }
-]
- const assets = [
-  // {
-  //   displayName: 'space cat',
-  //   thumbnailUrl: 'spacecat.png',
-  //   assetUrl: 'spacecat.obj',
-  //   id: 5
-  // },
-  // {
-  //   displayName: 'earth cat',
-  //   thumbnailUrl: 'http://www3.pictures.zimbio.com/gi/The+Jinx+New+York+Premire+l37VdCmDEUGl.jpg',
-  //   assetUrl: 'spacecat.obj',
-  //   id: 2
-  // },
-  // {
-  //   displayName: 'space dog',
-  //   thumbnailUrl: 'spacecat.png',
-  //   assetUrl: 'spacecat.obj',
-  //   id: 6
-  // },
-  // {
-  //   displayName: 'earth dog',
-  //   thumbnailUrl: 'spacecat.png',
-  //   assetUrl: 'spacecat.obj',
-  //   id: 3
-  // },
-  // {
-  //   displayName: 'space mouse',
-  //   thumbnailUrl: 'http://www3.pictures.zimbio.com/gi/The+Jinx+New+York+Premire+l37VdCmDEUGl.jpg',
-  //   assetUrl: 'spacecat.obj',
-  //   id: 1
-  // },
-  // {
-  //   displayName: 'earth mouse',
-  //   thumbnailUrl: 'spacecat.png',
-  //   assetUrl: 'spacecat.obj',
-  //   id: 8
-  // },
-  {
-    googleApiId: '5OP5JSQZZn-',
-    displayName: 'Galactic Cat',
-    authorName: '3Donimus',
-    triangleCount: 817584,
-    assetUrl: 'https://poly.googleapis.com/downloads/5OP5JSQZZn-/bH019e0GhVf/tmp1435adba.gltf',
-    thumbnailUrl: 'https://lh3.googleusercontent.com/gVNS2NSKIHwtmOuA29F4dZjHsvmxAzLL9bqXInKx1GemsUopXY8NT37nkC3FnlEP',
-    category: 'Architecture',
-  },
-  {
-    googleApiId: '6kCzvvxTOej',
-    displayName: 'Van Goghs The wheatfield',
-    authorName: 'Tekano Bob',
-    triangleCount: 378856,
-    assetUrl: "https://poly.googleapis.com/downloads/6kCzvvxTOej/0ItsFgHRVS-/tmp2388f4d8.gltf",
-    thumbnailUrl: "https://lh3.googleusercontent.com/PtNvfeGKuoa0t7zagntX_SJotkR_NrwL-6ZKqluknrfMzN1Hv7QEIz8GpPu90lw",
-    category: 'Art',
-  },
+];
 
-]
+const isGLTF = asset =>
+  asset.formats.filter(format => format.formatType === "GLTF").length > 0;
+const assetUrlFilter = asset =>
+  asset.formats.filter(asset => asset.formatType === "GLTF")[0].root.url;
+let validAssets = [];
 
-
-
- const seed = () =>
-  Promise.all(users.map(user => User.create(user)))
-  .then(() => Promise.all(assets.map(asset => Asset.create(asset)))
-  )
-  .then(() => {
-    return User.findById(4)
-  })
-  .then((user) => {
-    return user.setAssets([1,2])
-  }).catch(err => {
-    console.log(err)
-  })
-
-
- const main = () => {
-  console.log('syncing db..')
-  db
-    .sync({force: true})
-    .then(() => {
-      console.log('seeding database')
-      return seed()
+const seed = () => {
+  axios
+    .get(
+      "https://poly.googleapis.com/v1/assets?key=AIzaSyDbAkOgCpfiweD3ZQ3_ZyR0UBEqD17ZBs4&pageSize=100&maxComplexity=MEDIUM"
+    )
+    .then(res => {
+      const allAssetsFromAPI = res.data.assets;
+      allAssetsFromAPI.forEach(asset => {
+        if (isGLTF(asset)) {
+          validAssets.push({
+            displayName: asset.displayName,
+            authorName: asset.authorName,
+            thumbnailUrl: asset.thumbnail.url,
+            googleApiId: asset.name,
+            assetUrl: assetUrlFilter(asset),
+            category: "N/A"
+          });
+        }
+      });
     })
     .then(() => {
-      db.close()
-      return null
+      Promise.all(users.map(user => User.create(user)));
+    })
+    .then(() => {
+      Promise.all(validAssets.map(asset => Asset.create(asset)));
+      return null;
+    })
+    .catch(err => console.error(err));
+};
+const main = () => {
+  console.log("syncing db..");
+  db.sync({ force: true })
+    .then(() => {
+      console.log("seeding database");
+      seed();
+    })
+    .then(() => {
+      setTimeout(() => db.close(), 2000);
+      // db.close();
+      return null;
     })
     .catch(err => {
-      console.log('error while seeding')
-      console.log(err.stack)
-    })
-}
- main()
- module.exports = main
+      console.log("error while seeding");
+      console.log(err.stack);
+    });
+};
+main();
+module.exports = main;
