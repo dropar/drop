@@ -23,42 +23,61 @@ const {User, Asset} = require('./server/db/models');
   }
 ]
  const assets = [
+  // {
+  //   displayName: 'space cat',
+  //   thumbnailUrl: 'spacecat.png',
+  //   assetUrl: 'spacecat.obj',
+  //   id: 5
+  // },
+  // {
+  //   displayName: 'earth cat',
+  //   thumbnailUrl: 'http://www3.pictures.zimbio.com/gi/The+Jinx+New+York+Premire+l37VdCmDEUGl.jpg',
+  //   assetUrl: 'spacecat.obj',
+  //   id: 2
+  // },
+  // {
+  //   displayName: 'space dog',
+  //   thumbnailUrl: 'spacecat.png',
+  //   assetUrl: 'spacecat.obj',
+  //   id: 6
+  // },
+  // {
+  //   displayName: 'earth dog',
+  //   thumbnailUrl: 'spacecat.png',
+  //   assetUrl: 'spacecat.obj',
+  //   id: 3
+  // },
+  // {
+  //   displayName: 'space mouse',
+  //   thumbnailUrl: 'http://www3.pictures.zimbio.com/gi/The+Jinx+New+York+Premire+l37VdCmDEUGl.jpg',
+  //   assetUrl: 'spacecat.obj',
+  //   id: 1
+  // },
+  // {
+  //   displayName: 'earth mouse',
+  //   thumbnailUrl: 'spacecat.png',
+  //   assetUrl: 'spacecat.obj',
+  //   id: 8
+  // },
   {
-    displayName: 'space cat',
-    thumbnailUrl: 'spacecat.png',
-    assetUrl: 'spacecat.obj',
-    id: 5
+    googleApiId: '5OP5JSQZZn-',
+    displayName: 'Galactic Cat',
+    authorName: '3Donimus',
+    triangleCount: 817584,
+    assetUrl: 'https://poly.googleapis.com/downloads/5OP5JSQZZn-/bH019e0GhVf/tmp1435adba.gltf',
+    thumbnailUrl: 'https://lh3.googleusercontent.com/gVNS2NSKIHwtmOuA29F4dZjHsvmxAzLL9bqXInKx1GemsUopXY8NT37nkC3FnlEP',
+    category: 'Architecture',
   },
   {
-    displayName: 'earth cat',
-    thumbnailUrl: 'http://www3.pictures.zimbio.com/gi/The+Jinx+New+York+Premire+l37VdCmDEUGl.jpg',
-    assetUrl: 'spacecat.obj',
-    id: 2
+    googleApiId: '6kCzvvxTOej',
+    displayName: 'Van Goghs The wheatfield',
+    authorName: 'Tekano Bob',
+    triangleCount: 378856,
+    assetUrl: "https://poly.googleapis.com/downloads/6kCzvvxTOej/0ItsFgHRVS-/tmp2388f4d8.gltf",
+    thumbnailUrl: "https://lh3.googleusercontent.com/PtNvfeGKuoa0t7zagntX_SJotkR_NrwL-6ZKqluknrfMzN1Hv7QEIz8GpPu90lw",
+    category: 'Art',
   },
-  {
-    displayName: 'space dog',
-    thumbnailUrl: 'spacecat.png',
-    assetUrl: 'spacecat.obj',
-    id: 6
-  },
-  {
-    displayName: 'earth dog',
-    thumbnailUrl: 'spacecat.png',
-    assetUrl: 'spacecat.obj',
-    id: 3
-  },
-  {
-    displayName: 'space mouse',
-    thumbnailUrl: 'http://www3.pictures.zimbio.com/gi/The+Jinx+New+York+Premire+l37VdCmDEUGl.jpg',
-    assetUrl: 'spacecat.obj',
-    id: 1
-  },
-  {
-    displayName: 'earth mouse',
-    thumbnailUrl: 'spacecat.png',
-    assetUrl: 'spacecat.obj',
-    id: 8
-  }
+
 ]
 
 

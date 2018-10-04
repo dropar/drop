@@ -23,7 +23,7 @@ AFRAME.registerSystem('assetLoader', {
   },
   loadAssetById: async function (id) {
     // fetch asset from db
-    const {data: asset} = await axios.get(`/api/asset/${id}`);
+    const {data: asset} = await axios.get(`/api/assets/${id}`);
     // uidpate state
     this.currentAsset = asset;
   },
@@ -49,29 +49,31 @@ AFRAME.registerSystem('assetLoader', {
     geo.setAttribute('visible', params.visible);
     container.appendChild(geo);
   },
-  loadGeometry: function () {
-    console.log('--- load geo')
-    this.addGltfAsset({
-      id: 'test',
-      url: 'https://poly.googleapis.com/downloads/5OP5JSQZZn-/bH019e0GhVf/tmp1435adba.gltf',
-    })
-    this.addGltfEntity({
-      id: 'geo2',
-      assetId: '#test',
-      visible: true,
-      // url: 'https://poly.googleapis.com/downloads/5OP5JSQZZn-/bH019e0GhVf/tmp1435adba.gltf',
-    })
-  },
   // loadGeometry: function () {
+  //   console.log('--- load geo')
   //   this.addGltfAsset({
-  //     id: currentAsset.id,
-  //     name: currentAsset.name,
-  //     modelUrl: currentAsset.modelUrl
+  //     id: 'test',
+  //     url: 'https://poly.googleapis.com/downloads/5OP5JSQZZn-/bH019e0GhVf/tmp1435adba.gltf',
   //   })
   //   this.addGltfEntity({
-  //     id: 'curGeo',
-  //     assetId: `#${currentAsset.id}`,
-  //     visible: true
+  //     id: 'geo2',
+  //     assetId: '#test',
+  //     visible: true,
+  //     // url: 'https://poly.googleapis.com/downloads/5OP5JSQZZn-/bH019e0GhVf/tmp1435adba.gltf',
   //   })
-  // }
+  // },
+  loadGeometry: function () {
+    var currentAsset = JSON.parse(localStorage.getItem('currentAsset'));
+    // console.log(`currentAsset: ${JSON.stringify(currentAsset)}`)
+    this.addGltfAsset({
+      id: currentAsset.id,
+      name: currentAsset.name,
+      url: currentAsset.assetUrl
+    })
+    this.addGltfEntity({
+      id: 'currentAsset',
+      assetId: `#${currentAsset.id}`,
+      visible: true
+    })
+  }
 });

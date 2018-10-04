@@ -84,17 +84,23 @@ self.addEventListener('install', function(event) {
 });
 
 self.addEventListener('fetch', function(event) {
-  if (window.location.href.startsWith('https://dropar.herokuapp.com')) {
-    event.respondWith(
-      caches.match(event.request)
-      .then(function(response) {
-        if (response) {
-          return response;
-        }
-        return fetch(event.request);
-      })
-      .catch(err => console.log(err))
-    )
-  }
+  console.log('sending fetch', location.href);
+  fetch(event.request)
+  .then(response => {
+    if (response.status !== 200) {
+      if (!location.href.startsWith('http://localhost:8080')) {
+        event.respondWith(
+          caches.match(event.request)
+          .then(function(response) {
+            if (response) {
+              return response;
+            }
+            return fetch(event.request);
+          })
+          .catch(err => console.log(err))
+        )
+      }
+    }
+  })
 })
 

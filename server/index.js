@@ -124,7 +124,7 @@ if (process.env.NODE_ENV === 'production') {
   syncDb = () => db.sync();
 }
 else {
-  syncDb = () => console.log('db sync')
+  syncDb = () => console.log('db synced');
 }
 
 async function bootApp() {

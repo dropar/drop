@@ -6,7 +6,7 @@
     "build": "cross-env NODE_ENV=production webpack",
     "start": "node server",
     "lint": "semistandard -v | snazzy",
-    "seed": "node script/seed.js"
+    "seed": "node seed.js"
   },
   "repository": "projectSasquatchHunter/backend",
   "license": "MIT",
