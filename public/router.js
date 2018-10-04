@@ -76,6 +76,7 @@ const { uploadForm } = require('../src/components/upload');
       loadHTML('./templates/upload.html', 'view')
       .then(() => {
         uploadForm();
+        console.log('upload function run');
       })
     }
   });
