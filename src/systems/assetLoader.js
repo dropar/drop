@@ -64,7 +64,7 @@ AFRAME.registerSystem('assetLoader', {
   // },
   loadGeometry: function () {
     var currentAsset = JSON.parse(localStorage.getItem('currentAsset'));
-    console.log(`currentAsset: ${JSON.stringify(currentAsset.id)}`)
+    // console.log(`currentAsset: ${JSON.stringify(currentAsset)}`)
     this.addGltfAsset({
       id: currentAsset.id,
       name: currentAsset.name,

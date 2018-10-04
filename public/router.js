@@ -58,7 +58,13 @@ const assetFetcher = require('../src/components/assetFetcher.js');
         submitLoginForm();
       });
     },
-    'assets/:id': () => { loadHTML('./templates/singleAsset.html', 'view'); },
+    'assets/:id': (params) => {
+      assetFetcher.fetchCurrentAsset(params.id)
+      .then(() => {
+        // assetFetcher.fetchUserAssets(window.user.id);
+        loadHTML('./templates/singleAsset.html', 'view');
+      })
+    },
     'signup': () => {
       loadHTML('./templates/signup.html', 'view')
       .then(() => {
