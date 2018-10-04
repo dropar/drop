@@ -40,6 +40,16 @@ module.exports = {
         console.log(`axios posted ${asset.displayName}`)
         }))
 
+//////CHANGE AXIOS TO FETCH
+
+
+
+
+
+
+
+
+
     console.log(`valid assets --->`, validAssets)
       let allAssetsView = document.getElementById('all-assets-view');
 

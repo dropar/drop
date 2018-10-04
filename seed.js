@@ -24,7 +24,7 @@ const {User, Asset} = require('./server/db/models');
 ]
  const assets = [
   {
-    id: '5OP5JSQZZn-',
+    googleApiId: '5OP5JSQZZn-',
     displayName: 'Galactic Cat',
     authorName: '3Donimus',
     triangleCount: 817584,
@@ -33,7 +33,7 @@ const {User, Asset} = require('./server/db/models');
     category: 'Architecture',
   },
   {
-    id: '6kCzvvxTOej',
+    googleApiId: '6kCzvvxTOej',
     displayName: 'Van Goghs The wheatfield',
     authorName: 'Tekano Bob',
     triangleCount: 378856,

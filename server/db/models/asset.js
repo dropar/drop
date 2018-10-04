@@ -4,15 +4,13 @@ const db = require('../db')
 const Asset = db.define('asset', {
   googleApiId: { // name
     type: Sequelize.STRING,
-    allowNull: false,
-    primaryKey: true,
   },
   displayName: { // displayName
     type: Sequelize.STRING,
     allowNull: false
   },
   authorName: {
-    type: Sequelize.TEXT,
+    type: Sequelize.STRING,
     allowNull: true
   },
   triangleCount: { // asset.formats[].formatComplexity.triangleCount
