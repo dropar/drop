@@ -23,7 +23,7 @@ const Asset = db.define('asset', {
     allowNull: false
   },
   googleApiId: { // name
-    type: Sequelize.INTEGER,
+    type: Sequelize.STRING,
     allowNull: true
   },
   triangleCount: { // asset.formats[].formatComplexity.triangleCount

@@ -1,4 +1,4 @@
-const axios = require('axios');
+require("../../public/css/login.css");
 
 module.exports = {
   submitLoginForm: () => {
@@ -11,9 +11,15 @@ module.exports = {
 
       //login post request
       try {
-        axios.post('/auth/login', {
-          email: email.value,
-          password: password.value
+        fetch('/auth/login', {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json; charset=utf-8"
+          },
+          body: JSON.stringify({
+            email: email.value,
+            password: password.value
+          })
         })
         .then(res => {
           console.log('res', res);
