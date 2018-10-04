@@ -3,6 +3,18 @@ const {User} = require('../db/models')
 const {Asset} = require('../db/models')
 module.exports = router
 
+
+router.get('/:userId/assets', async (req, res, next) => {
+  const targetUser = req.params.userId;
+  try {
+    const user = await User.find({where: { id: targetUser }});
+    const userAssets = await user.getAssets();
+    res.send(userAssets)
+  } catch (err) {
+    next(err)
+  }
+})
+
 router.get('/', async (req, res, next) => {
   try {
     const users = await User.findAll({
@@ -12,19 +24,6 @@ router.get('/', async (req, res, next) => {
       attributes: ['id', 'email']
     })
     res.json(users)
-  } catch (err) {
-    next(err)
-  }
-})
-
-router.get('/:userId/assets', async (req, res, next) => {
-  const targetUser = req.params.userId;
-  try {
-    const userAssets = await Asset.findAll({
-      where: {userId: targetUser},
-      attributes: ['thumbnail', 'name']
-    })
-    res.json(userAssets)
   } catch (err) {
     next(err)
   }

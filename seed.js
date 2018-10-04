@@ -23,6 +23,42 @@ const {User, Asset} = require('./server/db/models');
   }
 ]
  const assets = [
+  // {
+  //   displayName: 'space cat',
+  //   thumbnailUrl: 'spacecat.png',
+  //   assetUrl: 'spacecat.obj',
+  //   id: 5
+  // },
+  // {
+  //   displayName: 'earth cat',
+  //   thumbnailUrl: 'http://www3.pictures.zimbio.com/gi/The+Jinx+New+York+Premire+l37VdCmDEUGl.jpg',
+  //   assetUrl: 'spacecat.obj',
+  //   id: 2
+  // },
+  // {
+  //   displayName: 'space dog',
+  //   thumbnailUrl: 'spacecat.png',
+  //   assetUrl: 'spacecat.obj',
+  //   id: 6
+  // },
+  // {
+  //   displayName: 'earth dog',
+  //   thumbnailUrl: 'spacecat.png',
+  //   assetUrl: 'spacecat.obj',
+  //   id: 3
+  // },
+  // {
+  //   displayName: 'space mouse',
+  //   thumbnailUrl: 'http://www3.pictures.zimbio.com/gi/The+Jinx+New+York+Premire+l37VdCmDEUGl.jpg',
+  //   assetUrl: 'spacecat.obj',
+  //   id: 1
+  // },
+  // {
+  //   displayName: 'earth mouse',
+  //   thumbnailUrl: 'spacecat.png',
+  //   assetUrl: 'spacecat.obj',
+  //   id: 8
+  // },
   {
     googleApiId: '5OP5JSQZZn-',
     displayName: 'Galactic Cat',
@@ -43,10 +79,23 @@ const {User, Asset} = require('./server/db/models');
   },
 
 ]
+
+
+
  const seed = () =>
-  Promise.all(users.map(user => User.create(user))).then(() =>
-    Promise.all(assets.map(asset => Asset.create(asset)))
+  Promise.all(users.map(user => User.create(user)))
+  .then(() => Promise.all(assets.map(asset => Asset.create(asset)))
   )
+  .then(() => {
+    return User.findById(4)
+  })
+  .then((user) => {
+    return user.setAssets([1,2])
+  }).catch(err => {
+    console.log(err)
+  })
+
+
  const main = () => {
   console.log('syncing db..')
   db
