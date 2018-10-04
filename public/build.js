@@ -6461,6 +6461,11 @@ AFRAME.registerComponent('store-controls', {
 "use strict";
 
 
+<<<<<<< HEAD
+var axios = __webpack_require__(29);
+
+=======
+>>>>>>> master
 module.exports = {
   uploadForm: function uploadForm() {
     var environment = window.location.href.startsWith('http://localhost:8080') ? 'development' : 'production';
@@ -6516,21 +6521,36 @@ module.exports = {
   getUserAssets: function getUserAssets() {
     var mainDiv = document.getElementById('view');
     var assetsDiv = document.getElementById('user-assets');
-    var userId = _this.user.id;
-    var userAssets = [];
-    assetsDiv.addEventListener('load', function () {
-      userAssets = axios.get("api/users/".concat(userId, "/assets"));
+    var userId = window.user.id;
+    var userAssets = fetch("api/users/".concat(userId, "/assets"), {
+      method: "GET"
+    }).then(function (response) {
+      return response.json();
+    }).then(function (resData) {
+      console.log(resData);
+      console.log(resData.id);
+      resData.forEach(function (asset) {
+        var userDiv = document.createElement('div');
+        userDiv.id = 'one asset';
+        userDiv.addEventListener('click', function () {
+          fetch("api/assets/".concat(asset.id));
+        });
+        var userAssetName = document.createElement('a');
+        userAssetName.href = 'https://google.com';
+        userAssetName.innerText = asset.displayName;
+        var userAssetImg = new Image(100, 100);
+        userAssetImg.src = asset.thumbnailUrl;
+        userDiv.appendChild(userAssetName);
+        userDiv.appendChild(userAssetImg);
+        assetsDiv.appendChild(userDiv); //mainDiv.appendChild(assetsDiv)
+      });
     });
-    var assetsHTML = userAssets.forEach(function (asset) {
-      var userAssetName = document.createElement('p');
-      userAssetName.innerText = asset.name;
-      var userAssetImg = new Image(100, 100);
-      userAssetImg.src = asset.thumbnail;
-      assetsDiv.appendChild(userAssetName);
-      assetsDiv.appendChild(userAssetImg);
-    });
-    mainDiv.appendChild(assetsHTML);
-  }
+  } //add event listener to each asset for routing to asset
+  // create div
+  // add onclick handling to //someurl.url for entire div
+  //divname.onclick = fetch(someurl.url)
+  // fetch(assets/:assetId, { method: 'GET' })
+
 };
 
 /***/ }),
