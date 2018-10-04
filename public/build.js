@@ -6451,20 +6451,18 @@ module.exports = {
   getUserAssets: function getUserAssets() {
     var mainDiv = document.getElementById('view');
     var assetsDiv = document.getElementById('user-assets');
-    console.log('assetsdiv', assetsDiv);
     var userId = window.user.id;
-    var userAssets = axios.get("api/users/".concat(userId, "/assets"));
-    var parsedUserAssets = userAssets.data;
-    console.log(parsedUserAssets);
-    var assetsHTML = parsedUserAssets.forEach(function (asset) {
-      var userAssetName = document.createElement('p');
-      userAssetName.innerText = asset.name;
-      var userAssetImg = new Image(100, 100);
-      userAssetImg.src = asset.thumbnail;
-      assetsDiv.appendChild(userAssetName);
-      assetsDiv.appendChild(userAssetImg);
+    var userAssets = axios.get("api/users/".concat(userId, "/assets")).then(function (response) {
+      response.data.forEach(function (asset) {
+        console.log(asset.displayName);
+        var userAssetName = document.createElement('p');
+        userAssetName.innerText = asset.displayName;
+        var userAssetImg = new Image(100, 100);
+        userAssetImg.src = asset.thumbnailUrl;
+        assetsDiv.appendChild(userAssetName);
+        assetsDiv.appendChild(userAssetImg); //mainDiv.appendChild(assetsDiv)
+      });
     });
-    mainDiv.appendChild(assetsHTML);
   }
 };
 

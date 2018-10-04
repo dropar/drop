@@ -1,7 +1,20 @@
 const router = require('express').Router()
-const {User} = require('../db/models')
+const User = require('../db/models/user')
 const {Asset} = require('../db/models')
 module.exports = router
+
+
+router.get('/:userId/assets', async (req, res, next) => {
+  const targetUser = req.params.userId;
+  try {
+    const user = await User.find({where: { id: targetUser }});
+    const userAssets = await user.getAssets();
+    console.log('backend user assets',userAssets)
+    res.send(userAssets)
+  } catch (err) {
+    next(err)
+  }
+})
 
 router.get('/', async (req, res, next) => {
   try {
@@ -12,18 +25,6 @@ router.get('/', async (req, res, next) => {
       attributes: ['id', 'email']
     })
     res.json(users)
-  } catch (err) {
-    next(err)
-  }
-})
-
-router.get('/:userId/assets', async (req, res, next) => {
-  const targetUser = req.params.userId;
-  try {
-    const user = await User.findById(targetUser);
-    const userAssets = await user.getAssets();
-    console.log(userAssets)
-    res.json(userAssets)
   } catch (err) {
     next(err)
   }

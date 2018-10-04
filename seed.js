@@ -31,7 +31,7 @@ const {User, Asset} = require('./server/db/models');
   },
   {
     displayName: 'earth cat',
-    thumbnailUrl: 'spacecat.png',
+    thumbnailUrl: 'http://www3.pictures.zimbio.com/gi/The+Jinx+New+York+Premire+l37VdCmDEUGl.jpg',
     assetUrl: 'spacecat.obj',
     id: 2
   },
@@ -49,7 +49,7 @@ const {User, Asset} = require('./server/db/models');
   },
   {
     displayName: 'space mouse',
-    thumbnailUrl: 'spacecat.png',
+    thumbnailUrl: 'http://www3.pictures.zimbio.com/gi/The+Jinx+New+York+Premire+l37VdCmDEUGl.jpg',
     assetUrl: 'spacecat.obj',
     id: 1
   },
@@ -68,10 +68,10 @@ const {User, Asset} = require('./server/db/models');
   .then(() => Promise.all(assets.map(asset => Asset.create(asset)))
   )
   .then(() => {
-    return User.findById(1)
+    return User.findById(4)
   })
   .then((user) => {
-    return user.setAssets(1)
+    return user.setAssets([1,2])
   }).catch(err => {
     console.log(err)
   })
