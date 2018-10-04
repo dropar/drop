@@ -9,7 +9,6 @@ router.get('/:userId/assets', async (req, res, next) => {
   try {
     const user = await User.find({where: { id: targetUser }});
     const userAssets = await user.getAssets();
-    console.log('backend user assets',userAssets)
     res.send(userAssets)
   } catch (err) {
     next(err)

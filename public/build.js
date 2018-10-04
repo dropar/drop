@@ -6447,7 +6447,6 @@ module.exports = {
 "use strict";
 
 
-//const axios = require('axios')
 module.exports = {
   getUserAssets: function getUserAssets() {
     var mainDiv = document.getElementById('view');
@@ -6459,26 +6458,28 @@ module.exports = {
       return response.json();
     }).then(function (resData) {
       console.log(resData);
+      console.log(resData.id);
       resData.forEach(function (asset) {
-        console.log(asset.displayName);
         var userDiv = document.createElement('div');
-        userDiv.onclick = console.log('clicked user asset div');
+        userDiv.id = 'one asset';
+        userDiv.addEventListener('click', function () {
+          fetch("api/assets/".concat(asset.id));
+        });
         var userAssetName = document.createElement('a');
-        userAssetName.href = 'www.google.com';
+        userAssetName.href = 'https://google.com';
         userAssetName.innerText = asset.displayName;
         var userAssetImg = new Image(100, 100);
         userAssetImg.src = asset.thumbnailUrl;
         userDiv.appendChild(userAssetName);
         userDiv.appendChild(userAssetImg);
-        assetsDiv.appendChild(userDiv); // assetsDiv.appendChild(userAssetName);
-        // assetsDiv.appendChild(userAssetImg);
-        //mainDiv.appendChild(assetsDiv)
+        assetsDiv.appendChild(userDiv); //mainDiv.appendChild(assetsDiv)
       });
     });
   } //add event listener to each asset for routing to asset
   // create div
   // add onclick handling to //someurl.url for entire div
   //divname.onclick = fetch(someurl.url)
+  // fetch(assets/:assetId, { method: 'GET' })
 
 };
 

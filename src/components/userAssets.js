@@ -1,4 +1,3 @@
-//const axios = require('axios')
 module.exports = {
   getUserAssets: () => {
     const mainDiv = document.getElementById('view')
@@ -10,19 +9,17 @@ module.exports = {
       .then((resData) => {
         console.log(resData)
         resData.forEach((asset) => {
-        console.log(asset.displayName)
-        const userDiv = document.createElement('div')
-        userDiv.onclick = console.log('clicked user asset div')
-        const userAssetName = document.createElement('a')
-        userAssetName.href = 'www.google.com';
+        const userDiv = document.createElement('div');
+        userDiv.id = 'one asset'
+        userDiv.addEventListener('click', () => { fetch(`api/assets/${asset.id}`)});
+        const userAssetName = document.createElement('a');
+        userAssetName.href='https://google.com';
         userAssetName.innerText = asset.displayName;
         const userAssetImg = new Image(100, 100);
         userAssetImg.src = asset.thumbnailUrl;
         userDiv.appendChild(userAssetName);
         userDiv.appendChild(userAssetImg);
         assetsDiv.appendChild(userDiv)
-        // assetsDiv.appendChild(userAssetName);
-        // assetsDiv.appendChild(userAssetImg);
         //mainDiv.appendChild(assetsDiv)
       })
     })
@@ -34,4 +31,6 @@ module.exports = {
 // create div
 // add onclick handling to //someurl.url for entire div
 //divname.onclick = fetch(someurl.url)
+
+// fetch(assets/:assetId, { method: 'GET' })
 
