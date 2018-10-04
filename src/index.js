@@ -1,12 +1,11 @@
 
 require('./components/intersect-color-change.js');
 require('./components/store-controls.js');
-// require('./components/test-component-2');
 require('./systems/singleAsset.js');
 require('./systems/assetLoader.js');
 require('./components/login.js');
 require('../public/router.js');
-// require('./router.js');
+require("../public/css/login.css");
 
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', function() {
