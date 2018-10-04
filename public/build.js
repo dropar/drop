@@ -6214,7 +6214,7 @@ module.exports = {
     var _fetchCurrentAsset = _asyncToGenerator(
     /*#__PURE__*/
     regeneratorRuntime.mark(function _callee(assetId) {
-      var _ref, asset, currentAsset;
+      var _ref, asset;
 
       return regeneratorRuntime.wrap(function _callee$(_context) {
         while (1) {
@@ -6228,10 +6228,8 @@ module.exports = {
               asset = _ref.data;
               // update state
               localStorage.setItem('currentAsset', JSON.stringify(asset));
-              currentAsset = JSON.parse(localStorage.getItem('currentAsset'));
-              console.log("---------> currentAsset: ".concat(JSON.stringify(currentAsset)));
 
-            case 7:
+            case 5:
             case "end":
               return _context.stop();
           }
@@ -6647,8 +6645,8 @@ AFRAME.registerSystem('assetLoader', {
   //   })
   // },
   loadGeometry: function loadGeometry() {
-    var currentAsset = JSON.parse(localStorage.getItem('currentAsset'));
-    console.log("currentAsset: ".concat(JSON.stringify(currentAsset)));
+    var currentAsset = JSON.parse(localStorage.getItem('currentAsset')); // console.log(`currentAsset: ${JSON.stringify(currentAsset)}`)
+
     this.addGltfAsset({
       id: currentAsset.id,
       name: currentAsset.name,
