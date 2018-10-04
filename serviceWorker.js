@@ -84,7 +84,7 @@ self.addEventListener('install', function(event) {
 });
 
 self.addEventListener('fetch', function(event) {
-  console.log('href', location.href);
+  console.log('sending fetch', location.href);
   fetch(event.request)
   .then(response => {
     if (response.status !== 200) {

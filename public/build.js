@@ -6184,6 +6184,7 @@ router.on({
   'upload': function upload() {
     loadHTML('./templates/upload.html', 'view').then(function () {
       uploadForm();
+      console.log('upload function run');
     });
   }
 }); // set the default route
@@ -6408,24 +6409,24 @@ var axios = __webpack_require__(27);
 
 module.exports = {
   uploadForm: function uploadForm() {
-    console.log('function run');
     var environment = window.location.href.startsWith('http://localhost:8080') ? 'development' : 'production';
     var submitButton = document.getElementById('upload-submit');
+    console.log('upload function running');
     submitButton.addEventListener('click', function (event) {
       event.preventDefault();
-      console.log('upload button clicked');
+      console.log('upload button clicked HOPEFULLY NOT TWICE');
       var displayName = document.getElementById('displayName');
-      var authorName = window.user.name;
       var assetUrl = document.getElementById('assetUrl');
       var thumbnailUrl = document.getElementById('thumbnailUrl'); //upload post request
 
       try {
-        axios.post("/api/users/".concat(window.user.id, "/assets"), {
-          displayName: displayName,
-          authorName: authorName,
-          assetUrl: assetUrl,
-          thumbnailUrl: thumbnailUrl
-        }).then(function () {
+        fetch.post("/api/users/".concat(window.user.id, "/assets"), {
+          displayName: displayName.value,
+          authorName: window.user.name,
+          assetUrl: assetUrl.value,
+          thumbnailUrl: thumbnailUrl.value
+        }).then(function (res) {
+          console.log('asset', res.data);
           console.log('asset posted');
 
           if (environment === 'production') {
