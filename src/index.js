@@ -6,6 +6,7 @@ require('./systems/assetLoader.js');
 require('./components/login.js');
 require('../public/router.js');
 require("../public/css/login.css");
+require("../public/css/splash.css");
 
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', function() {

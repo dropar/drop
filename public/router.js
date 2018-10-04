@@ -42,6 +42,12 @@ const { uploadForm } = require('../src/components/upload');
   console.log('ROUTER-',router);
   router.on({
     // 'view' is the id of the div element inside which we render the HTML
+    'home': () => {
+      loadHTML('./templates/splash.html', 'view')
+      .then(() => {
+        console.log('home');
+      })
+    },
     'assets': () => {
       loadHTML('./templates/allAssets.html','view')
        .then(() => {allAssets.getAllAssets()})},
