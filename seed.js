@@ -24,40 +24,59 @@ const {User, Asset} = require('./server/db/models');
 ]
  const assets = [
   {
-    name: 'space cat',
-    thumbnail: 'spacecat.png',
-    assetUrl: 'spacecat.obj'
+    displayName: 'space cat',
+    thumbnailUrl: 'spacecat.png',
+    assetUrl: 'spacecat.obj',
+    id: 5
   },
   {
-    name: 'earth cat',
-    thumbnail: 'spacecat.png',
-    assetUrl: 'spacecat.obj'
+    displayName: 'earth cat',
+    thumbnailUrl: 'spacecat.png',
+    assetUrl: 'spacecat.obj',
+    id: 2
   },
   {
-    name: 'space dog',
-    thumbnail: 'spacecat.png',
-    assetUrl: 'spacecat.obj'
+    displayName: 'space dog',
+    thumbnailUrl: 'spacecat.png',
+    assetUrl: 'spacecat.obj',
+    id: 6
   },
   {
-    name: 'earth dog',
-    thumbnail: 'spacecat.png',
-    assetUrl: 'spacecat.obj'
+    displayName: 'earth dog',
+    thumbnailUrl: 'spacecat.png',
+    assetUrl: 'spacecat.obj',
+    id: 3
   },
   {
-    name: 'space mouse',
-    thumbnail: 'spacecat.png',
-    assetUrl: 'spacecat.obj'
+    displayName: 'space mouse',
+    thumbnailUrl: 'spacecat.png',
+    assetUrl: 'spacecat.obj',
+    id: 1
   },
   {
-    name: 'earth mouse',
-    thumbnail: 'spacecat.png',
-    assetUrl: 'spacecat.obj'
+    displayName: 'earth mouse',
+    thumbnailUrl: 'spacecat.png',
+    assetUrl: 'spacecat.obj',
+    id: 8
   }
 ]
+
+
+
  const seed = () =>
-  Promise.all(users.map(user => User.create(user))).then(() =>
-    Promise.all(assets.map(asset => Asset.create(asset)))
+  Promise.all(users.map(user => User.create(user)))
+  .then(() => Promise.all(assets.map(asset => Asset.create(asset)))
   )
+  .then(() => {
+    return User.findById(1)
+  })
+  .then((user) => {
+    return user.setAssets(1)
+  }).catch(err => {
+    console.log(err)
+  })
+
+
  const main = () => {
   console.log('syncing db..')
   db

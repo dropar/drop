@@ -1,14 +1,16 @@
 const axios = require('axios')
- module.exports = {
+module.exports = {
   getUserAssets: () => {
     const mainDiv = document.getElementById('view')
     const assetsDiv = document.getElementById('user-assets');
-    const userId = this.user.id;
-    let userAssets = [];
-    assetsDiv.addEventListener('load', () => {
-      userAssets = axios.get(`api/users/${userId}/assets`)
-    })
-     const assetsHTML = userAssets.forEach((asset) => {
+    console.log('assetsdiv', assetsDiv)
+    const userId = window.user.id;
+
+
+    const userAssets = axios.get(`api/users/${userId}/assets`)
+    const parsedUserAssets = userAssets.data;
+    console.log(parsedUserAssets)
+    const assetsHTML = parsedUserAssets.forEach((asset) => {
       const userAssetName = document.createElement('p')
       userAssetName.innerText = asset.name;
       const userAssetImg = new Image(100, 100);
@@ -16,6 +18,6 @@ const axios = require('axios')
       assetsDiv.appendChild(userAssetName);
       assetsDiv.appendChild(userAssetImg);
     })
-     mainDiv.appendChild(assetsHTML)
+    mainDiv.appendChild(assetsHTML)
   }
 }

@@ -8,7 +8,7 @@ const Asset = db.define('asset', {
     primaryKey: true,
   },
   displayName: { // displayName
-    type: Sequelize.INTEGER,
+    type: Sequelize.TEXT,
     allowNull: false
   },
   authorName: {

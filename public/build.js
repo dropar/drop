@@ -6445,20 +6445,18 @@ grabData();
 "use strict";
 
 
-var _this = void 0;
-
 var axios = __webpack_require__(37);
 
 module.exports = {
   getUserAssets: function getUserAssets() {
     var mainDiv = document.getElementById('view');
     var assetsDiv = document.getElementById('user-assets');
-    var userId = _this.user.id;
-    var userAssets = [];
-    assetsDiv.addEventListener('load', function () {
-      userAssets = axios.get("api/users/".concat(userId, "/assets"));
-    });
-    var assetsHTML = userAssets.forEach(function (asset) {
+    console.log('assetsdiv', assetsDiv);
+    var userId = window.user.id;
+    var userAssets = axios.get("api/users/".concat(userId, "/assets"));
+    var parsedUserAssets = userAssets.data;
+    console.log(parsedUserAssets);
+    var assetsHTML = parsedUserAssets.forEach(function (asset) {
       var userAssetName = document.createElement('p');
       userAssetName.innerText = asset.name;
       var userAssetImg = new Image(100, 100);
