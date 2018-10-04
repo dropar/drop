@@ -183,7 +183,7 @@ $exports.store = store;
 
 var anObject = __webpack_require__(4);
 var IE8_DOM_DEFINE = __webpack_require__(97);
-var toPrimitive = __webpack_require__(29);
+var toPrimitive = __webpack_require__(28);
 var dP = Object.defineProperty;
 
 exports.f = __webpack_require__(8) ? Object.defineProperty : function defineProperty(O, P, Attributes) {
@@ -721,7 +721,7 @@ module.exports = function (TYPE, $create) {
 var pIE = __webpack_require__(46);
 var createDesc = __webpack_require__(35);
 var toIObject = __webpack_require__(15);
-var toPrimitive = __webpack_require__(29);
+var toPrimitive = __webpack_require__(28);
 var has = __webpack_require__(13);
 var IE8_DOM_DEFINE = __webpack_require__(97);
 var gOPD = Object.getOwnPropertyDescriptor;
@@ -844,7 +844,7 @@ if (__webpack_require__(8)) {
   var toLength = __webpack_require__(9);
   var toIndex = __webpack_require__(116);
   var toAbsoluteIndex = __webpack_require__(36);
-  var toPrimitive = __webpack_require__(29);
+  var toPrimitive = __webpack_require__(28);
   var has = __webpack_require__(13);
   var classof = __webpack_require__(48);
   var isObject = __webpack_require__(3);
@@ -1313,12 +1313,6 @@ if (__webpack_require__(8)) {
 /* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(123);
-
-/***/ }),
-/* 28 */
-/***/ (function(module, exports, __webpack_require__) {
-
 var META = __webpack_require__(37)('meta');
 var isObject = __webpack_require__(3);
 var has = __webpack_require__(13);
@@ -1375,7 +1369,7 @@ var meta = module.exports = {
 
 
 /***/ }),
-/* 29 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 7.1.1 ToPrimitive(input [, PreferredType])
@@ -1391,6 +1385,12 @@ module.exports = function (it, S) {
   throw TypeError("Can't convert object to primitive value");
 };
 
+
+/***/ }),
+/* 29 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(123);
 
 /***/ }),
 /* 30 */
@@ -1702,7 +1702,7 @@ var global = __webpack_require__(2);
 var $export = __webpack_require__(0);
 var redefine = __webpack_require__(10);
 var redefineAll = __webpack_require__(41);
-var meta = __webpack_require__(28);
+var meta = __webpack_require__(27);
 var forOf = __webpack_require__(51);
 var anInstance = __webpack_require__(39);
 var isObject = __webpack_require__(3);
@@ -3892,7 +3892,7 @@ module.exports = function bind(fn, thisArg) {
 "use strict";
 
 
-var axios = __webpack_require__(27);
+var axios = __webpack_require__(29);
 
 module.exports = {
   submitLoginForm: function submitLoginForm() {
@@ -4049,7 +4049,7 @@ var $iterDefine = __webpack_require__(70);
 var step = __webpack_require__(102);
 var setSpecies = __webpack_require__(42);
 var DESCRIPTORS = __webpack_require__(8);
-var fastKey = __webpack_require__(28).fastKey;
+var fastKey = __webpack_require__(27).fastKey;
 var validate = __webpack_require__(44);
 var SIZE = DESCRIPTORS ? '_s' : 'size';
 
@@ -4191,7 +4191,7 @@ module.exports = {
 "use strict";
 
 var redefineAll = __webpack_require__(41);
-var getWeak = __webpack_require__(28).getWeak;
+var getWeak = __webpack_require__(27).getWeak;
 var anObject = __webpack_require__(4);
 var isObject = __webpack_require__(3);
 var anInstance = __webpack_require__(39);
@@ -6213,7 +6213,7 @@ var _this = void 0;
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } } function _next(value) { step("next", value); } function _throw(err) { step("throw", err); } _next(); }); }; }
 
-var axios = __webpack_require__(27); // -- STATE --
+var axios = __webpack_require__(29); // -- STATE --
 // let currentAsset = {};
 
 
@@ -6332,7 +6332,7 @@ AFRAME.registerComponent('intersect-color-change', {
 "use strict";
 
 
-var axios = __webpack_require__(27);
+var axios = __webpack_require__(29);
 
 module.exports = {
   submitSignUpForm: function submitSignUpForm() {
@@ -6405,26 +6405,32 @@ AFRAME.registerComponent('store-controls', {
 "use strict";
 
 
-var axios = __webpack_require__(27);
-
 module.exports = {
   uploadForm: function uploadForm() {
     var environment = window.location.href.startsWith('http://localhost:8080') ? 'development' : 'production';
-    var submitButton = document.getElementById('upload-submit');
+    var form = document.getElementById('upload-form');
     console.log('upload function running');
-    submitButton.addEventListener('click', function (event) {
+    form.addEventListener('submit', function (event) {
       event.preventDefault();
       console.log('upload button clicked HOPEFULLY NOT TWICE');
       var displayName = document.getElementById('displayName');
       var assetUrl = document.getElementById('assetUrl');
-      var thumbnailUrl = document.getElementById('thumbnailUrl'); //upload post request
+      var thumbnailUrl = document.getElementById('thumbnailUrl');
+      var body = JSON.stringify({
+        displayName: displayName.value,
+        authorName: window.user.name,
+        assetUrl: assetUrl.value,
+        thumbnailUrl: thumbnailUrl.value
+      });
+      console.log(body); //upload post request
 
       try {
-        fetch.post("/api/users/".concat(window.user.id, "/assets"), {
-          displayName: displayName.value,
-          authorName: window.user.name,
-          assetUrl: assetUrl.value,
-          thumbnailUrl: thumbnailUrl.value
+        fetch("/api/users/".concat(window.user.id, "/assets"), {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json; charset=utf-8"
+          },
+          body: body
         }).then(function (res) {
           console.log('asset', res.data);
           console.log('asset posted');
@@ -6449,7 +6455,7 @@ module.exports = {
 
 var _this = void 0;
 
-var axios = __webpack_require__(27);
+var axios = __webpack_require__(29);
 
 module.exports = {
   getUserAssets: function getUserAssets() {
@@ -6481,7 +6487,7 @@ module.exports = {
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } } function _next(value) { step("next", value); } function _throw(err) { step("throw", err); } _next(); }); }; }
 
-var axios = __webpack_require__(27);
+var axios = __webpack_require__(29);
 
 module.exports = {
   getAllAssets: function () {
@@ -6583,7 +6589,7 @@ module.exports = {
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } } function _next(value) { step("next", value); } function _throw(err) { step("throw", err); } _next(); }); }; }
 
 // import axios from 'axios'
-var axios = __webpack_require__(27);
+var axios = __webpack_require__(29);
 
 AFRAME.registerSystem('assetLoader', {
   init: function init() {
@@ -7597,7 +7603,7 @@ module.exports = (fails(function () {
 "use strict";
 
 var anObject = __webpack_require__(4);
-var toPrimitive = __webpack_require__(29);
+var toPrimitive = __webpack_require__(28);
 var NUMBER = 'number';
 
 module.exports = function (hint) {
@@ -8195,7 +8201,7 @@ $export($export.P + $export.F * (Date.prototype.toISOString !== toISOString), 'D
 
 var $export = __webpack_require__(0);
 var toObject = __webpack_require__(16);
-var toPrimitive = __webpack_require__(29);
+var toPrimitive = __webpack_require__(28);
 
 $export($export.P + $export.F * __webpack_require__(1)(function () {
   return new Date(NaN).toJSON() !== null
@@ -8602,7 +8608,7 @@ var global = __webpack_require__(2);
 var has = __webpack_require__(13);
 var cof = __webpack_require__(22);
 var inheritIfRequired = __webpack_require__(66);
-var toPrimitive = __webpack_require__(29);
+var toPrimitive = __webpack_require__(28);
 var fails = __webpack_require__(1);
 var gOPN = __webpack_require__(32).f;
 var gOPD = __webpack_require__(19).f;
@@ -8963,7 +8969,7 @@ $export($export.S + $export.F * !__webpack_require__(8), 'Object', { definePrope
 
 // 19.1.2.5 Object.freeze(O)
 var isObject = __webpack_require__(3);
-var meta = __webpack_require__(28).onFreeze;
+var meta = __webpack_require__(27).onFreeze;
 
 __webpack_require__(20)('freeze', function ($freeze) {
   return function freeze(it) {
@@ -9084,7 +9090,7 @@ __webpack_require__(20)('keys', function () {
 
 // 19.1.2.15 Object.preventExtensions(O)
 var isObject = __webpack_require__(3);
-var meta = __webpack_require__(28).onFreeze;
+var meta = __webpack_require__(27).onFreeze;
 
 __webpack_require__(20)('preventExtensions', function ($preventExtensions) {
   return function preventExtensions(it) {
@@ -9099,7 +9105,7 @@ __webpack_require__(20)('preventExtensions', function ($preventExtensions) {
 
 // 19.1.2.17 Object.seal(O)
 var isObject = __webpack_require__(3);
-var meta = __webpack_require__(28).onFreeze;
+var meta = __webpack_require__(27).onFreeze;
 
 __webpack_require__(20)('seal', function ($seal) {
   return function seal(it) {
@@ -9237,7 +9243,7 @@ $export($export.S + $export.F * (NEW_TARGET_BUG || ARGS_BUG), 'Reflect', {
 var dP = __webpack_require__(6);
 var $export = __webpack_require__(0);
 var anObject = __webpack_require__(4);
-var toPrimitive = __webpack_require__(29);
+var toPrimitive = __webpack_require__(28);
 
 // MS Edge has broken Reflect.defineProperty - throwing instead of returning false
 $export($export.S + $export.F * __webpack_require__(1)(function () {
@@ -10103,7 +10109,7 @@ var has = __webpack_require__(13);
 var DESCRIPTORS = __webpack_require__(8);
 var $export = __webpack_require__(0);
 var redefine = __webpack_require__(10);
-var META = __webpack_require__(28).KEY;
+var META = __webpack_require__(27).KEY;
 var $fails = __webpack_require__(1);
 var shared = __webpack_require__(75);
 var setToStringTag = __webpack_require__(43);
@@ -10116,7 +10122,7 @@ var isArray = __webpack_require__(68);
 var anObject = __webpack_require__(4);
 var isObject = __webpack_require__(3);
 var toIObject = __webpack_require__(15);
-var toPrimitive = __webpack_require__(29);
+var toPrimitive = __webpack_require__(28);
 var createDesc = __webpack_require__(35);
 var _create = __webpack_require__(31);
 var gOPNExt = __webpack_require__(107);
@@ -10502,7 +10508,7 @@ __webpack_require__(26)('Uint8', 1, function (init) {
 
 var each = __webpack_require__(18)(0);
 var redefine = __webpack_require__(10);
-var meta = __webpack_require__(28);
+var meta = __webpack_require__(27);
 var assign = __webpack_require__(105);
 var weak = __webpack_require__(96);
 var isObject = __webpack_require__(3);
@@ -10902,7 +10908,7 @@ module.exports = g;
 
 __webpack_require__(121);
 __webpack_require__(84);
-__webpack_require__(27);
+__webpack_require__(29);
 module.exports = __webpack_require__(122);
 
 
