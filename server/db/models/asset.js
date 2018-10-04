@@ -3,14 +3,14 @@ const db = require('../db')
 
 const Asset = db.define('asset', {
   googleApiId: { // name
-    type: Sequelize.INTEGER,
+    type: Sequelize.STRING,
   },
   displayName: { // displayName
     type: Sequelize.STRING,
     allowNull: false
   },
   authorName: {
-    type: Sequelize.TEXT,
+    type: Sequelize.STRING,
     allowNull: true
   },
   triangleCount: { // asset.formats[].formatComplexity.triangleCount
@@ -23,6 +23,10 @@ const Asset = db.define('asset', {
   },
   thumbnailUrl: { // thumbnail.url
     type: Sequelize.TEXT,
+    allowNull: false
+  },
+  category: {
+    type: Sequelize.ENUM('Architecture', 'Art', 'Food', 'Nature', 'Objects', 'People', 'Scenes', 'Technology','Transport', 'Other'),
     allowNull: false
   }
 })
