@@ -19,26 +19,26 @@ module.exports = {
           displayName: asset.displayName,
           authorName: asset.authorName,
           thumbnailUrl: asset.thumbnail.url,
-          id: asset.name,
-          assetUrl: assetUrlFilter(asset)
+          googleApiId: asset.name,
+          assetUrl: assetUrlFilter(asset),
+          category: 'N/A'
           })
         }
     })
 
-
-
-
-    // validAssets.forEach((asset) => {
-    //     async function (){
-    //         await axios.post('/assets', asset)
-    //     }
-    // })
-
-
-
-
-
-
+    // await Promise.all(
+    //   cart.products.map(async product => {
+    //    const {data: updatedItem} = await axios.put(`/api/users/${user.id}/orders/${orderId}/${product.id}`, {
+    //     purchasePrice: product.price,
+    //    })
+    //    dispatch(setItem(updatedItem, local))
+    //   })
+    //  )
+    await Promise.all(
+     validAssets.map(async asset => {
+        await axios.post('/api/assets', asset)
+        console.log(`axios posted ${asset.displayName}`)
+        }))
 
     console.log(`valid assets --->`, validAssets)
       let allAssetsView = document.getElementById('all-assets-view');

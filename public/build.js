@@ -3889,9 +3889,6 @@ module.exports = function bind(fn, thisArg) {
 /* 90 */
 /***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
-
-
 var axios = __webpack_require__(29);
 
 module.exports = {
@@ -5204,9 +5201,6 @@ global._babelPolyfill = true;
 /* 122 */
 /***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
-
-
 __webpack_require__(142);
 
 __webpack_require__(144); // require('./components/test-component-2');
@@ -6090,9 +6084,6 @@ module.exports = function spread(callback) {
 /* 140 */
 /***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
-
-
 // document.addEventListener("DOMContentLoaded", function(event) {
 // window.addEventListener('load', function() {
 // getElementById wrapper
@@ -6197,12 +6188,11 @@ module.exports = {
 /* 141 */
 /***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
+var _this = this;
 
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
-var _this = void 0;
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } } function _next(value) { step("next", value); } function _throw(err) { step("throw", err); } _next(); }); }; }
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
 var axios = __webpack_require__(29); // -- STATE --
 // let currentAsset = {};
@@ -6214,7 +6204,7 @@ module.exports = {
     var _fetchCurrentAsset = _asyncToGenerator(
     /*#__PURE__*/
     regeneratorRuntime.mark(function _callee(assetId) {
-      var _ref, asset, currentAsset;
+      var _ref, asset;
 
       return regeneratorRuntime.wrap(function _callee$(_context) {
         while (1) {
@@ -6228,10 +6218,8 @@ module.exports = {
               asset = _ref.data;
               // update state
               localStorage.setItem('currentAsset', JSON.stringify(asset));
-              currentAsset = JSON.parse(localStorage.getItem('currentAsset'));
-              console.log("---------> currentAsset: ".concat(JSON.stringify(currentAsset)));
 
-            case 7:
+            case 5:
             case "end":
               return _context.stop();
           }
@@ -6280,10 +6268,7 @@ module.exports = {
 
 /***/ }),
 /* 142 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
+/***/ (function(module, exports) {
 
 /* global AFRAME */
 
@@ -6321,9 +6306,6 @@ AFRAME.registerComponent('intersect-color-change', {
 /***/ }),
 /* 143 */
 /***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
 
 var axios = __webpack_require__(29);
 
@@ -6365,10 +6347,7 @@ module.exports = {
 
 /***/ }),
 /* 144 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
+/***/ (function(module, exports) {
 
 AFRAME.registerComponent('store-controls', {
   // schema used to declare inputs, like props
@@ -6395,10 +6374,7 @@ AFRAME.registerComponent('store-controls', {
 /* 145 */
 /***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
-
-
-var _this = void 0;
+var _this = this;
 
 var axios = __webpack_require__(29);
 
@@ -6427,10 +6403,9 @@ module.exports = {
 /* 146 */
 /***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } } function _next(value) { step("next", value); } function _throw(err) { step("throw", err); } _next(); }); }; }
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
 var axios = __webpack_require__(29);
 
@@ -6438,11 +6413,11 @@ module.exports = {
   getAllAssets: function () {
     var _getAllAssets = _asyncToGenerator(
     /*#__PURE__*/
-    regeneratorRuntime.mark(function _callee() {
+    regeneratorRuntime.mark(function _callee2() {
       var isGLTF, assetUrlFilter, validAssets, res, allAssetsFromAPI, allAssetsView;
-      return regeneratorRuntime.wrap(function _callee$(_context) {
+      return regeneratorRuntime.wrap(function _callee2$(_context2) {
         while (1) {
-          switch (_context.prev = _context.next) {
+          switch (_context2.prev = _context2.next) {
             case 0:
               isGLTF = function isGLTF(asset) {
                 return asset.formats.filter(function (format) {
@@ -6458,12 +6433,12 @@ module.exports = {
               };
 
               validAssets = [];
-              _context.prev = 3;
-              _context.next = 6;
+              _context2.prev = 3;
+              _context2.next = 6;
               return axios.get('https://poly.googleapis.com/v1/assets?key=AIzaSyDbAkOgCpfiweD3ZQ3_ZyR0UBEqD17ZBs4&pageSize=100&maxComplexity=MEDIUM');
 
             case 6:
-              res = _context.sent;
+              res = _context2.sent;
               allAssetsFromAPI = res.data.assets;
               allAssetsFromAPI.forEach(function (asset) {
                 // && isLowPoly(asset) insert into below if and uncomment above function to restore to original filter
@@ -6473,15 +6448,50 @@ module.exports = {
                     authorName: asset.authorName,
                     thumbnailUrl: asset.thumbnail.url,
                     id: asset.name,
-                    assetUrl: assetUrlFilter(asset)
+                    assetUrl: assetUrlFilter(asset),
+                    category: 'N/A'
                   });
                 }
-              }); // validAssets.forEach((asset) => {
-              //     async function (){
-              //         await axios.post('/assets', asset)
-              //     }
-              // })
+              }); // await Promise.all(
+              //   cart.products.map(async product => {
+              //    const {data: updatedItem} = await axios.put(`/api/users/${user.id}/orders/${orderId}/${product.id}`, {
+              //     purchasePrice: product.price,
+              //    })
+              //    dispatch(setItem(updatedItem, local))
+              //   })
+              //  )
 
+              _context2.next = 11;
+              return Promise.all(validAssets.map(
+              /*#__PURE__*/
+              function () {
+                var _ref = _asyncToGenerator(
+                /*#__PURE__*/
+                regeneratorRuntime.mark(function _callee(asset) {
+                  return regeneratorRuntime.wrap(function _callee$(_context) {
+                    while (1) {
+                      switch (_context.prev = _context.next) {
+                        case 0:
+                          _context.next = 2;
+                          return axios.post('/api/assets', asset);
+
+                        case 2:
+                          console.log("axios posted ".concat(asset.displayName));
+
+                        case 3:
+                        case "end":
+                          return _context.stop();
+                      }
+                    }
+                  }, _callee, this);
+                }));
+
+                return function (_x) {
+                  return _ref.apply(this, arguments);
+                };
+              }()));
+
+            case 11:
               console.log("valid assets --->", validAssets);
               allAssetsView = document.getElementById('all-assets-view');
               validAssets.forEach(function (asset) {
@@ -6502,20 +6512,20 @@ module.exports = {
                 newDiv.appendChild(authorName);
                 allAssetsView.appendChild(newDiv);
               });
-              _context.next = 17;
+              _context2.next = 19;
               break;
 
-            case 14:
-              _context.prev = 14;
-              _context.t0 = _context["catch"](3);
-              console.error(_context.t0);
+            case 16:
+              _context2.prev = 16;
+              _context2.t0 = _context2["catch"](3);
+              console.error(_context2.t0);
 
-            case 17:
+            case 19:
             case "end":
-              return _context.stop();
+              return _context2.stop();
           }
         }
-      }, _callee, this, [[3, 14]]);
+      }, _callee2, this, [[3, 16]]);
     }));
 
     return function getAllAssets() {
@@ -6528,10 +6538,9 @@ module.exports = {
 /* 147 */
 /***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } } function _next(value) { step("next", value); } function _throw(err) { step("throw", err); } _next(); }); }; }
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
 // import axios from 'axios'
 var axios = __webpack_require__(29);
@@ -6647,8 +6656,8 @@ AFRAME.registerSystem('assetLoader', {
   //   })
   // },
   loadGeometry: function loadGeometry() {
-    var currentAsset = JSON.parse(localStorage.getItem('currentAsset'));
-    console.log("currentAsset: ".concat(JSON.stringify(currentAsset)));
+    var currentAsset = JSON.parse(localStorage.getItem('currentAsset')); // console.log(`currentAsset: ${JSON.stringify(currentAsset)}`)
+
     this.addGltfAsset({
       id: currentAsset.id,
       name: currentAsset.name,
@@ -6664,10 +6673,7 @@ AFRAME.registerSystem('assetLoader', {
 
 /***/ }),
 /* 148 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
+/***/ (function(module, exports) {
 
 AFRAME.registerSystem('singleAsset', {
   // register a component named store

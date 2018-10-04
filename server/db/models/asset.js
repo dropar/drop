@@ -2,7 +2,7 @@ const Sequelize = require('sequelize')
 const db = require('../db')
 
 const Asset = db.define('asset', {
-  id: { // name
+  googleApiId: { // name
     type: Sequelize.STRING,
     allowNull: false,
     primaryKey: true,
@@ -28,7 +28,7 @@ const Asset = db.define('asset', {
     allowNull: false
   },
   category: {
-    type: Sequelize.ENUM('Architecture', 'Art', 'Food', 'Nature', 'Objects', 'People', 'Scenes', 'Technology','Transport', 'Other'),
+    type: Sequelize.ENUM('Architecture', 'Art', 'Food', 'Nature', 'Objects', 'People', 'Scenes', 'Technology','Transport', 'Other', 'N/A'),
     allowNull: false
   }
 })
