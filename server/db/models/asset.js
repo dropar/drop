@@ -18,12 +18,12 @@ const Asset = db.define('asset', {
     type: Sequelize.TEXT,
     allowNull: false
   },
-  // category: {
-  //   type: Sequelize.ENUM('Architecture', 'Art', 'Food', 'Nature', 'Objects', 'People', 'Scenes', 'Technology','Transport', 'Other'),
-  //   allowNull: false
-  // },
+  category: {
+    type: Sequelize.ENUM('Architecture', 'Art', 'Food', 'Nature', 'Objects', 'People', 'Scenes', 'Technology','Transport', 'Other'),
+    allowNull: false
+  },
   googleApiId: { // name
-    type: Sequelize.INTEGER,
+    type: Sequelize.STRING,
     allowNull: true
   },
   triangleCount: { // asset.formats[].formatComplexity.triangleCount
