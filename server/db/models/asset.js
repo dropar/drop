@@ -2,10 +2,8 @@ const Sequelize = require('sequelize')
 const db = require('../db')
 
 const Asset = db.define('asset', {
-  id: { // name
-    type: Sequelize.STRING,
-    allowNull: false,
-    primaryKey: true,
+  googleApiId: { // name
+    type: Sequelize.INTEGER,
   },
   displayName: { // displayName
     type: Sequelize.STRING,
@@ -25,10 +23,6 @@ const Asset = db.define('asset', {
   },
   thumbnailUrl: { // thumbnail.url
     type: Sequelize.TEXT,
-    allowNull: false
-  },
-  category: {
-    type: Sequelize.ENUM('Architecture', 'Art', 'Food', 'Nature', 'Objects', 'People', 'Scenes', 'Technology','Transport', 'Other'),
     allowNull: false
   }
 })

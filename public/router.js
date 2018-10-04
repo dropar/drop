@@ -7,6 +7,7 @@ const { submitLoginForm }= require('../src/components/login');
 const assetQuery = require('../src/components/userAssets');
 const { submitSignUpForm } = require('../src/components/signup');
 const assetFetcher = require('../src/components/assetFetcher.js');
+const { uploadForm } = require('../src/components/upload');
 
   function $id(id) {
     return document.getElementById(id);
@@ -69,6 +70,12 @@ const assetFetcher = require('../src/components/assetFetcher.js');
       loadHTML('./templates/signup.html', 'view')
       .then(() => {
         submitSignUpForm();
+      })
+    },
+    'upload': () => {
+      loadHTML('./templates/upload.html', 'view')
+      .then(() => {
+        uploadForm();
       })
     }
   });
