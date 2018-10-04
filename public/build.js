@@ -6405,26 +6405,37 @@ AFRAME.registerComponent('store-controls', {
 "use strict";
 
 
+<<<<<<< HEAD
 var axios = __webpack_require__(29);
 
+=======
+>>>>>>> master
 module.exports = {
   uploadForm: function uploadForm() {
     var environment = window.location.href.startsWith('http://localhost:8080') ? 'development' : 'production';
-    var submitButton = document.getElementById('upload-submit');
+    var form = document.getElementById('upload-form');
     console.log('upload function running');
-    submitButton.addEventListener('click', function (event) {
+    form.addEventListener('submit', function (event) {
       event.preventDefault();
       console.log('upload button clicked HOPEFULLY NOT TWICE');
       var displayName = document.getElementById('displayName');
       var assetUrl = document.getElementById('assetUrl');
-      var thumbnailUrl = document.getElementById('thumbnailUrl'); //upload post request
+      var thumbnailUrl = document.getElementById('thumbnailUrl');
+      var body = JSON.stringify({
+        displayName: displayName.value,
+        authorName: window.user.name,
+        assetUrl: assetUrl.value,
+        thumbnailUrl: thumbnailUrl.value
+      });
+      console.log(body); //upload post request
 
       try {
-        fetch.post("/api/users/".concat(window.user.id, "/assets"), {
-          displayName: displayName.value,
-          authorName: window.user.name,
-          assetUrl: assetUrl.value,
-          thumbnailUrl: thumbnailUrl.value
+        fetch("/api/users/".concat(window.user.id, "/assets"), {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json; charset=utf-8"
+          },
+          body: body
         }).then(function (res) {
           console.log('asset', res.data);
           console.log('asset posted');
@@ -6446,6 +6457,10 @@ module.exports = {
 
 "use strict";
 
+
+var _this = void 0;
+
+var axios = __webpack_require__(29);
 
 module.exports = {
   getUserAssets: function getUserAssets() {
