@@ -28,7 +28,7 @@ a{
   margin: 0 auto;
   margin-bottom: 20px;
   height: 50px;
-  border-bottom: 1px solid #cccccc;
+  /* border-bottom: 1px solid #cccccc; */
 }
 #header.ar{
   max-width: 95%;
@@ -91,11 +91,15 @@ a{
 }
 
 #content3D {
+  /* position: relative;
   float: left;
   width: 430px;
   height: 300px;
   border: 1px solid #dedede;
-  margin: 0 auto;
+  margin: 0 auto; */
+  position: fixed;
+  width: 100%;
+  height: 100%;
 }
 #content3D.ar {
   border: 0;
@@ -324,3 +328,16 @@ a{
   max-height: 150px;
   max-width: 150px;
 }
+
+
+
+.a-canvas {
+  position: fixed;
+}
+
+.a-enter-vr-button {
+  position: fixed !important;
+  right: 10px !important;
+  bottom: 20px !important;
+}
+
