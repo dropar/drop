@@ -2,10 +2,9 @@ module.exports = {
   uploadForm: () => {
     const environment = window.location.href.startsWith('http://localhost:8080') ? 'development' : 'production';
     const form = document.getElementById('upload-form');
-    console.log('upload function running');
+    const formRow = document.getElementById('upload-row');
     form.addEventListener('submit', event => {
       event.preventDefault();
-      console.log('upload button clicked HOPEFULLY NOT TWICE');
       const displayName = document.getElementById('displayName');
       const assetUrl = document.getElementById('assetUrl');
       const thumbnailUrl = document.getElementById('thumbnailUrl');
