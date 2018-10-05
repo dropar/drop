@@ -3,6 +3,7 @@ module.exports = {
     const mainDiv = document.getElementById('view')
     const assetsDiv = document.getElementById('user-assets');
     const userId = window.user.id;
+    const environment = window.location.href.startsWith('http://localhost:8080') ? 'development' : 'production';
     const userAssets = fetch(`api/users/${userId}/assets`,
     {method: "GET"}).then((response) =>
       response.json())
@@ -10,8 +11,15 @@ module.exports = {
         console.log(resData)
         resData.forEach((asset) => {
         const userDiv = document.createElement('div');
-        userDiv.id = 'one asset'
-        userDiv.addEventListener('click', () => { fetch(`api/assets/${asset.id}`)});
+        userDiv.id = 'one-asset'
+        userDiv.addEventListener('click', () => {
+          if (environment === 'production'){
+            window.location.href = `https://dropar.herokuapp.com/?#!assets/${asset.id}`
+            console.log(window.location.href)
+          } else {
+            window.location.href = `http://localhost:8080/?#!assets/${asset.id}`
+            console.log(window.location.href)
+          }});
         const userAssetName = document.createElement('a');
         userAssetName.href='https://google.com';
         userAssetName.innerText = asset.displayName;

@@ -20,11 +20,9 @@ router.get('/', async (req, res, next) => {
 router.get('/:userId/assets', async (req, res, next) => {
   const targetUser = req.params.userId;
   try {
-    const userAssets = await Asset.findAll({
-      where: {userId: targetUser},
-      attributes: ['thumbnail', 'name']
-    })
-    res.json(userAssets)
+    const user = await User.find({where: {id: targetUser}});
+    const userAssets = await user.getAssets();
+    res.send(userAssets);
   } catch (err) {
     next(err)
   }
