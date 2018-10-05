@@ -2,12 +2,13 @@
   // window.addEventListener('load', function() {
 
   // getElementById wrapper
-const allAssets = require('../src/controllers/allAssets')
+const allAssets = require('../src/components/allAssets')
 const { submitLoginForm }= require('../src/components/login');
-const assetQuery = require('../src/components/userAssets');
+const userAssets = require('../src/components/userAssets');
 const { submitSignUpForm } = require('../src/components/signup');
 const assetFetcher = require('../src/components/assetFetcher.js');
 const { uploadForm } = require('../src/components/upload');
+const { runSplash } = require('../src/components/splash');
 
   function $id(id) {
     return document.getElementById(id);
@@ -56,7 +57,7 @@ const { uploadForm } = require('../src/components/upload');
     'thirdroute': () => { loadHTML('./templates/third.html', 'view'); },
     'userAssets': () => {
       loadHTML('./templates/userAssets.html', 'view').then(() => {
-        assetQuery.getUserAssets();
+        userAssets.getUserAssets();
       })
     },
     'login': () => {
@@ -88,7 +89,12 @@ const { uploadForm } = require('../src/components/upload');
   });
 
   // set the default route
-  router.on(() => { loadHTML('./templates/first.html', 'view'); });
+  router.on(() => {
+    loadHTML('./templates/splash.html', 'view')
+    .then(() => {
+      runSplash();
+    })
+  });
 
   // set the 404 route
   router.notFound((query) => { $id('view').innerHTML = '<h3>Couldn\'t find the page you\'re looking for...</h3>'; });
