@@ -25,16 +25,20 @@ const users = [
   }
 ];
 
-const ownership = []
+const ownership = [];
 
-const isGLTF = asset => asset.formats.filter(format => format.formatType === "GLTF").length > 0;
-const assetUrlFilter = asset => asset.formats.filter(asset => asset.formatType === "GLTF")[0].root.url;
+const isGLTF = asset =>
+  asset.formats.filter(format => format.formatType === "GLTF").length > 0;
+const assetUrlFilter = asset =>
+  asset.formats.filter(asset => asset.formatType === "GLTF")[0].root.url;
 
 let validAssets = [];
 
 const seed = async () => {
   try {
-    const resAnimals = await axios.get("https://poly.googleapis.com/v1/assets?key=AIzaSyDbAkOgCpfiweD3ZQ3_ZyR0UBEqD17ZBs4&pageSize=100&maxComplexity=MEDIUM&category=ANIMALS")
+    const resAnimals = await axios.get(
+      "https://poly.googleapis.com/v1/assets?key=AIzaSyDbAkOgCpfiweD3ZQ3_ZyR0UBEqD17ZBs4&pageSize=100&maxComplexity=MEDIUM&category=ANIMALS"
+    );
     const resArchitecture = await axios.get("https://poly.googleapis.com/v1/assets?key=AIzaSyDbAkOgCpfiweD3ZQ3_ZyR0UBEqD17ZBs4&pageSize=100&maxComplexity=MEDIUM&category=ARCHITECTURE")
     const resArt = await axios.get("https://poly.googleapis.com/v1/assets?key=AIzaSyDbAkOgCpfiweD3ZQ3_ZyR0UBEqD17ZBs4&pageSize=100&maxComplexity=MEDIUM&category=ART")
     const resFood = await axios.get("https://poly.googleapis.com/v1/assets?key=AIzaSyDbAkOgCpfiweD3ZQ3_ZyR0UBEqD17ZBs4&pageSize=100&maxComplexity=MEDIUM&category=FOOD")
@@ -45,7 +49,7 @@ const seed = async () => {
     const resTechnology = await axios.get("https://poly.googleapis.com/v1/assets?key=AIzaSyDbAkOgCpfiweD3ZQ3_ZyR0UBEqD17ZBs4&pageSize=100&maxComplexity=MEDIUM&category=TECH")
     const resTransport = await axios.get("https://poly.googleapis.com/v1/assets?key=AIzaSyDbAkOgCpfiweD3ZQ3_ZyR0UBEqD17ZBs4&pageSize=100&maxComplexity=MEDIUM&category=TRANSPORT")
 
-    const animals = resAnimals.data.assets
+    const animals = resAnimals.data.assets;
     const architecture = resArchitecture.data.assets;
     const art = resArt.data.assets
     const food = resFood.data.assets
@@ -57,179 +61,155 @@ const seed = async () => {
     const transport = resTransport.data.assets
 
     animals.forEach(asset => {
-        if (isGLTF(asset)) {
-          validAssets.push({
-            displayName: asset.displayName,
-            authorName: asset.authorName,
-            thumbnailUrl: asset.thumbnail.url,
-            googleApiId: asset.name,
-            assetUrl: assetUrlFilter(asset),
-            category: "Animals",
-          });
-        }
-      });
+      if (isGLTF(asset)) {
+        validAssets.push({
+          displayName: asset.displayName,
+          authorName: asset.authorName,
+          thumbnailUrl: asset.thumbnail.url,
+          googleApiId: asset.name,
+          assetUrl: assetUrlFilter(asset),
+          category: "Animals"
+        });
+      }
+    });
 
-      architecture.forEach(asset => {
-        if (isGLTF(asset)) {
-          validAssets.push({
-            displayName: asset.displayName,
-            authorName: asset.authorName,
-            thumbnailUrl: asset.thumbnail.url,
-            googleApiId: asset.name,
-            assetUrl: assetUrlFilter(asset),
-            category: "Architecture",
-          });
-        }
-      });
+    architecture.forEach(asset => {
+      if (isGLTF(asset)) {
+        validAssets.push({
+          displayName: asset.displayName,
+          authorName: asset.authorName,
+          thumbnailUrl: asset.thumbnail.url,
+          googleApiId: asset.name,
+          assetUrl: assetUrlFilter(asset),
+          category: "Architecture",
+        });
+      }
+    });
 
-      art.forEach(asset => {
-        if (isGLTF(asset)) {
-          validAssets.push({
-            displayName: asset.displayName,
-            authorName: asset.authorName,
-            thumbnailUrl: asset.thumbnail.url,
-            googleApiId: asset.name,
-            assetUrl: assetUrlFilter(asset),
-            category: "Art",
-          });
-        }
-      });
+    art.forEach(asset => {
+      if (isGLTF(asset)) {
+        validAssets.push({
+          displayName: asset.displayName,
+          authorName: asset.authorName,
+          thumbnailUrl: asset.thumbnail.url,
+          googleApiId: asset.name,
+          assetUrl: assetUrlFilter(asset),
+          category: "Art",
+        });
+      }
+    });
 
+    food.forEach(asset => {
+      if (isGLTF(asset)) {
+        validAssets.push({
+          displayName: asset.displayName,
+          authorName: asset.authorName,
+          thumbnailUrl: asset.thumbnail.url,
+          googleApiId: asset.name,
+          assetUrl: assetUrlFilter(asset),
+          category: "Food",
+        });
+      }
+    });
 
-      food.forEach(asset => {
-        if (isGLTF(asset)) {
-          validAssets.push({
-            displayName: asset.displayName,
-            authorName: asset.authorName,
-            thumbnailUrl: asset.thumbnail.url,
-            googleApiId: asset.name,
-            assetUrl: assetUrlFilter(asset),
-            category: "Food",
-          });
-        }
-      });
+    nature.forEach(asset => {
+      if (isGLTF(asset)) {
+        validAssets.push({
+          displayName: asset.displayName,
+          authorName: asset.authorName,
+          thumbnailUrl: asset.thumbnail.url,
+          googleApiId: asset.name,
+          assetUrl: assetUrlFilter(asset),
+          category: "Nature",
+        });
+      }
+    });
 
-      // nature.forEach(asset => {
-      //   if (isGLTF(asset)) {
-      //     validAssets.push({
-      //       displayName: asset.displayName,
-      //       authorName: asset.authorName,
-      //       thumbnailUrl: asset.thumbnail.url,
-      //       googleApiId: asset.name,
-      //       assetUrl: assetUrlFilter(asset),
-      //       category: "Nature",
-      //     });
-      //   }
-      // });
+    objects.forEach(asset => {
+      if (isGLTF(asset)) {
+        validAssets.push({
+          displayName: asset.displayName,
+          authorName: asset.authorName,
+          thumbnailUrl: asset.thumbnail.url,
+          googleApiId: asset.name,
+          assetUrl: assetUrlFilter(asset),
+          category: "Objects",
+        });
+      }
+    });
 
-      // objects.forEach(asset => {
-      //   if (isGLTF(asset)) {
-      //     validAssets.push({
-      //       displayName: asset.displayName,
-      //       authorName: asset.authorName,
-      //       thumbnailUrl: asset.thumbnail.url,
-      //       googleApiId: asset.name,
-      //       assetUrl: assetUrlFilter(asset),
-      //       category: "Objects",
-      //     });
-      //   }
-      // });
+    people.forEach(asset => {
+      if (isGLTF(asset)) {
+        validAssets.push({
+          displayName: asset.displayName,
+          authorName: asset.authorName,
+          thumbnailUrl: asset.thumbnail.url,
+          googleApiId: asset.name,
+          assetUrl: assetUrlFilter(asset),
+          category: "People",
+        });
+      }
+    });
 
-      // people.forEach(asset => {
-      //   if (isGLTF(asset)) {
-      //     validAssets.push({
-      //       displayName: asset.displayName,
-      //       authorName: asset.authorName,
-      //       thumbnailUrl: asset.thumbnail.url,
-      //       googleApiId: asset.name,
-      //       assetUrl: assetUrlFilter(asset),
-      //       category: "People",
-      //     });
-      //   }
-      // });
+    scenes.forEach(asset => {
+      if (isGLTF(asset)) {
+        validAssets.push({
+          displayName: asset.displayName,
+          authorName: asset.authorName,
+          thumbnailUrl: asset.thumbnail.url,
+          googleApiId: asset.name,
+          assetUrl: assetUrlFilter(asset),
+          category: "Scenes",
+        });
+      }
+    });
 
-      // scenes.forEach(asset => {
-      //   if (isGLTF(asset)) {
-      //     validAssets.push({
-      //       displayName: asset.displayName,
-      //       authorName: asset.authorName,
-      //       thumbnailUrl: asset.thumbnail.url,
-      //       googleApiId: asset.name,
-      //       assetUrl: assetUrlFilter(asset),
-      //       category: "Scenes",
-      //     });
-      //   }
-      // });
+    technology.forEach(asset => {
+      if (isGLTF(asset)) {
+        validAssets.push({
+          displayName: asset.displayName,
+          authorName: asset.authorName,
+          thumbnailUrl: asset.thumbnail.url,
+          googleApiId: asset.name,
+          assetUrl: assetUrlFilter(asset),
+          category: "Technology",
+        });
+      }
+    });
 
-      // technology.forEach(asset => {
-      //   if (isGLTF(asset)) {
-      //     validAssets.push({
-      //       displayName: asset.displayName,
-      //       authorName: asset.authorName,
-      //       thumbnailUrl: asset.thumbnail.url,
-      //       googleApiId: asset.name,
-      //       assetUrl: assetUrlFilter(asset),
-      //       category: "Technology",
-      //     });
-      //   }
-      // });
+    transport.forEach(asset => {
+      if (isGLTF(asset)) {
+        validAssets.push({
+          displayName: asset.displayName,
+          authorName: asset.authorName,
+          thumbnailUrl: asset.thumbnail.url,
+          googleApiId: asset.name,
+          assetUrl: assetUrlFilter(asset),
+          category: "Transport",
+        });
+      }
+    });
 
-      // transport.forEach(asset => {
-      //   if (isGLTF(asset)) {
-      //     validAssets.push({
-      //       displayName: asset.displayName,
-      //       authorName: asset.authorName,
-      //       thumbnailUrl: asset.thumbnail.url,
-      //       googleApiId: asset.name,
-      //       assetUrl: assetUrlFilter(asset),
-      //       category: "Transport",
-      //     });
-      //   }
-      // });
-
-      await users.map(user => User.create(user));
-      await validAssets.map(asset => Asset.create(asset));
+    await Promise.all(users.map(user => User.create(user)));
+    await Promise.all(validAssets.map(asset => Asset.create(asset)));
   } catch (error) {
-    console.error(error)
+    console.error(error);
   }
-}
+};
 
-  const main = async () => {
-    try {
-      console.log("syncing db..");
-      db.sync({ force: true })
-      await seed();
-      setTimeout(db.close(), 10000);
-    } catch (error) {
-        console.log("error while seeding");
-        console.log(err.stack);
-    }
+const main = async () => {
+  try {
+    console.log("syncing db..");
+    db.sync({ force: true });
+    await seed();
+  } catch (error) {
+    console.log("error while seeding");
+    console.log(error.stack);
+  } finally {
+    db.close();
   }
+};
 
-  main();
+main();
 
-  module.exports = main;
-
-
-
-
-  //&category  animals, architecture, art, food, nature, objects, people, scenes, technology, and transport.
-
-  // .then(() => {
-  //   axios.get("https://poly.googleapis.com/v1/assets?key=AIzaSyDbAkOgCpfiweD3ZQ3_ZyR0UBEqD17ZBs4&category=ART&pageSize=100&maxComplexity=MEDIUM")
-  // })
-  // .then(res => {
-  //   const artAssetsFromAPI = res.data.assets;
-  //   artAssetsFromAPI.forEach(asset => {
-  //     if (isGLTF(asset)) {
-  //       validAssets.push({
-  //         displayName: asset.displayName,
-  //         authorName: asset.authorName,
-  //         thumbnailUrl: asset.thumbnail.url,
-  //         googleApiId: asset.name,
-  //         assetUrl: assetUrlFilter(asset),
-  //         category: "Art",
-  //       });
-  //     }
-  //   });
-  // })
+module.exports = main;
