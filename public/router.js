@@ -2,7 +2,7 @@
   // window.addEventListener('load', function() {
 
   // getElementById wrapper
-const allAssets = require('../src/controllers/allAssets')
+const allAssets = require('../src/components/allAssets')
 const { submitLoginForm }= require('../src/components/login');
 const userAssets = require('../src/components/userAssets');
 const { submitSignUpForm } = require('../src/components/signup');
