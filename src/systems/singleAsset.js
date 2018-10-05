@@ -123,6 +123,7 @@ AFRAME.registerSystem('singleAsset', { // register a component named store
   // handle change in reality btw "Magic Window", AR, and VR
   realityChanged: function (data) {
     console.log('--- reality changed', data)
+    console.log('--- pinSelected', this.pinSelected);
     document.getElementById('status').innerText = this.currentReality;
 
     if (data.detail !== this.currentReality) {
@@ -133,7 +134,9 @@ AFRAME.registerSystem('singleAsset', { // register a component named store
   changeReality: function () {
     var productOptionArr = document.getElementsByClassName('productOption');
 
-    document.getElementById('status').innerText = this.currentReality;
+    document.getElementById('status').innerText = this.pinSelected + ' ' + this.currentReality;
+    console.log('--- currentReality', this.currentReality);
+    console.log('--- pinSelected2', this.pinSelected);
 
     // currentReality is actually the new reality we are switching to
     // b/c we set on realityChanged event above before calling changeReality.
@@ -141,26 +144,31 @@ AFRAME.registerSystem('singleAsset', { // register a component named store
 
       case 'ar':
 
-        // remove title and add "ar" class to to everything that stays
-        document.getElementById('header').classList.add('ar');
-        document.getElementById('title').style.display = 'none';
-        document.getElementById('visualSheet').classList.add('ar');
-        document.getElementById('content3D').classList.add('ar');
-        document.getElementById('productOptions').classList.add('ar');
-        for (var i = 0; i < productOptionArr.length; i++) {
-          productOptionArr[i].classList.add('ar');
-        }
 
-        // remove more stuff. this should probably be wrapped
-        document.getElementById('brand').style.display = 'none';
-        document.getElementById('productName').style.display = 'none';
-        document.getElementById('price').style.display = 'none';
-        document.getElementById('comments').style.display = 'none';
-        // document.getElementById('thumbs').classList.add('ar');
-        document.getElementById('buttonCart').classList.add('ar');
-        document.getElementById('footer').style.display = 'none';
+      // remove title and add "ar" class to to everything that stays
+      document.getElementById('header').classList.add('ar');
+      document.getElementById('title').style.display = 'none';
+      document.getElementById('visualSheet').classList.add('ar');
+      document.getElementById('content3D').classList.add('ar');
+      document.getElementById('productOptions').classList.add('ar');
+      for (var i = 0; i < productOptionArr.length; i++) {
+        productOptionArr[i].classList.add('ar');
+      }
+
+      // remove more stuff. this should probably be wrapped
+      // document.getElementById('brand').style.display = 'none';
+      // document.getElementById('productName').style.display = 'none';
+      // document.getElementById('price').style.display = 'none';
+      // document.getElementById('comments').style.display = 'none';
+      // document.getElementById('thumbs').classList.add('ar');
+      // document.getElementById('buttonCart').classList.add('ar');
+      // document.getElementById('footer').style.display = 'none';
+
+      document.getElementById('status').innerText = 'mthfkr' + ' ' + this.pinSelected + ' ' + this.currentReality;
 
         if (!this.pinSelected) { // object not yet placed.
+          document.getElementById('status').innerText = 'show it';
+
           document.getElementById('arui').style.display = 'block';
           document.getElementById('header').style.display = 'none';
           document.getElementById('productOptions').style.display = 'none';
