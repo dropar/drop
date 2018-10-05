@@ -192,6 +192,8 @@ const seed = async () => {
 
     await Promise.all(users.map(user => User.create(user)));
     await Promise.all(validAssets.map(asset => Asset.create(asset)));
+    const seedTestUser = await User.findById(4)
+    await seedTestUser.setAssets([1,2])
   } catch (error) {
     console.error(error);
   }
