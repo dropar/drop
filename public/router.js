@@ -8,6 +8,7 @@ const userAssets = require('../src/components/userAssets');
 const { submitSignUpForm } = require('../src/components/signup');
 const assetFetcher = require('../src/components/assetFetcher.js');
 const { uploadForm } = require('../src/components/upload');
+const { runSplash } = require('../src/components/splash');
 
   function $id(id) {
     return document.getElementById(id);
@@ -88,7 +89,12 @@ const { uploadForm } = require('../src/components/upload');
   });
 
   // set the default route
-  router.on(() => { loadHTML('./templates/splash.html', 'view'); });
+  router.on(() => {
+    loadHTML('./templates/splash.html', 'view')
+    .then(() => {
+      runSplash();
+    })
+  });
 
   // set the 404 route
   router.notFound((query) => { $id('view').innerHTML = '<h3>Couldn\'t find the page you\'re looking for...</h3>'; });
