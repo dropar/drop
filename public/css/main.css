@@ -341,7 +341,7 @@ a{
   bottom: 20px !important;
 }
 
-@media only screen and (device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait) {
+/* @media only screen and (device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait) {
   body {
     background-color: #FFFFFF;
     background-image: url('../assets/apple-startup-images/splash-640x1136.png')
@@ -388,4 +388,4 @@ a{
     background-color: #FFFFFF;
     background-image: url('../assets/apple-startup-images/splash-2048x2732.png')
   }
-}
+} */
