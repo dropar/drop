@@ -14,6 +14,16 @@ router.get('/', async (req, res, next) => {
   }
 })
 
+router.get('/:category', async (req, res, next) => {
+  const category = req.params.category;
+  try {
+    const assets = await Asset.findAll({where: {category: category}})
+    res.send(assets)
+  } catch (err) {
+    console.error(err)
+    next(err)
+  }
+})
 
 router.get('/:assetId', async (req, res, next) => {
   console.log(Asset)
