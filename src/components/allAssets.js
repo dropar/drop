@@ -47,7 +47,6 @@ module.exports = {
             window.location.href = `http://localhost:8080/?#!assets/${asset.id}`
           }});
         const allAssetName = document.createElement('a');
-        allAssetName.href='https://google.com';
         allAssetName.innerText = asset.displayName;
         const allAssetImg = new Image(100, 100);
         allAssetImg.src = asset.thumbnailUrl;
