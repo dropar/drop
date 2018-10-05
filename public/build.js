@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 323);
+/******/ 	return __webpack_require__(__webpack_require__.s = 324);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -1632,7 +1632,7 @@ exports.f = {}.propertyIsEnumerable;
 /* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(126);
+module.exports = __webpack_require__(125);
 
 /***/ }),
 /* 47 */
@@ -1988,7 +1988,7 @@ module.exports = navigator && navigator.userAgent || '';
 /* WEBPACK VAR INJECTION */(function(process) {
 
 var utils = __webpack_require__(12);
-var normalizeHeaderName = __webpack_require__(140);
+var normalizeHeaderName = __webpack_require__(139);
 
 var DEFAULT_CONTENT_TYPE = {
   'Content-Type': 'application/x-www-form-urlencoded'
@@ -3624,12 +3624,12 @@ addToUnscopables('entries');
 /* WEBPACK VAR INJECTION */(function(process) {
 
 var utils = __webpack_require__(12);
-var settle = __webpack_require__(132);
-var buildURL = __webpack_require__(135);
-var parseHeaders = __webpack_require__(141);
-var isURLSameOrigin = __webpack_require__(139);
+var settle = __webpack_require__(131);
+var buildURL = __webpack_require__(134);
+var parseHeaders = __webpack_require__(140);
+var isURLSameOrigin = __webpack_require__(138);
 var createError = __webpack_require__(88);
-var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(134);
+var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(133);
 
 module.exports = function xhrAdapter(config) {
   return new Promise(function dispatchXhrRequest(resolve, reject) {
@@ -3726,7 +3726,7 @@ module.exports = function xhrAdapter(config) {
     // This is only done if running in a standard browser environment.
     // Specifically not if we're in a web worker, or react-native.
     if (utils.isStandardBrowserEnv()) {
-      var cookies = __webpack_require__(137);
+      var cookies = __webpack_require__(136);
 
       // Add xsrf header
       var xsrfValue = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ?
@@ -3849,7 +3849,7 @@ module.exports = function isCancel(value) {
 "use strict";
 
 
-var enhanceError = __webpack_require__(131);
+var enhanceError = __webpack_require__(130);
 
 /**
  * Create an Error with the specified message, config, error code, request and response.
@@ -3892,8 +3892,6 @@ module.exports = function bind(fn, thisArg) {
 "use strict";
 
 
-__webpack_require__(122);
-
 module.exports = {
   submitLoginForm: function submitLoginForm() {
     var environment = window.location.href.startsWith('http://localhost:8080') ? 'development' : 'production';
@@ -3914,10 +3912,10 @@ module.exports = {
             password: password.value
           })
         }).then(function (res) {
-          console.log('res', res);
-          window.user = res.data;
-          console.log('user', window.user);
-
+          return res.json();
+        }).then(function (data) {
+          window.user = data;
+        }).then(function () {
           if (environment === 'production') {
             window.location.href = 'https://dropar.herokuapp.com/?#!userAssets';
           } else window.location.href = 'http://localhost:8080/?#!userAssets';
@@ -5256,56 +5254,6 @@ process.umask = function() { return 0; };
 /* 122 */
 /***/ (function(module, exports, __webpack_require__) {
 
-
-var content = __webpack_require__(317);
-
-if(typeof content === 'string') content = [[module.i, content, '']];
-
-var transform;
-var insertInto;
-
-
-
-var options = {"hmr":true}
-
-options.transform = transform
-options.insertInto = undefined;
-
-var update = __webpack_require__(123)(content, options);
-
-if(content.locals) module.exports = content.locals;
-
-if(false) {
-	module.hot.accept("!!../../node_modules/css-loader/index.js!./login.css", function() {
-		var newContent = require("!!../../node_modules/css-loader/index.js!./login.css");
-
-		if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-
-		var locals = (function(a, b) {
-			var key, idx = 0;
-
-			for(key in a) {
-				if(!b || a[key] !== b[key]) return false;
-				idx++;
-			}
-
-			for(key in b) idx--;
-
-			return idx === 0;
-		}(content.locals, newContent.locals));
-
-		if(!locals) throw new Error('Aborting CSS HMR due to changed css-modules locals.');
-
-		update(newContent);
-	});
-
-	module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 123 */
-/***/ (function(module, exports, __webpack_require__) {
-
 /*
 	MIT License http://www.opensource.org/licenses/mit-license.php
 	Author Tobias Koppers @sokra
@@ -5372,7 +5320,7 @@ var singleton = null;
 var	singletonCounter = 0;
 var	stylesInsertedAtTop = [];
 
-var	fixUrls = __webpack_require__(321);
+var	fixUrls = __webpack_require__(322);
 
 module.exports = function(list, options) {
 	if (typeof DEBUG !== "undefined" && DEBUG) {
@@ -5707,7 +5655,7 @@ function updateLink (link, options, obj) {
 
 
 /***/ }),
-/* 124 */
+/* 123 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5740,10 +5688,10 @@ if (global._babelPolyfill && typeof console !== "undefined" && console.warn) {
 }
 
 global._babelPolyfill = true;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(322)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(323)))
 
 /***/ }),
-/* 125 */
+/* 124 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5751,7 +5699,7 @@ global._babelPolyfill = true;
 
 __webpack_require__(145);
 
-__webpack_require__(147);
+__webpack_require__(148);
 
 __webpack_require__(152);
 
@@ -5759,11 +5707,11 @@ __webpack_require__(151);
 
 __webpack_require__(90);
 
-__webpack_require__(143);
-
-__webpack_require__(122);
+__webpack_require__(142);
 
 __webpack_require__(320);
+
+__webpack_require__(321);
 
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', function () {
@@ -5776,7 +5724,7 @@ if ('serviceWorker' in navigator) {
 }
 
 /***/ }),
-/* 126 */
+/* 125 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5784,7 +5732,7 @@ if ('serviceWorker' in navigator) {
 
 var utils = __webpack_require__(12);
 var bind = __webpack_require__(89);
-var Axios = __webpack_require__(128);
+var Axios = __webpack_require__(127);
 var defaults = __webpack_require__(58);
 
 /**
@@ -5819,14 +5767,14 @@ axios.create = function create(instanceConfig) {
 
 // Expose Cancel & CancelToken
 axios.Cancel = __webpack_require__(86);
-axios.CancelToken = __webpack_require__(127);
+axios.CancelToken = __webpack_require__(126);
 axios.isCancel = __webpack_require__(87);
 
 // Expose all/spread
 axios.all = function all(promises) {
   return Promise.all(promises);
 };
-axios.spread = __webpack_require__(142);
+axios.spread = __webpack_require__(141);
 
 module.exports = axios;
 
@@ -5835,7 +5783,7 @@ module.exports.default = axios;
 
 
 /***/ }),
-/* 127 */
+/* 126 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5899,7 +5847,7 @@ module.exports = CancelToken;
 
 
 /***/ }),
-/* 128 */
+/* 127 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5907,8 +5855,8 @@ module.exports = CancelToken;
 
 var defaults = __webpack_require__(58);
 var utils = __webpack_require__(12);
-var InterceptorManager = __webpack_require__(129);
-var dispatchRequest = __webpack_require__(130);
+var InterceptorManager = __webpack_require__(128);
+var dispatchRequest = __webpack_require__(129);
 
 /**
  * Create a new instance of Axios
@@ -5985,7 +5933,7 @@ module.exports = Axios;
 
 
 /***/ }),
-/* 129 */
+/* 128 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6044,18 +5992,18 @@ module.exports = InterceptorManager;
 
 
 /***/ }),
-/* 130 */
+/* 129 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var utils = __webpack_require__(12);
-var transformData = __webpack_require__(133);
+var transformData = __webpack_require__(132);
 var isCancel = __webpack_require__(87);
 var defaults = __webpack_require__(58);
-var isAbsoluteURL = __webpack_require__(138);
-var combineURLs = __webpack_require__(136);
+var isAbsoluteURL = __webpack_require__(137);
+var combineURLs = __webpack_require__(135);
 
 /**
  * Throws a `Cancel` if cancellation has been requested.
@@ -6137,7 +6085,7 @@ module.exports = function dispatchRequest(config) {
 
 
 /***/ }),
-/* 131 */
+/* 130 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6165,7 +6113,7 @@ module.exports = function enhanceError(error, config, code, request, response) {
 
 
 /***/ }),
-/* 132 */
+/* 131 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6198,7 +6146,7 @@ module.exports = function settle(resolve, reject, response) {
 
 
 /***/ }),
-/* 133 */
+/* 132 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6225,7 +6173,7 @@ module.exports = function transformData(data, headers, fns) {
 
 
 /***/ }),
-/* 134 */
+/* 133 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6268,7 +6216,7 @@ module.exports = btoa;
 
 
 /***/ }),
-/* 135 */
+/* 134 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6341,7 +6289,7 @@ module.exports = function buildURL(url, params, paramsSerializer) {
 
 
 /***/ }),
-/* 136 */
+/* 135 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6362,7 +6310,7 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 
 
 /***/ }),
-/* 137 */
+/* 136 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6422,7 +6370,7 @@ module.exports = (
 
 
 /***/ }),
-/* 138 */
+/* 137 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6443,7 +6391,7 @@ module.exports = function isAbsoluteURL(url) {
 
 
 /***/ }),
-/* 139 */
+/* 138 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6518,7 +6466,7 @@ module.exports = (
 
 
 /***/ }),
-/* 140 */
+/* 139 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6537,7 +6485,7 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 
 
 /***/ }),
-/* 141 */
+/* 140 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6597,7 +6545,7 @@ module.exports = function parseHeaders(headers) {
 
 
 /***/ }),
-/* 142 */
+/* 141 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6631,7 +6579,7 @@ module.exports = function spread(callback) {
 
 
 /***/ }),
-/* 143 */
+/* 142 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6640,20 +6588,23 @@ module.exports = function spread(callback) {
 // document.addEventListener("DOMContentLoaded", function(event) {
 // window.addEventListener('load', function() {
 // getElementById wrapper
-var allAssets = __webpack_require__(150);
+var allAssets = __webpack_require__(143);
 
 var _require = __webpack_require__(90),
     submitLoginForm = _require.submitLoginForm;
 
-var assetQuery = __webpack_require__(149);
+var _userAssets = __webpack_require__(150);
 
 var _require2 = __webpack_require__(146),
     submitSignUpForm = _require2.submitSignUpForm;
 
 var assetFetcher = __webpack_require__(144);
 
-var _require3 = __webpack_require__(148),
+var _require3 = __webpack_require__(149),
     uploadForm = _require3.uploadForm;
+
+var _require4 = __webpack_require__(147),
+    runSplash = _require4.runSplash;
 
 function $id(id) {
   return document.getElementById(id);
@@ -6700,6 +6651,11 @@ router.on({
       allAssets.getAllAssets();
     });
   },
+  'assets/:category': function assetsCategory(params) {
+    loadHTML('./templates/allAssets.html', 'view').then(function () {
+      allAssets.getAllAssetsCategory(params.category);
+    });
+  },
   'firstroute': function firstroute() {
     loadHTML('./templates/first.html', 'view');
   },
@@ -6711,7 +6667,7 @@ router.on({
   },
   'userAssets': function userAssets() {
     loadHTML('./templates/userAssets.html', 'view').then(function () {
-      assetQuery.getUserAssets();
+      _userAssets.getUserAssets();
     });
   },
   'login': function login() {
@@ -6739,7 +6695,9 @@ router.on({
 }); // set the default route
 
 router.on(function () {
-  loadHTML('./templates/first.html', 'view');
+  loadHTML('./templates/splash.html', 'view').then(function () {
+    runSplash();
+  });
 }); // set the 404 route
 
 router.notFound(function (query) {
@@ -6749,6 +6707,109 @@ router.resolve(); // });
 
 module.exports = {
   router: router
+};
+
+/***/ }),
+/* 143 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _this = void 0;
+
+module.exports = {
+  assetsArr: [],
+  getAllAssets: function getAllAssets() {
+    var assetGlobalDiv = document.getElementById('all-assets');
+    var environment = window.location.href.startsWith('http://localhost:8080') ? 'development' : 'production';
+    var allAssets = fetch("api/assets", {
+      method: "GET"
+    }).then(function (response) {
+      return response.json();
+    }).then(function (resData) {
+      console.log('all assets result', resData);
+      resData.forEach(function (asset) {
+        _this.assetsArr.push(asset);
+
+        var allAssetDiv = document.createElement('div');
+        allAssetDiv.id = 'one-asset';
+        allAssetDiv.addEventListener('click', function () {
+          if (environment === 'production') {
+            window.location.href = "https://dropar.herokuapp.com/?#!assets/".concat(asset.id);
+          } else {
+            window.location.href = "http://localhost:8080/?#!assets/".concat(asset.id);
+          }
+        });
+        var allAssetName = document.createElement('a');
+        allAssetName.href = 'https://google.com';
+        allAssetName.innerText = asset.displayName;
+        var allAssetImg = new Image(100, 100);
+        allAssetImg.src = asset.thumbnailUrl;
+        allAssetDiv.appendChild(allAssetName);
+        allAssetDiv.appendChild(allAssetImg);
+        assetGlobalDiv.appendChild(allAssetDiv);
+      });
+    });
+  },
+  getAllAssetsCategory: function getAllAssetsCategory(category) {
+    var assetGlobalDiv = document.getElementById('all-assets');
+    var environment = window.location.href.startsWith('http://localhost:8080') ? 'development' : 'production';
+    var allAssets = fetch("api/assets/".concat(category), {
+      method: "GET"
+    }).then(function (response) {
+      return response.json();
+    }).then(function (resData) {
+      console.log('all assets result', resData);
+      resData.forEach(function (asset) {
+        var allAssetDiv = document.createElement('div');
+        allAssetDiv.id = 'one-asset';
+        allAssetDiv.addEventListener('click', function () {
+          if (environment === 'production') {
+            window.location.href = "https://dropar.herokuapp.com/?#!assets/".concat(asset.id);
+          } else {
+            window.location.href = "http://localhost:8080/?#!assets/".concat(asset.id);
+          }
+        });
+        var allAssetName = document.createElement('a');
+        allAssetName.href = 'https://google.com';
+        allAssetName.innerText = asset.displayName;
+        var allAssetImg = new Image(100, 100);
+        allAssetImg.src = asset.thumbnailUrl;
+        allAssetDiv.appendChild(allAssetName);
+        allAssetDiv.appendChild(allAssetImg);
+        assetGlobalDiv.appendChild(allAssetDiv);
+      });
+    });
+  } // getAssetsByCategory: (category) => {
+  //   const assetGlobalDiv = document.getElementById('all-assets');
+  //   if (assetsArr.length !== 0){
+  //     const catFiltArr = assetsArr.filter(function(asset){
+  //       return asset.category === category
+  //     })
+  //     catFiltArr.forEach((asset) => {
+  //       const allAssetDiv = document.createElement('div');
+  //       allAssetDiv.id = 'one-asset'
+  //       allAssetDiv.addEventListener('click', () => {
+  //         if (environment === 'production'){
+  //           window.location.href = `https://dropar.herokuapp.com/?#!assets/${asset.id}`
+  //         } else {
+  //           window.location.href = `http://localhost:8080/?#!assets/${asset.id}`
+  //         }});
+  //       const allAssetName = document.createElement('a');
+  //       allAssetName.href='https://google.com';
+  //       allAssetName.innerText = asset.displayName;
+  //       const allAssetImg = new Image(100, 100);
+  //       allAssetImg.src = asset.thumbnailUrl;
+  //       allAssetDiv.appendChild(allAssetName);
+  //       allAssetDiv.appendChild(allAssetImg);
+  //       assetGlobalDiv.appendChild(allAssetDiv)
+  //     })
+  //   } else {
+  //     console.log('view all assets page first')
+  //   }
+  // }
+
 };
 
 /***/ }),
@@ -6926,6 +6987,35 @@ module.exports = {
 "use strict";
 
 
+module.exports = {
+  runSplash: function runSplash() {
+    var environment = window.location.href.startsWith('http://localhost:8080') ? 'development' : 'production';
+    var loginButton = document.getElementById('footer-login-button');
+    var signUpButton = document.getElementById('footer-signup-button');
+    loginButton.addEventListener('click', function (event) {
+      event.preventDefault();
+
+      if (environment === 'production') {
+        window.location.href = 'https://dropar.herokuapp.com/?#!login';
+      } else window.location.href = 'http://localhost:8080/?#!login';
+    });
+    signUpButton.addEventListener('click', function (event) {
+      event.preventDefault();
+
+      if (environment === 'production') {
+        window.location.href = 'https://dropar.herokuapp.com/?#!signup';
+      } else window.location.href = 'http://localhost:8080/?#!signup';
+    });
+  }
+};
+
+/***/ }),
+/* 148 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
 AFRAME.registerComponent('store-controls', {
   // schema used to declare inputs, like props
   schema: {
@@ -6948,7 +7038,7 @@ AFRAME.registerComponent('store-controls', {
 });
 
 /***/ }),
-/* 148 */
+/* 149 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6995,7 +7085,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 149 */
+/* 150 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7006,6 +7096,7 @@ module.exports = {
     var mainDiv = document.getElementById('view');
     var assetsDiv = document.getElementById('user-assets');
     var userId = window.user.id;
+    var environment = window.location.href.startsWith('http://localhost:8080') ? 'development' : 'production';
     var userAssets = fetch("api/users/".concat(userId, "/assets"), {
       method: "GET"
     }).then(function (response) {
@@ -7014,9 +7105,15 @@ module.exports = {
       console.log(resData);
       resData.forEach(function (asset) {
         var userDiv = document.createElement('div');
-        userDiv.id = 'one asset';
+        userDiv.id = 'one-asset';
         userDiv.addEventListener('click', function () {
-          fetch("api/assets/".concat(asset.id));
+          if (environment === 'production') {
+            window.location.href = "https://dropar.herokuapp.com/?#!assets/".concat(asset.id);
+            console.log(window.location.href);
+          } else {
+            window.location.href = "http://localhost:8080/?#!assets/".concat(asset.id);
+            console.log(window.location.href);
+          }
         });
         var userAssetName = document.createElement('a');
         userAssetName.href = 'https://google.com';
@@ -7035,75 +7132,6 @@ module.exports = {
   // fetch(assets/:assetId, { method: 'GET' })
 
 };
-
-/***/ }),
-/* 150 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-// const axios = require('axios')
-// module.exports = {
-//   getAllAssets: async () => {
-//     // const isGLTF = asset => (asset.formats.filter(format => format.formatType === "GLTF").length > 0)
-//     // const assetUrlFilter = asset => asset.formats.filter(asset => asset.formatType === "GLTF")[0].root.url
-//     // let validAssets = [];
-//     // try {
-//     //   const res = await axios.get
-//     //   ('https://poly.googleapis.com/v1/assets?key=AIzaSyDbAkOgCpfiweD3ZQ3_ZyR0UBEqD17ZBs4&pageSize=100&maxComplexity=MEDIUM');
-//     //   const allAssetsFromAPI = res.data.assets;
-//     //   allAssetsFromAPI.forEach(asset => {
-//     //     if(isGLTF(asset)) {
-//     //       validAssets.push({
-//     //         displayName: asset.displayName,
-//     //         authorName: asset.authorName,
-//     //         thumbnailUrl: asset.thumbnail.url,
-//     //         googleApiId: asset.name,
-//     //         assetUrl: assetUrlFilter(asset),
-//     //         category: 'N/A'
-//     //       })
-//     //     }
-//     // })
-//     // try {
-//     //     Promise.all(validAssets)
-//     //     .then(values => {
-//     //         values.map(async asset => {
-//     //             await fetch('/api/assets', {
-//     //                 method: 'POST',
-//     //                 headers: {
-//     //                     "Content-Type": "application/json; charset-utf8"
-//     //                 },
-//     //                 body: JSON.stringify(asset);
-//     //             })
-//     //             if (environmeent === 'production') {
-//     //                 window.location.href = "https://dropar.herokuapp.com"
-//     //             }
-//     //         })
-//     //     })
-//     // } catch (error) {
-//     //        console.error(error)
-//     //     }
-// //////CHANGE AXIOS TO FETCH
-//     console.log(`valid assets --->`, validAssets)
-//       let allAssetsView = document.getElementById('all-assets-view');
-//       validAssets.forEach(asset => {
-//         let newDiv = document.createElement('div')
-//         let assetThumbnail = document.createElement('img')
-//             assetThumbnail.setAttribute('src', `${asset.thumbnailUrl}`)
-//             assetThumbnail.setAttribute('class', 'asset-thumbnail')
-//         let displayName = document.createTextNode(`${asset.displayName}`)
-//         // ('h4')
-//             // displayName.setAttribute('id', 'display-name')
-//             // document.getElementById('display-name').innerHTML = `${asset.displayName}`
-//         let authorName = document.createTextNode(` by ${asset.authorName}`)
-//         // ('h2')
-//             // authorName.setAttribute('id', 'author-name')
-//             // document.getElementById('author-name').innerHTML = `by ${asset.authorName}`
-//         newDiv.appendChild(assetThumbnail)
-//         newDiv.appendChild(displayName)
-//         newDiv.appendChild(authorName)
-//         allAssetsView.appendChild(newDiv);
-//         });
-
 
 /***/ }),
 /* 151 */
@@ -11434,6 +11462,56 @@ function isSlowBuffer (obj) {
 /***/ (function(module, exports, __webpack_require__) {
 
 
+var content = __webpack_require__(317);
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(122)(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {
+	module.hot.accept("!!../../node_modules/css-loader/index.js!./login.css", function() {
+		var newContent = require("!!../../node_modules/css-loader/index.js!./login.css");
+
+		if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+
+		var locals = (function(a, b) {
+			var key, idx = 0;
+
+			for(key in a) {
+				if(!b || a[key] !== b[key]) return false;
+				idx++;
+			}
+
+			for(key in b) idx--;
+
+			return idx === 0;
+		}(content.locals, newContent.locals));
+
+		if(!locals) throw new Error('Aborting CSS HMR due to changed css-modules locals.');
+
+		update(newContent);
+	});
+
+	module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 321 */
+/***/ (function(module, exports, __webpack_require__) {
+
+
 var content = __webpack_require__(318);
 
 if(typeof content === 'string') content = [[module.i, content, '']];
@@ -11448,7 +11526,7 @@ var options = {"hmr":true}
 options.transform = transform
 options.insertInto = undefined;
 
-var update = __webpack_require__(123)(content, options);
+var update = __webpack_require__(122)(content, options);
 
 if(content.locals) module.exports = content.locals;
 
@@ -11480,7 +11558,7 @@ if(false) {
 }
 
 /***/ }),
-/* 321 */
+/* 322 */
 /***/ (function(module, exports) {
 
 
@@ -11575,7 +11653,7 @@ module.exports = function (css) {
 
 
 /***/ }),
-/* 322 */
+/* 323 */
 /***/ (function(module, exports) {
 
 var g;
@@ -11602,13 +11680,13 @@ module.exports = g;
 
 
 /***/ }),
-/* 323 */
+/* 324 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(124);
+__webpack_require__(123);
 __webpack_require__(84);
 __webpack_require__(46);
-module.exports = __webpack_require__(125);
+module.exports = __webpack_require__(124);
 
 
 /***/ })
