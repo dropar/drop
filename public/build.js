@@ -6593,7 +6593,7 @@ var allAssets = __webpack_require__(149);
 var _require = __webpack_require__(90),
     submitLoginForm = _require.submitLoginForm;
 
-var assetQuery = __webpack_require__(148);
+var _userAssets = __webpack_require__(148);
 
 var _require2 = __webpack_require__(145),
     submitSignUpForm = _require2.submitSignUpForm;
@@ -6659,7 +6659,7 @@ router.on({
   },
   'userAssets': function userAssets() {
     loadHTML('./templates/userAssets.html', 'view').then(function () {
-      assetQuery.getUserAssets();
+      _userAssets.getUserAssets();
     });
   },
   'login': function login() {
@@ -6963,7 +6963,7 @@ module.exports = {
       console.log(resData);
       resData.forEach(function (asset) {
         var userDiv = document.createElement('div');
-        userDiv.id = 'one asset';
+        userDiv.id = 'one-asset';
         userDiv.addEventListener('click', function () {
           if (environment === 'production') {
             window.location.href = "https://dropar.herokuapp.com/?#!assets/".concat(asset.id);

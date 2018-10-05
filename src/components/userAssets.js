@@ -11,7 +11,7 @@ module.exports = {
         console.log(resData)
         resData.forEach((asset) => {
         const userDiv = document.createElement('div');
-        userDiv.id = 'one asset'
+        userDiv.id = 'one-asset'
         userDiv.addEventListener('click', () => {
           if (environment === 'production'){
             window.location.href = `https://dropar.herokuapp.com/?#!assets/${asset.id}`

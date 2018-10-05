@@ -4,7 +4,7 @@
   // getElementById wrapper
 const allAssets = require('../src/controllers/allAssets')
 const { submitLoginForm }= require('../src/components/login');
-const assetQuery = require('../src/components/userAssets');
+const userAssets = require('../src/components/userAssets');
 const { submitSignUpForm } = require('../src/components/signup');
 const assetFetcher = require('../src/components/assetFetcher.js');
 const { uploadForm } = require('../src/components/upload');
@@ -56,7 +56,7 @@ const { uploadForm } = require('../src/components/upload');
     'thirdroute': () => { loadHTML('./templates/third.html', 'view'); },
     'userAssets': () => {
       loadHTML('./templates/userAssets.html', 'view').then(() => {
-        assetQuery.getUserAssets();
+        userAssets.getUserAssets();
       })
     },
     'login': () => {
