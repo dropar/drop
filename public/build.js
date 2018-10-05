@@ -3917,8 +3917,8 @@ module.exports = {
           window.user = data;
         }).then(function () {
           if (environment === 'production') {
-            window.location.href = 'https://dropar.herokuapp.com/?#!userAssets';
-          } else window.location.href = 'http://localhost:8080/?#!userAssets';
+            window.location.href = 'https://dropar.herokuapp.com/?#!assets';
+          } else window.location.href = 'http://localhost:8080/?#!assets';
         });
       } catch (err) {
         console.error(err);
@@ -6749,7 +6749,6 @@ module.exports = {
           }
         });
         var allAssetName = document.createElement('a');
-        allAssetName.href = 'https://google.com';
         allAssetName.innerText = asset.displayName;
         var allAssetImg = new Image(100, 100);
         allAssetImg.src = asset.thumbnailUrl;

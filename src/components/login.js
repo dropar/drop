@@ -27,9 +27,9 @@ module.exports = {
         })
         .then(() => {
           if (environment === 'production') {
-            window.location.href = 'https://dropar.herokuapp.com/?#!userAssets'
+            window.location.href = 'https://dropar.herokuapp.com/?#!assets'
           }
-          else window.location.href = 'http://localhost:8080/?#!userAssets'
+          else window.location.href = 'http://localhost:8080/?#!assets'
         })
       }
       catch(err) {
