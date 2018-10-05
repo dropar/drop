@@ -123,6 +123,8 @@ AFRAME.registerSystem('singleAsset', { // register a component named store
   // handle change in reality btw "Magic Window", AR, and VR
   realityChanged: function (data) {
     console.log('--- reality changed', data)
+    document.getElementById('status').innerText = this.currentReality;
+
     if (data.detail !== this.currentReality) {
       this.currentReality = data.detail;
       this.changeReality();
@@ -130,6 +132,8 @@ AFRAME.registerSystem('singleAsset', { // register a component named store
   },
   changeReality: function () {
     var productOptionArr = document.getElementsByClassName('productOption');
+
+    document.getElementById('status').innerText = this.currentReality;
 
     // currentReality is actually the new reality we are switching to
     // b/c we set on realityChanged event above before calling changeReality.
