@@ -20,6 +20,7 @@ module.exports = {
           })
         })
         .then(res => {
+          console.log(res);
           return res.json();
         })
         .then(data => {
@@ -27,6 +28,7 @@ module.exports = {
         })
         .then(() => {
           if (environment === 'production') {
+            console.log(environment);
             window.location.href = 'https://dropar.herokuapp.com/?#!assets'
           }
           else window.location.href = 'http://localhost:8080/?#!assets'
