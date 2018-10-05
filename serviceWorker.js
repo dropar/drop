@@ -76,26 +76,20 @@ self.addEventListener('install', function(event) {
       console.log('Opened cache');
       return cache.addAll(urlsToCache);
     })
+    .then(self.skipWaiting())
     .catch(err => console.log(err))
   )
 });
 
 self.addEventListener('fetch', function(event) {
-  console.log('event.request.url------>', event.request.url);
-  fetch(event.request)
-  .then(response => {
-    if (!location.href.startsWith('http://localhost:8080')) {
-      event.respondWith(
-        caches.match(event.request)
-        .then(function(response) {
-          if (response) {
-            return response;
-          }
-          return fetch(event.request);
-        })
-        .catch(err => console.log(err))
-      )
-    }
-  })
+  event.respondWith(
+    caches.match(event.request)
+    .then(function(response) {
+      if (response) {
+        return response;
+      }
+      return fetch(event.request);
+    })
+  )
 })
 
