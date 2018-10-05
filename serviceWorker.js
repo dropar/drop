@@ -2,8 +2,6 @@ const CACHE_NAME = 'my-site-cache-v1';
 var urlsToCache = [
   '/',
   '/css/main.css',
-  '/manifest.json',
-  '/public/build.js',
   '/fav-16.png',
   '/fav-32.png',
   '/assets/apple-startup-images/splash-640x1136.png',
