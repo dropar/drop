@@ -1,0 +1,26 @@
+.footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: black;
+  height: 100px;
+  display: flex;
+  justify-content: space-between;
+}
+
+#footer-login-button, #footer-signup-button {
+  height: 100%;
+  width: 50%;
+}
+
+#footer-login-button:hover, #footer-signup-button:hover {
+  background-color: #262626;
+}
+
+#footer-login-button-text, #footer-signup-button-text {
+  margin-top: 20px;
+  color: white;
+  text-align: center;
+  font-size: 40px;
+}
