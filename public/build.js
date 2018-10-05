@@ -630,7 +630,7 @@ module.exports = __webpack_require__(8) ? function (object, key, value) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // to indexed object, toObject with fallback for non-array-like ES3 strings
-var IObject = __webpack_require__(45);
+var IObject = __webpack_require__(44);
 var defined = __webpack_require__(24);
 module.exports = function (it) {
   return IObject(defined(it));
@@ -676,7 +676,7 @@ module.exports = function (method, arg) {
 // 5 -> Array#find
 // 6 -> Array#findIndex
 var ctx = __webpack_require__(23);
-var IObject = __webpack_require__(45);
+var IObject = __webpack_require__(44);
 var toObject = __webpack_require__(16);
 var toLength = __webpack_require__(9);
 var asc = __webpack_require__(163);
@@ -718,7 +718,7 @@ module.exports = function (TYPE, $create) {
 /* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var pIE = __webpack_require__(46);
+var pIE = __webpack_require__(45);
 var createDesc = __webpack_require__(34);
 var toIObject = __webpack_require__(15);
 var toPrimitive = __webpack_require__(28);
@@ -1613,12 +1613,6 @@ module.exports = function (it, TYPE) {
 /* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(126);
-
-/***/ }),
-/* 45 */
-/***/ (function(module, exports, __webpack_require__) {
-
 // fallback for non-array-like ES3 and non-enumerable old V8 strings
 var cof = __webpack_require__(22);
 // eslint-disable-next-line no-prototype-builtins
@@ -1628,11 +1622,17 @@ module.exports = Object('z').propertyIsEnumerable(0) ? Object : function (it) {
 
 
 /***/ }),
-/* 46 */
+/* 45 */
 /***/ (function(module, exports) {
 
 exports.f = {}.propertyIsEnumerable;
 
+
+/***/ }),
+/* 46 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(126);
 
 /***/ }),
 /* 47 */
@@ -3979,7 +3979,7 @@ module.exports = [].copyWithin || function copyWithin(target /* = 0 */, start /*
 
 var aFunction = __webpack_require__(21);
 var toObject = __webpack_require__(16);
-var IObject = __webpack_require__(45);
+var IObject = __webpack_require__(44);
 var toLength = __webpack_require__(9);
 
 module.exports = function (that, callbackfn, aLen, memo, isRight) {
@@ -4416,9 +4416,9 @@ module.exports.f = function (C) {
 // 19.1.2.1 Object.assign(target, source, ...)
 var getKeys = __webpack_require__(33);
 var gOPS = __webpack_require__(53);
-var pIE = __webpack_require__(46);
+var pIE = __webpack_require__(45);
 var toObject = __webpack_require__(16);
-var IObject = __webpack_require__(45);
+var IObject = __webpack_require__(44);
 var $assign = Object.assign;
 
 // should work with symbols and should have deterministic property order (V8 bug)
@@ -4521,7 +4521,7 @@ module.exports = function (object, names) {
 
 var getKeys = __webpack_require__(33);
 var toIObject = __webpack_require__(15);
-var isEnum = __webpack_require__(46).f;
+var isEnum = __webpack_require__(45).f;
 module.exports = function (isEntries) {
   return function (it) {
     var O = toIObject(it);
@@ -6762,7 +6762,7 @@ var _this = void 0;
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } } function _next(value) { step("next", value); } function _throw(err) { step("throw", err); } _next(); }); }; }
 
-var axios = __webpack_require__(44); // -- STATE --
+var axios = __webpack_require__(46); // -- STATE --
 // let currentAsset = {};
 
 
@@ -6881,7 +6881,7 @@ AFRAME.registerComponent('intersect-color-change', {
 "use strict";
 
 
-var axios = __webpack_require__(44);
+var axios = __webpack_require__(46);
 
 module.exports = {
   submitSignUpForm: function submitSignUpForm() {
@@ -7041,101 +7041,69 @@ module.exports = {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+// const axios = require('axios')
+// module.exports = {
+//   getAllAssets: async () => {
+//     // const isGLTF = asset => (asset.formats.filter(format => format.formatType === "GLTF").length > 0)
+//     // const assetUrlFilter = asset => asset.formats.filter(asset => asset.formatType === "GLTF")[0].root.url
+//     // let validAssets = [];
+//     // try {
+//     //   const res = await axios.get
+//     //   ('https://poly.googleapis.com/v1/assets?key=AIzaSyDbAkOgCpfiweD3ZQ3_ZyR0UBEqD17ZBs4&pageSize=100&maxComplexity=MEDIUM');
+//     //   const allAssetsFromAPI = res.data.assets;
+//     //   allAssetsFromAPI.forEach(asset => {
+//     //     if(isGLTF(asset)) {
+//     //       validAssets.push({
+//     //         displayName: asset.displayName,
+//     //         authorName: asset.authorName,
+//     //         thumbnailUrl: asset.thumbnail.url,
+//     //         googleApiId: asset.name,
+//     //         assetUrl: assetUrlFilter(asset),
+//     //         category: 'N/A'
+//     //       })
+//     //     }
+//     // })
+//     // try {
+//     //     Promise.all(validAssets)
+//     //     .then(values => {
+//     //         values.map(async asset => {
+//     //             await fetch('/api/assets', {
+//     //                 method: 'POST',
+//     //                 headers: {
+//     //                     "Content-Type": "application/json; charset-utf8"
+//     //                 },
+//     //                 body: JSON.stringify(asset);
+//     //             })
+//     //             if (environmeent === 'production') {
+//     //                 window.location.href = "https://dropar.herokuapp.com"
+//     //             }
+//     //         })
+//     //     })
+//     // } catch (error) {
+//     //        console.error(error)
+//     //     }
+// //////CHANGE AXIOS TO FETCH
+//     console.log(`valid assets --->`, validAssets)
+//       let allAssetsView = document.getElementById('all-assets-view');
+//       validAssets.forEach(asset => {
+//         let newDiv = document.createElement('div')
+//         let assetThumbnail = document.createElement('img')
+//             assetThumbnail.setAttribute('src', `${asset.thumbnailUrl}`)
+//             assetThumbnail.setAttribute('class', 'asset-thumbnail')
+//         let displayName = document.createTextNode(`${asset.displayName}`)
+//         // ('h4')
+//             // displayName.setAttribute('id', 'display-name')
+//             // document.getElementById('display-name').innerHTML = `${asset.displayName}`
+//         let authorName = document.createTextNode(` by ${asset.authorName}`)
+//         // ('h2')
+//             // authorName.setAttribute('id', 'author-name')
+//             // document.getElementById('author-name').innerHTML = `by ${asset.authorName}`
+//         newDiv.appendChild(assetThumbnail)
+//         newDiv.appendChild(displayName)
+//         newDiv.appendChild(authorName)
+//         allAssetsView.appendChild(newDiv);
+//         });
 
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } } function _next(value) { step("next", value); } function _throw(err) { step("throw", err); } _next(); }); }; }
-
-var axios = __webpack_require__(44);
-
-module.exports = {
-  getAllAssets: function () {
-    var _getAllAssets = _asyncToGenerator(
-    /*#__PURE__*/
-    regeneratorRuntime.mark(function _callee() {
-      var isGLTF, assetUrlFilter, validAssets, res, allAssetsFromAPI, allAssetsView;
-      return regeneratorRuntime.wrap(function _callee$(_context) {
-        while (1) {
-          switch (_context.prev = _context.next) {
-            case 0:
-              isGLTF = function isGLTF(asset) {
-                return asset.formats.filter(function (format) {
-                  return format.formatType === "GLTF";
-                }).length > 0;
-              }; // const isLowPoly = asset => (asset.formats.filter(asset => asset.formatComplexity.triangleCount < 100000).length > 0);
-
-
-              assetUrlFilter = function assetUrlFilter(asset) {
-                return asset.formats.filter(function (asset) {
-                  return asset.formatType === "GLTF";
-                })[0].root.url;
-              };
-
-              validAssets = [];
-              _context.prev = 3;
-              _context.next = 6;
-              return axios.get('https://poly.googleapis.com/v1/assets?key=AIzaSyDbAkOgCpfiweD3ZQ3_ZyR0UBEqD17ZBs4&pageSize=100&maxComplexity=MEDIUM');
-
-            case 6:
-              res = _context.sent;
-              allAssetsFromAPI = res.data.assets;
-              allAssetsFromAPI.forEach(function (asset) {
-                // && isLowPoly(asset) insert into below if and uncomment above function to restore to original filter
-                if (isGLTF(asset)) {
-                  validAssets.push({
-                    displayName: asset.displayName,
-                    authorName: asset.authorName,
-                    thumbnailUrl: asset.thumbnail.url,
-                    id: asset.name,
-                    assetUrl: assetUrlFilter(asset)
-                  });
-                }
-              }); // validAssets.forEach((asset) => {
-              //     async function (){
-              //         await axios.post('/assets', asset)
-              //     }
-              // })
-
-              console.log("valid assets --->", validAssets);
-              allAssetsView = document.getElementById('all-assets-view');
-              validAssets.forEach(function (asset) {
-                var newDiv = document.createElement('div');
-                var assetThumbnail = document.createElement('img');
-                assetThumbnail.setAttribute('src', "".concat(asset.thumbnailUrl));
-                assetThumbnail.setAttribute('class', 'asset-thumbnail');
-                var displayName = document.createTextNode("".concat(asset.displayName)); // ('h4')
-                // displayName.setAttribute('id', 'display-name')
-                // document.getElementById('display-name').innerHTML = `${asset.displayName}`
-
-                var authorName = document.createTextNode(" by ".concat(asset.authorName)); // ('h2')
-                // authorName.setAttribute('id', 'author-name')
-                // document.getElementById('author-name').innerHTML = `by ${asset.authorName}`
-
-                newDiv.appendChild(assetThumbnail);
-                newDiv.appendChild(displayName);
-                newDiv.appendChild(authorName);
-                allAssetsView.appendChild(newDiv);
-              });
-              _context.next = 17;
-              break;
-
-            case 14:
-              _context.prev = 14;
-              _context.t0 = _context["catch"](3);
-              console.error(_context.t0);
-
-            case 17:
-            case "end":
-              return _context.stop();
-          }
-        }
-      }, _callee, this, [[3, 14]]);
-    }));
-
-    return function getAllAssets() {
-      return _getAllAssets.apply(this, arguments);
-    };
-  }()
-};
 
 /***/ }),
 /* 151 */
@@ -7147,7 +7115,7 @@ module.exports = {
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } } function _next(value) { step("next", value); } function _throw(err) { step("throw", err); } _next(); }); }; }
 
 // import axios from 'axios'
-var axios = __webpack_require__(44);
+var axios = __webpack_require__(46);
 
 AFRAME.registerSystem('assetLoader', {
   init: function init() {
@@ -8177,7 +8145,7 @@ module.exports = function (hint) {
 // all enumerable object keys, includes symbols
 var getKeys = __webpack_require__(33);
 var gOPS = __webpack_require__(53);
-var pIE = __webpack_require__(46);
+var pIE = __webpack_require__(45);
 module.exports = function (it) {
   var result = getKeys(it);
   var getSymbols = gOPS.f;
@@ -8525,7 +8493,7 @@ var toIObject = __webpack_require__(15);
 var arrayJoin = [].join;
 
 // fallback for not array-like strings
-$export($export.P + $export.F * (__webpack_require__(45) != Object || !__webpack_require__(17)(arrayJoin)), 'Array', {
+$export($export.P + $export.F * (__webpack_require__(44) != Object || !__webpack_require__(17)(arrayJoin)), 'Array', {
   join: function join(separator) {
     return arrayJoin.call(toIObject(this), separator === undefined ? ',' : separator);
   }
@@ -10810,7 +10778,7 @@ if (!USE_NATIVE) {
   $GOPD.f = $getOwnPropertyDescriptor;
   $DP.f = $defineProperty;
   __webpack_require__(31).f = gOPNExt.f = $getOwnPropertyNames;
-  __webpack_require__(46).f = $propertyIsEnumerable;
+  __webpack_require__(45).f = $propertyIsEnumerable;
   __webpack_require__(53).f = $getOwnPropertySymbols;
 
   if (DESCRIPTORS && !__webpack_require__(29)) {
@@ -11639,7 +11607,7 @@ module.exports = g;
 
 __webpack_require__(124);
 __webpack_require__(84);
-__webpack_require__(44);
+__webpack_require__(46);
 module.exports = __webpack_require__(125);
 
 
