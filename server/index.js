@@ -10,6 +10,9 @@ const sessionStore = new SequelizeStore({db})
 const PORT = process.env.PORT || 8080
 const app = express()
 const socketio = require('socket.io')
+
+
+
 module.exports = app
 
 // This is a global Mocha hook, used for resource cleanup.
@@ -107,11 +110,27 @@ const createApp = () => {
   })
 }
 
+// local https
+// var fs = require('fs')
+// var https = require('https')
+// var certOptions = {
+//   key: fs.readFileSync(path.resolve('cert/server.key')),
+//   cert: fs.readFileSync(path.resolve('cert/server.crt'))
+// }
+// var server = https.createServer(certOptions, app).listen(443)
+
 const startListening = () => {
   // start listening (and create a 'server' object representing our server)
+
+
   const server = app.listen(PORT, () =>
     console.log(`Mixing it up on port ${PORT}`)
   )
+
+  // http.createServer(app).listen(PORT);
+  // https.createServer(certOptions, app).listen(443, () =>
+  //   console.log(`Mixing it up on port ${3000}`)
+  // )
 
   // set up our socket control center
   const io = socketio(server)
