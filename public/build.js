@@ -5697,9 +5697,9 @@ global._babelPolyfill = true;
 "use strict";
 
 
-__webpack_require__(144);
+__webpack_require__(145);
 
-__webpack_require__(146);
+__webpack_require__(147);
 
 __webpack_require__(151);
 
@@ -6588,19 +6588,19 @@ module.exports = function spread(callback) {
 // document.addEventListener("DOMContentLoaded", function(event) {
 // window.addEventListener('load', function() {
 // getElementById wrapper
-var allAssets = __webpack_require__(149);
+var allAssets = __webpack_require__(143);
 
 var _require = __webpack_require__(90),
     submitLoginForm = _require.submitLoginForm;
 
-var assetQuery = __webpack_require__(148);
+var _userAssets = __webpack_require__(149);
 
-var _require2 = __webpack_require__(145),
+var _require2 = __webpack_require__(146),
     submitSignUpForm = _require2.submitSignUpForm;
 
-var assetFetcher = __webpack_require__(143);
+var assetFetcher = __webpack_require__(144);
 
-var _require3 = __webpack_require__(147),
+var _require3 = __webpack_require__(148),
     uploadForm = _require3.uploadForm;
 
 function $id(id) {
@@ -6659,7 +6659,7 @@ router.on({
   },
   'userAssets': function userAssets() {
     loadHTML('./templates/userAssets.html', 'view').then(function () {
-      assetQuery.getUserAssets();
+      _userAssets.getUserAssets();
     });
   },
   'login': function login() {
@@ -6701,6 +6701,46 @@ module.exports = {
 
 /***/ }),
 /* 143 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = {
+  getAllAssets: function getAllAssets() {
+    var assetGlobalDiv = document.getElementById('all-assets');
+    var environment = window.location.href.startsWith('http://localhost:8080') ? 'development' : 'production';
+    var allAssets = fetch("api/assets", {
+      method: "GET"
+    }).then(function (response) {
+      return response.json();
+    }).then(function (resData) {
+      console.log('all assets result', resData);
+      resData.forEach(function (asset) {
+        var allAssetDiv = document.createElement('div');
+        allAssetDiv.id = 'one-asset';
+        allAssetDiv.addEventListener('click', function () {
+          if (environment === 'production') {
+            window.location.href = "https://dropar.herokuapp.com/?#!assets/".concat(asset.id);
+          } else {
+            window.location.href = "http://localhost:8080/?#!assets/".concat(asset.id);
+          }
+        });
+        var allAssetName = document.createElement('a');
+        allAssetName.href = 'https://google.com';
+        allAssetName.innerText = asset.displayName;
+        var allAssetImg = new Image(100, 100);
+        allAssetImg.src = asset.thumbnailUrl;
+        allAssetDiv.appendChild(allAssetName);
+        allAssetDiv.appendChild(allAssetImg);
+        assetGlobalDiv.appendChild(allAssetDiv);
+      });
+    });
+  }
+};
+
+/***/ }),
+/* 144 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6783,7 +6823,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 144 */
+/* 145 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6823,7 +6863,7 @@ AFRAME.registerComponent('intersect-color-change', {
 });
 
 /***/ }),
-/* 145 */
+/* 146 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6868,7 +6908,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 146 */
+/* 147 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6896,7 +6936,7 @@ AFRAME.registerComponent('store-controls', {
 });
 
 /***/ }),
-/* 147 */
+/* 148 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6943,7 +6983,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 148 */
+/* 149 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6954,6 +6994,7 @@ module.exports = {
     var mainDiv = document.getElementById('view');
     var assetsDiv = document.getElementById('user-assets');
     var userId = window.user.id;
+    var environment = window.location.href.startsWith('http://localhost:8080') ? 'development' : 'production';
     var userAssets = fetch("api/users/".concat(userId, "/assets"), {
       method: "GET"
     }).then(function (response) {
@@ -6962,9 +7003,15 @@ module.exports = {
       console.log(resData);
       resData.forEach(function (asset) {
         var userDiv = document.createElement('div');
-        userDiv.id = 'one asset';
+        userDiv.id = 'one-asset';
         userDiv.addEventListener('click', function () {
-          fetch("api/assets/".concat(asset.id));
+          if (environment === 'production') {
+            window.location.href = "https://dropar.herokuapp.com/?#!assets/".concat(asset.id);
+            console.log(window.location.href);
+          } else {
+            window.location.href = "http://localhost:8080/?#!assets/".concat(asset.id);
+            console.log(window.location.href);
+          }
         });
         var userAssetName = document.createElement('a');
         userAssetName.href = 'https://google.com';
@@ -6983,75 +7030,6 @@ module.exports = {
   // fetch(assets/:assetId, { method: 'GET' })
 
 };
-
-/***/ }),
-/* 149 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-// const axios = require('axios')
-// module.exports = {
-//   getAllAssets: async () => {
-//     // const isGLTF = asset => (asset.formats.filter(format => format.formatType === "GLTF").length > 0)
-//     // const assetUrlFilter = asset => asset.formats.filter(asset => asset.formatType === "GLTF")[0].root.url
-//     // let validAssets = [];
-//     // try {
-//     //   const res = await axios.get
-//     //   ('https://poly.googleapis.com/v1/assets?key=AIzaSyDbAkOgCpfiweD3ZQ3_ZyR0UBEqD17ZBs4&pageSize=100&maxComplexity=MEDIUM');
-//     //   const allAssetsFromAPI = res.data.assets;
-//     //   allAssetsFromAPI.forEach(asset => {
-//     //     if(isGLTF(asset)) {
-//     //       validAssets.push({
-//     //         displayName: asset.displayName,
-//     //         authorName: asset.authorName,
-//     //         thumbnailUrl: asset.thumbnail.url,
-//     //         googleApiId: asset.name,
-//     //         assetUrl: assetUrlFilter(asset),
-//     //         category: 'N/A'
-//     //       })
-//     //     }
-//     // })
-//     // try {
-//     //     Promise.all(validAssets)
-//     //     .then(values => {
-//     //         values.map(async asset => {
-//     //             await fetch('/api/assets', {
-//     //                 method: 'POST',
-//     //                 headers: {
-//     //                     "Content-Type": "application/json; charset-utf8"
-//     //                 },
-//     //                 body: JSON.stringify(asset);
-//     //             })
-//     //             if (environmeent === 'production') {
-//     //                 window.location.href = "https://dropar.herokuapp.com"
-//     //             }
-//     //         })
-//     //     })
-//     // } catch (error) {
-//     //        console.error(error)
-//     //     }
-// //////CHANGE AXIOS TO FETCH
-//     console.log(`valid assets --->`, validAssets)
-//       let allAssetsView = document.getElementById('all-assets-view');
-//       validAssets.forEach(asset => {
-//         let newDiv = document.createElement('div')
-//         let assetThumbnail = document.createElement('img')
-//             assetThumbnail.setAttribute('src', `${asset.thumbnailUrl}`)
-//             assetThumbnail.setAttribute('class', 'asset-thumbnail')
-//         let displayName = document.createTextNode(`${asset.displayName}`)
-//         // ('h4')
-//             // displayName.setAttribute('id', 'display-name')
-//             // document.getElementById('display-name').innerHTML = `${asset.displayName}`
-//         let authorName = document.createTextNode(` by ${asset.authorName}`)
-//         // ('h2')
-//             // authorName.setAttribute('id', 'author-name')
-//             // document.getElementById('author-name').innerHTML = `by ${asset.authorName}`
-//         newDiv.appendChild(assetThumbnail)
-//         newDiv.appendChild(displayName)
-//         newDiv.appendChild(authorName)
-//         allAssetsView.appendChild(newDiv);
-//         });
-
 
 /***/ }),
 /* 150 */
