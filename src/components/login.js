@@ -25,11 +25,12 @@ module.exports = {
         .then(data => {
           window.user = data;
         })
-
-        if (environment === 'production') {
-          window.location.href = 'https://dropar.herokuapp.com/?#!userAssets'
-        }
-        else window.location.href = 'http://localhost:8080/?#!userAssets'
+        .then(() => {
+          if (environment === 'production') {
+            window.location.href = 'https://dropar.herokuapp.com/?#!userAssets'
+          }
+          else window.location.href = 'http://localhost:8080/?#!userAssets'
+        })
       }
       catch(err) {
         console.error(err);
