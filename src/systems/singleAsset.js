@@ -147,7 +147,7 @@ AFRAME.registerSystem('singleAsset', { // register a component named store
 
       // remove title and add "ar" class to to everything that stays
       document.getElementById('header').classList.add('ar');
-      document.getElementById('title').style.display = 'none';
+      // document.getElementById('title').style.display = 'none';
       document.getElementById('visualSheet').classList.add('ar');
       document.getElementById('content3D').classList.add('ar');
       document.getElementById('productOptions').classList.add('ar');
@@ -172,7 +172,7 @@ AFRAME.registerSystem('singleAsset', { // register a component named store
           document.getElementById('arui').style.display = 'block';
           document.getElementById('header').style.display = 'none';
           document.getElementById('productOptions').style.display = 'none';
-          document.getElementById('buttonCart').style.display = 'none';
+          // document.getElementById('buttonCart').style.display = 'none';
 
           // hide mesh for now, will show it again after item is placed
           // this happens inside touched event handler.
@@ -211,12 +211,12 @@ AFRAME.registerSystem('singleAsset', { // register a component named store
         document.getElementById('price').style.display = 'block';
         document.getElementById('comments').style.display = 'block';
         // document.getElementById('thumbs').classList.remove('ar');
-        document.getElementById('buttonCart').classList.remove('ar');
+        // document.getElementById('buttonCart').classList.remove('ar');
         document.getElementById('container').classList.remove('ar');
         document.getElementById('footer').style.display = 'block';
         document.getElementById('header').style.display = 'block';
         document.getElementById('productOptions').style.display = 'block';
-        document.getElementById('buttonCart').style.display = 'block';
+        // document.getElementById('buttonCart').style.display = 'block';
 
         document.getElementById('arui').style.display = 'none';
 
@@ -255,7 +255,7 @@ AFRAME.registerSystem('singleAsset', { // register a component named store
     this.isAdded = false;
 
     this.buttonCartClicked = this.buttonCartClicked.bind(this);
-    document.getElementById('buttonCart').addEventListener('click', this.buttonCartClicked);
+    // document.getElementById('buttonCart').addEventListener('click', this.buttonCartClicked);
   },
 
   buttonCartClicked: function () {
@@ -263,8 +263,8 @@ AFRAME.registerSystem('singleAsset', { // register a component named store
       document.getElementById('cart').innerHTML = '(0) Cart';
       document.getElementById('cart').style.color = '#181818';
       document.getElementById('cart').style.fontWeight = 'normal';
-      document.getElementById('buttonCart').innerHTML = 'Add to cart';
-      document.getElementById('buttonCart').style.backgroundColor = '#181818';
+      // document.getElementById('buttonCart').innerHTML = 'Add to cart';
+      // document.getElementById('buttonCart').style.backgroundColor = '#181818';
       document.querySelector('#addBtn-vr-bg').setAttribute('initialColor', '#181818');
       document.querySelector('#addBtn-vr-text').setAttribute('text', {value: 'Add to cart'});
       document.querySelector('#cart-vr').setAttribute('text', {value: '(0) Cart'});
@@ -272,8 +272,8 @@ AFRAME.registerSystem('singleAsset', { // register a component named store
       document.getElementById('cart').innerHTML = '(1) Cart';
       document.getElementById('cart').style.color = '#b7374c';
       document.getElementById('cart').style.fontWeight = 'bolder';
-      document.getElementById('buttonCart').innerHTML = 'Added!';
-      document.getElementById('buttonCart').style.backgroundColor = '#b7374c';
+      // document.getElementById('buttonCart').innerHTML = 'Added!';
+      // document.getElementById('buttonCart').style.backgroundColor = '#b7374c';
       document.querySelector('#addBtn-vr-bg').setAttribute('initialColor', '#b7374c');
       document.querySelector('#addBtn-vr-text').setAttribute('text', {value: 'Added!'});
       document.querySelector('#cart-vr').setAttribute('text', {value: '(1) Cart'});
@@ -376,17 +376,17 @@ AFRAME.registerSystem('singleAsset', { // register a component named store
       position: '-0.25 -0.3 0',
       parent: containerUI
     });
-    this.addButton({
-      id: 'addBtn-vr',
-      text: 'Add to cart',
-      textColor: '#ffffff',
-      width: 0.8,
-      height: 0.2,
-      color: '#181818',
-      parent: containerUI,
-      position: '-0.45 -0.5 0.01',
-      onclick: this.buttonCartClicked
-    });
+    // this.addButton({
+    //   id: 'addBtn-vr',
+    //   text: 'Add to cart',
+    //   textColor: '#ffffff',
+    //   width: 0.8,
+    //   height: 0.2,
+    //   color: '#181818',
+    //   parent: containerUI,
+    //   position: '-0.45 -0.5 0.01',
+    //   onclick: this.buttonCartClicked
+    // });
   },
   addPlane: function (params) {
     var uiEl = document.createElement('a-entity');
@@ -626,7 +626,7 @@ AFRAME.registerSystem('singleAsset', { // register a component named store
     document.getElementById('arui').style.display = 'none';
     document.getElementById('header').style.display = 'block';
     document.getElementById('productOptions').style.display = 'flex';
-    document.getElementById('buttonCart').style.display = 'block';
+    // document.getElementById('buttonCart').style.display = 'block';
     document.getElementById('container').classList.add('ar');
   }
 });
