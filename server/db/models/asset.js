@@ -19,7 +19,7 @@ const Asset = db.define('asset', {
     allowNull: false
   },
   category: {
-    type: Sequelize.ENUM('Architecture', 'Art', 'Food', 'Nature', 'Objects', 'People', 'Scenes', 'Technology','Transport', 'Other'),
+    type: Sequelize.ENUM('Animals','Architecture', 'Art', 'Food', 'Nature', 'Objects', 'People', 'Scenes', 'Technology','Transport', 'Other', 'N/A'),
     allowNull: false
   },
   googleApiId: { // name

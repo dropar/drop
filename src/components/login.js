@@ -1,5 +1,3 @@
-const axios = require('axios');
-
 module.exports = {
   submitLoginForm: () => {
     const environment = window.location.href.startsWith('http://localhost:8080') ? 'development' : 'production';
@@ -11,20 +9,28 @@ module.exports = {
 
       //login post request
       try {
-        axios.post('/auth/login', {
-          email: email.value,
-          password: password.value
+        fetch('/auth/login', {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json; charset=utf-8"
+          },
+          body: JSON.stringify({
+            email: email.value,
+            password: password.value
+          })
         })
         .then(res => {
-          console.log('res', res);
-          window.user = res.data;
-          console.log('user', window.user);
+          return res.json();
+        })
+        .then(data => {
+          window.user = data;
+        })
+        .then(() => {
           if (environment === 'production') {
             window.location.href = 'https://dropar.herokuapp.com/?#!userAssets'
           }
           else window.location.href = 'http://localhost:8080/?#!userAssets'
         })
-
       }
       catch(err) {
         console.error(err);
