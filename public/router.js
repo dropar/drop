@@ -88,7 +88,7 @@ const { uploadForm } = require('../src/components/upload');
   });
 
   // set the default route
-  router.on(() => { loadHTML('./templates/first.html', 'view'); });
+  router.on(() => { loadHTML('./templates/splash.html', 'view'); });
 
   // set the 404 route
   router.notFound((query) => { $id('view').innerHTML = '<h3>Couldn\'t find the page you\'re looking for...</h3>'; });

@@ -1,5 +1,3 @@
-require("../../public/css/login.css");
-
 module.exports = {
   submitLoginForm: () => {
     const environment = window.location.href.startsWith('http://localhost:8080') ? 'development' : 'production';
@@ -22,15 +20,16 @@ module.exports = {
           })
         })
         .then(res => {
-          console.log('res', res);
-          window.user = res.data;
-          console.log('user', window.user);
-          if (environment === 'production') {
-            window.location.href = 'https://dropar.herokuapp.com/?#!userAssets'
-          }
-          else window.location.href = 'http://localhost:8080/?#!userAssets'
+          return res.json();
+        })
+        .then(data => {
+          window.user = data;
         })
 
+        if (environment === 'production') {
+          window.location.href = 'https://dropar.herokuapp.com/?#!userAssets'
+        }
+        else window.location.href = 'http://localhost:8080/?#!userAssets'
       }
       catch(err) {
         console.error(err);
