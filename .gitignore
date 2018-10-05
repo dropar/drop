@@ -7,4 +7,3 @@ npm-debug.log*
 *.bat
 .vs
 secrets.js
-/public/build.js
