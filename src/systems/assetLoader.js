@@ -35,20 +35,41 @@ AFRAME.registerSystem('assetLoader', {
   addGltfAsset: function (params) {
     var assets = document.querySelector('a-assets');
     var item = document.createElement('a-asset-item');
+
     item.setAttribute('id', params.id);
     item.setAttribute('src', params.url);
     item.setAttribute('crossorigin', "anonymous");
+
     assets.appendChild(item);
   },
   addGltfEntity: function (params) {
+    console.log('--- position: ', params.position)
+    console.log('--- scale: ', params.scale)
+
     var container = document.querySelector('#meshContainer');
     var geo = document.createElement('a-entity');
+
     geo.setAttribute('id', params.id);
-    geo.setAttribute('gltf-model-legacy', params.assetId);
-    // geo.setAttribute('gltf-model-legacy', "url(" + params.url + ")");
     geo.setAttribute('visible', params.visible);
+
+    // updating position/scale directly via the three.js Object3D
+    // position/scale vectors is recommended but not working, so
+    // using set Attribute instead
+
+    // geo.object3D.position.set(...params.position);
+    // geo.object3D.scale.set(...params.scale);
+
+    geo.setAttribute('position', params.position);
+    geo.setAttribute('scale', params.scale);
+
+    // using gltf-model-legacy format instead of gltf
+    // geo.setAttribute('gltf-model-legacy', "url(" + params.url + ")");
+    geo.setAttribute('gltf-model', params.assetId);
+
+    console.log('--- geo.object3D.: ', geo.object3D)
     container.appendChild(geo);
   },
+  // keep for testing!!!
   // loadGeometry: function () {
   //   console.log('--- load geo')
   //   this.addGltfAsset({
@@ -73,7 +94,9 @@ AFRAME.registerSystem('assetLoader', {
     this.addGltfEntity({
       id: 'currentAsset',
       assetId: `#${currentAsset.id}`,
-      visible: true
+      visible: true,
+      position: {x:0, y:0, z:0},
+      scale: {x:1, y:1, z:1}
     })
   }
 });

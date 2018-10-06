@@ -2,7 +2,7 @@ const axios = require('axios');
 
 // -- STATE --
 // let currentAsset = {};
-let userAssets = [];
+// let userAssets = [];
 
 module.exports = {
   fetchCurrentAsset: async (assetId) => {
@@ -11,12 +11,12 @@ module.exports = {
     // update state
     localStorage.setItem('currentAsset', JSON.stringify(asset));
   },
-  fetchUserAssets: async (userId) => {
-    // fetch assets for user form db
-    const {data: assets} = await axios.get(`/api/${userId}/assets/`)
-    // filter by user here
-    // ...
-    // update state
-    this.userAssets = assets
-  },
+  // fetchUserAssets: async (userId) => {
+  //   // fetch assets for user form db
+  //   const {data: assets} = await axios.get(`/api/${userId}/assets/`)
+  //   // filter by user here
+  //   // ...
+  //   // update state
+  //   this.userAssets = assets
+  // },
 }

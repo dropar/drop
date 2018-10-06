@@ -6751,15 +6751,13 @@ module.exports = {
 "use strict";
 
 
-var _this = void 0;
-
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } } function _next(value) { step("next", value); } function _throw(err) { step("throw", err); } _next(); }); }; }
 
 var axios = __webpack_require__(46); // -- STATE --
 // let currentAsset = {};
+// let userAssets = [];
 
 
-var userAssets = [];
 module.exports = {
   fetchCurrentAsset: function () {
     var _fetchCurrentAsset = _asyncToGenerator(
@@ -6791,40 +6789,15 @@ module.exports = {
     return function fetchCurrentAsset(_x) {
       return _fetchCurrentAsset.apply(this, arguments);
     };
-  }(),
-  fetchUserAssets: function () {
-    var _fetchUserAssets = _asyncToGenerator(
-    /*#__PURE__*/
-    regeneratorRuntime.mark(function _callee2(userId) {
-      var _ref2, assets;
+  }() // fetchUserAssets: async (userId) => {
+  //   // fetch assets for user form db
+  //   const {data: assets} = await axios.get(`/api/${userId}/assets/`)
+  //   // filter by user here
+  //   // ...
+  //   // update state
+  //   this.userAssets = assets
+  // },
 
-      return regeneratorRuntime.wrap(function _callee2$(_context2) {
-        while (1) {
-          switch (_context2.prev = _context2.next) {
-            case 0:
-              _context2.next = 2;
-              return axios.get("/api/".concat(userId, "/assets/"));
-
-            case 2:
-              _ref2 = _context2.sent;
-              assets = _ref2.data;
-              // filter by user here
-              // ...
-              // update state
-              _this.userAssets = assets;
-
-            case 5:
-            case "end":
-              return _context2.stop();
-          }
-        }
-      }, _callee2, this);
-    }));
-
-    return function fetchUserAssets(_x2) {
-      return _fetchUserAssets.apply(this, arguments);
-    };
-  }()
 };
 
 /***/ }),
@@ -7166,14 +7139,26 @@ AFRAME.registerSystem('assetLoader', {
     assets.appendChild(item);
   },
   addGltfEntity: function addGltfEntity(params) {
+    console.log('--- position: ', params.position);
+    console.log('--- scale: ', params.scale);
     var container = document.querySelector('#meshContainer');
     var geo = document.createElement('a-entity');
     geo.setAttribute('id', params.id);
-    geo.setAttribute('gltf-model-legacy', params.assetId); // geo.setAttribute('gltf-model-legacy', "url(" + params.url + ")");
+    geo.setAttribute('visible', params.visible); // updating position/scale directly via the three.js Object3D
+    // position/scale vectors is recommended but not working, so
+    // using set Attribute instead
+    // geo.object3D.position.set(...params.position);
+    // geo.object3D.scale.set(...params.scale);
 
-    geo.setAttribute('visible', params.visible);
+    geo.setAttribute('position', params.position);
+    geo.setAttribute('scale', params.scale); // using gltf-model-legacy format instead of gltf
+    // geo.setAttribute('gltf-model-legacy', "url(" + params.url + ")");
+
+    geo.setAttribute('gltf-model', params.assetId);
+    console.log('--- geo.object3D.: ', geo.object3D);
     container.appendChild(geo);
   },
+  // keep for testing!!!
   // loadGeometry: function () {
   //   console.log('--- load geo')
   //   this.addGltfAsset({
@@ -7198,7 +7183,17 @@ AFRAME.registerSystem('assetLoader', {
     this.addGltfEntity({
       id: 'currentAsset',
       assetId: "#".concat(currentAsset.id),
-      visible: true
+      visible: true,
+      position: {
+        x: 0,
+        y: 0,
+        z: 0
+      },
+      scale: {
+        x: 1,
+        y: 1,
+        z: 1
+      }
     });
   }
 });
