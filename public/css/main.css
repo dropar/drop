@@ -7,7 +7,11 @@ body {
   height:100%;
   font-family: 'Open Sans', sans-serif;
   font-size: 16px;
+<<<<<<< HEAD
   /* background-color: #FF1B44 */
+=======
+  background-color: #FF1B44
+>>>>>>> fbb610ad589c7b461a96757ef5389fd8216d83e0
 }
 
 /* @media only screen and (device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait) {
@@ -371,3 +375,61 @@ a{
   background: black;
   color: white;
 }
+<<<<<<< HEAD
+=======
+
+.a-enter-vr-button {
+  position: fixed !important;
+  right: 10px !important;
+  bottom: 20px !important;
+}
+
+/* @media only screen and (device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait) {
+  body {
+    background-color: #FFFFFF;
+    background-image: url('../assets/apple-startup-images/splash-640x1136.png')
+  }
+}
+
+@media only screen and (device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait) {
+  body {
+    background-color: #FFFFFF;
+    background-image: url('../assets/apple-startup-images/splash-750x1334.png')
+  }
+}
+
+@media only screen and (device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait) {
+  body {
+    background-color: #FFFFFF;
+    background-image: url('../assets/apple-startup-images/splash-1242x2208.png')
+  }
+}
+
+@media only screen and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait) {
+  body {
+    background-color: #FFFFFF;
+    background-image: url('../assets/apple-startup-images/splash-1125x2436.png')
+  }
+}
+
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait) {
+  body {
+    background-color: #FFFFFF;
+    background-image: url('../assets/apple-startup-images/splash-1536x2048.png')
+  }
+}
+
+@media only screen and (min-device-width: 834px) and (max-device-width: 834px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait) {
+  body {
+    background-color: #FFFFFF;
+    background-image: url('../assets/apple-startup-images/splash-1668x2224.png')
+  }
+}
+
+@media only screen and (min-device-width: 1024px) and (max-device-width: 1024px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait) {
+  body {
+    background-color: #FFFFFF;
+    background-image: url('../assets/apple-startup-images/splash-2048x2732.png')
+  }
+} */
+>>>>>>> fbb610ad589c7b461a96757ef5389fd8216d83e0

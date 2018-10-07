@@ -10,6 +10,7 @@ module.exports = {
     // fetch asset from db
     const {data: asset} = await axios.get(`/api/assets/${assetId}/`);
     // update state
+    console.log(asset);
     localStorage.setItem('currentAsset', JSON.stringify(asset));
   },
   // fetchUserAssets: async (userId) => {
