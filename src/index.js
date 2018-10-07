@@ -1,7 +1,10 @@
 
 require('./components/intersect-color-change.js');
 require('./components/store-controls.js');
-require('./systems/singleAsset.js');
+// require('./systems/singleAsset.js');
+require('./systems/xr-controller.js');
+require('./systems/ar-controller.js');
+require('./systems/vr-controller.js');
 require('./systems/assetLoader.js');
 require('./components/login.js');
 require('../public/router.js');

@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 324);
+/******/ 	return __webpack_require__(__webpack_require__.s = 326);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -299,7 +299,7 @@ module.exports = function (NAME, exec) {
 
 
 var bind = __webpack_require__(89);
-var isBuffer = __webpack_require__(319);
+var isBuffer = __webpack_require__(321);
 
 /*global toString:true*/
 
@@ -679,7 +679,7 @@ var ctx = __webpack_require__(23);
 var IObject = __webpack_require__(44);
 var toObject = __webpack_require__(16);
 var toLength = __webpack_require__(9);
-var asc = __webpack_require__(163);
+var asc = __webpack_require__(165);
 module.exports = function (TYPE, $create) {
   var IS_MAP = TYPE == 1;
   var IS_FILTER = TYPE == 2;
@@ -4691,9 +4691,9 @@ var anInstance = __webpack_require__(38);
 var forOf = __webpack_require__(51);
 var speciesConstructor = __webpack_require__(54);
 var task = __webpack_require__(79).set;
-var microtask = __webpack_require__(168)();
+var microtask = __webpack_require__(170)();
 var newPromiseCapabilityModule = __webpack_require__(104);
-var perform = __webpack_require__(169);
+var perform = __webpack_require__(171);
 var userAgent = __webpack_require__(57);
 var promiseResolve = __webpack_require__(113);
 var PROMISE = 'Promise';
@@ -5320,7 +5320,7 @@ var singleton = null;
 var	singletonCounter = 0;
 var	stylesInsertedAtTop = [];
 
-var	fixUrls = __webpack_require__(322);
+var	fixUrls = __webpack_require__(324);
 
 module.exports = function(list, options) {
 	if (typeof DEBUG !== "undefined" && DEBUG) {
@@ -5661,25 +5661,25 @@ function updateLink (link, options, obj) {
 "use strict";
 /* WEBPACK VAR INJECTION */(function(global) {
 
-__webpack_require__(153);
-
-__webpack_require__(154);
-
-__webpack_require__(160);
-
-__webpack_require__(159);
-
-__webpack_require__(161);
+__webpack_require__(155);
 
 __webpack_require__(156);
 
-__webpack_require__(157);
+__webpack_require__(162);
 
-__webpack_require__(155);
+__webpack_require__(161);
+
+__webpack_require__(163);
 
 __webpack_require__(158);
 
-__webpack_require__(316);
+__webpack_require__(159);
+
+__webpack_require__(157);
+
+__webpack_require__(160);
+
+__webpack_require__(318);
 
 __webpack_require__(84);
 
@@ -5688,7 +5688,7 @@ if (global._babelPolyfill && typeof console !== "undefined" && console.warn) {
 }
 
 global._babelPolyfill = true;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(323)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(325)))
 
 /***/ }),
 /* 124 */
@@ -5699,19 +5699,24 @@ global._babelPolyfill = true;
 
 __webpack_require__(145);
 
-__webpack_require__(148);
+__webpack_require__(148); // require('./systems/singleAsset.js');
 
-__webpack_require__(152);
+
+__webpack_require__(154);
 
 __webpack_require__(151);
+
+__webpack_require__(153);
+
+__webpack_require__(152);
 
 __webpack_require__(90);
 
 __webpack_require__(142);
 
-__webpack_require__(320);
+__webpack_require__(322);
 
-__webpack_require__(321);
+__webpack_require__(323);
 
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', function () {
@@ -7045,6 +7050,200 @@ module.exports = {
 "use strict";
 
 
+AFRAME.registerComponent('ar-controller', {
+  // register a component named store
+  // This component will be attached to the scene element, so scene and its children
+  // will be initialized before this component!!!
+  init: function init() {
+    console.log("--- init arController"); // get the xrController
+
+    this.system = document.querySelector('a-scene').systems['xr-controller']; // access system as this.system
+
+    this.system.registerAr(this); // this.pinDetected = this.system.pinDetected;
+    // this.pinSelected = this.system.pinSelected;
+    // this.meshContainer = this.system.meshContainer;
+
+    this.state = this.system.state;
+    /* --- DOM BINDINGS --- */
+    // reticle binding using attribute selection b/c reticle is a component provided by
+    // aframe-xr.js --> https://github.com/mozilla/aframe-xr/blob/master/src/components/reticle.js
+
+    this.reticle = document.querySelector('[reticle]'); // binding to meshContainer, aframe entity that groups all the 3d objects, which are
+    // themselves aframe entities which wrap the three.js 3d objects. Since this wraps
+    // all 3d objects, we can use it to set position of which ever 3d object is visible, and
+    // of course toggle visibility of all, eg. when user clicks schematic thumbnail.
+
+    this.meshContainer = document.querySelector('#meshContainer');
+    this.meshContainerOrigPosition = this.meshContainer.getAttribute('position');
+    /* --- REGISTER EVENT HANDLERS --- */
+    // listen for plane detection and touched events
+
+    this.planeDetected = this.planeDetected.bind(this);
+    this.touched = this.touched.bind(this);
+    this.reticle.addEventListener('planeDetected', this.planeDetected);
+    this.reticle.addEventListener('touched', this.touched);
+    this.renderAr = this.renderAr.bind(this);
+    this.renderMagicWindow = this.renderMagicWindow.bind(this);
+  },
+  // handler for plane detection event
+  planeDetected: function planeDetected() {
+    console.log('----- plane detected', this.state.pinDetected, this.state.pinSelected);
+    document.getElementById('status').innerHTML += '<div> --- plane detected </div>';
+
+    if (this.state.pinSelected) {
+      // object already pinned
+      // jp: if we get plane detection but object already pinned, so...
+      // show mesh and position at reticle and show AR UI.
+      this.meshContainer.setAttribute('visible', true);
+      this.meshContainer.setAttribute('position', this.reticle.getAttribute('position'));
+      this.showARUI();
+    } else {
+      if (!this.state.pinDetected) {
+        // pin NOT selected or detected
+        this.state.pinDetected = true; // plane is detected so hide "move to find surface" instruction
+        // and show "tap to place" instruction
+
+        document.querySelector('#arui-step1').style.display = 'none';
+        document.querySelector('#arui-step2').style.display = 'block';
+      } else {
+        // pin is detected by NOT selected
+        // why add listener again here ??? its already been added in init.
+        // b/c it might have been removed!
+        this.reticle.addEventListener('touched', this.touched);
+      }
+    }
+  },
+  // handler for touched, ie. place after plane detected, event
+  touched: function touched(evt) {
+    console.log('----- touched', evt.detail.target);
+    document.getElementById('status').innerHTML += '<div> --- touched </div>';
+
+    if (evt.detail.target.type !== 'submit') {
+      document.getElementById('status').innerHTML += '<div> --- --- place mesh </div>'; //state.pinSelected = true;
+      // remove the reticle, but save the parent. WHY ???
+
+      this.reticleParent = this.reticle.parentNode;
+      this.reticle.parentNode.removeChild(this.reticle); // show mesh and position at reticle and show AR UI.
+
+      this.meshContainer.setAttribute('visible', true);
+      this.meshContainer.setAttribute('position', this.reticle.getAttribute('position'));
+      this.showARUI();
+    } // why add listener again here ??? its already been added in init.
+
+
+    this.reticle.removeEventListener('touched', this.touched); // this.state.pinDetected = false;
+    // this.state.pinSelected = false;
+  },
+  showARUI: function showARUI() {
+    document.getElementById('status').innerHTML += '<div> --- show AR UI </div>';
+    document.getElementById('arui').style.display = 'none';
+    document.getElementById('header').style.display = 'block';
+    document.getElementById('productOptions').style.display = 'flex'; // document.getElementById('buttonCart').style.display = 'block';
+
+    document.getElementById('container').classList.add('ar');
+  },
+  renderAr: function renderAr() {
+    // document.getElementById('status').innerText = 'mthfkr' + ' ' + this.state.pinSelected + ' ' + this.state.currentReality;
+    document.getElementById('status').innerHTML += '<div> --- renderAr </div>'; // remove title and add "ar" class to to everything that stays
+
+    document.getElementById('header').classList.add('ar'); // document.getElementById('title').style.display = 'none';
+
+    document.getElementById('visualSheet').classList.add('ar');
+    document.getElementById('content3D').classList.add('ar');
+    document.getElementById('productOptions').classList.add('ar');
+    var productOptionArr = document.getElementsByClassName('productOption');
+
+    for (var i = 0; i < productOptionArr.length; i++) {
+      productOptionArr[i].classList.add('ar');
+    } // remove more stuff. this should probably be wrapped
+    // document.getElementById('brand').style.display = 'none';
+    // document.getElementById('productName').style.display = 'none';
+    // document.getElementById('price').style.display = 'none';
+    // document.getElementById('comments').style.display = 'none';
+    // document.getElementById('thumbs').classList.add('ar');
+    // document.getElementById('buttonCart').classList.add('ar');
+    // document.getElementById('footer').style.display = 'none';
+
+
+    if (!this.state.pinSelected) {
+      // object not yet placed.
+      document.getElementById('status').innerHTML += '<div> --- --- obj not yet pinned (typ) </div>';
+      document.getElementById('arui').style.display = 'block';
+      document.getElementById('header').style.display = 'none';
+      document.getElementById('productOptions').style.display = 'none'; // document.getElementById('buttonCart').style.display = 'none';
+      // hide mesh for now, will show it again after item is placed
+      // this happens inside touched event handler.
+
+      this.meshContainer.setAttribute('visible', false);
+    } else {
+      // object already placed.
+      document.getElementById('status').innerHTML += '<div> --- --- obj already pinned </div>'; // product option control panel only shows after object placed.
+
+      document.getElementById('productOptions').style.display = 'flex'; // just used to change background on container after item placed.
+
+      document.getElementById('container').classList.add('ar');
+    }
+
+    if (this.state.pinDetected) {
+      // ???
+      document.getElementById('status').innerHTML += '<div> --- --- plane already detected </div>';
+      this.planeDetected();
+    }
+  },
+  renderMagicWindow: function renderMagicWindow() {
+    document.getElementById('status').innerHTML += '<div> --- renderMagicWindow </div>'; // show all the stuff on detail page thats gets hidden during ar
+    // and remote all the ar class on everything else
+
+    document.getElementById('header').classList.remove('ar'); // document.getElementById('title').style.display = 'block';
+
+    document.getElementById('visualSheet').classList.remove('ar');
+    document.getElementById('content3D').classList.remove('ar');
+    document.getElementById('productOptions').classList.remove('ar');
+    var productOptionArr = document.getElementsByClassName('productOption');
+
+    for (var i = 0; i < productOptionArr.length; i++) {
+      productOptionArr[i].classList.remove('ar');
+    } // document.getElementById('brand').style.display = 'block';
+    // document.getElementById('productName').style.display = 'block';
+    // document.getElementById('price').style.display = 'block';
+    // document.getElementById('comments').style.display = 'block';
+    // document.getElementById('thumbs').classList.remove('ar');
+    // document.getElementById('buttonCart').classList.remove('ar');
+
+
+    document.getElementById('container').classList.remove('ar'); // document.getElementById('footer').style.display = 'block';
+
+    document.getElementById('header').style.display = 'block';
+    document.getElementById('productOptions').style.display = 'block'; // document.getElementById('buttonCart').style.display = 'block';
+
+    document.getElementById('arui').style.display = 'none'; // document.getElementById('this').innerHTML += `<div> --- ${this} </div>`;
+    // put mesh back to default magic window position
+    // show it incase it is hidden, ie in ar but not yet placed!
+
+    var meshContainer = document.querySelector('#meshContainer');
+    var meshContainerOrigPosition = meshContainer.getAttribute('position');
+    meshContainer.setAttribute('visible', true);
+    meshContainer.setAttribute('position', meshContainerOrigPosition); // this.meshContainer.setAttribute('visible', true);
+    // this.meshContainer.setAttribute('position', this.meshContainerOrigPosition);
+
+    document.getElementById('status').innerHTML += '<div> --- 3 </div>'; // save reticle and hide <---------------- ???
+
+    if (this.reticleParent) {
+      this.reticleParent.appendChild(this.reticle);
+    }
+
+    this.reticle.setAttribute('visible', false); // hide VR store panel
+    // this.storePanelVR.setAttribute('visible', false);
+  }
+});
+
+/***/ }),
+/* 152 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } } function _next(value) { step("next", value); } function _throw(err) { step("throw", err); } _next(); }); }; }
 
 // import axios from 'axios'
@@ -7199,16 +7398,22 @@ AFRAME.registerSystem('assetLoader', {
 });
 
 /***/ }),
-/* 152 */
+/* 153 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-AFRAME.registerSystem('singleAsset', {
+AFRAME.registerSystem('vr-controller', {
   // register a component named store
   init: function init() {
-    console.log("--- init FRAME.registerSystem('store', {...}"); // mapping for mapping inputs to application-specific actions.
+    console.log("--- init vrController"); // get the xrController
+
+    this.system = document.querySelector('a-scene').systems['xr-controller']; // access system as this.system
+
+    this.system.registerVr(this); // get state
+
+    this.state = this.system.state; // mapping for mapping inputs to application-specific actions.
     // read about input mappings -> https://blog.mozvr.com/input-mapping/
 
     var mappings = {
@@ -7240,47 +7445,9 @@ AFRAME.registerSystem('singleAsset', {
           }
         }
       }
-    };
-    /* --- STATE for surface detection and item placement --- */
-    // 1. pin is "detected" when plane is detected.
+    }; // listen for XR initialized event from aframe-xr.
 
-    this.pinDetected = false; // 2. pin is "selected" when item is placed.
-
-    this.pinSelected = false;
-    /* --- CONSTANTS -- */
-    // color constants
-
-    this.colorArr = [0x66ca9c, 0xfa5784, 0x4db5d1]; // default to magic Window
-
-    this.currentReality = 'magicWindow';
-    /* --- DOM BINDINGS --- */
-    // binding to meshContainer, aframe entity that groups all the 3d objects, which are
-    // themselves aframe entities which wrap the three.js 3d objects. Since this wraps
-    // all 3d objects, we can use it to set position of which ever 3d object is visible, and
-    // of course toggle visibility of all, eg. when user clicks schematic thumbnail.
-
-    this.meshContainer = document.querySelector('#meshContainer');
-    this.meshContainerOrigPosition = this.meshContainer.getAttribute('position'); // reticle binding using attribute selection b/c reticle is a component provided by
-    // aframe-xr.js --> https://github.com/mozilla/aframe-xr/blob/master/src/components/reticle.js
-
-    this.reticle = document.querySelector('[reticle]');
-    /* --- REGISTER EVENT HANDLERS --- */
-    // listen for plane detection and touched events
-
-    this.planeDetected = this.planeDetected.bind(this);
-    this.touched = this.touched.bind(this);
-    this.reticle.addEventListener('planeDetected', this.planeDetected);
-    this.reticle.addEventListener('touched', this.touched); // listen for change in reality from aframe-xr. note:
-    // threejs scene is accessible on a-frame elements as "sceneEl"
-    // a-frame element is accessible on the a-frame component as "el"
-    // so we access scene from inside any component with "this.el.sceneEl"
-    // this.el.sceneEl.setAttribute('vr-mode-ui', {enabled: false});
-
-    this.el.sceneEl.addEventListener('realityChanged', this.realityChanged.bind(this)); // listen for XR initialized event from aframe-xr.
-
-    this.el.sceneEl.addEventListener('xrInitialized', this.xrInitialized.bind(this)); // add click handlers to DOM elements
-
-    this.addEvents();
+    this.el.sceneEl.addEventListener('xrInitialized', this.xrInitialized.bind(this));
     var self = this;
     this.sceneEl.addEventListener('loaded', function () {
       // inits for after scene loaded
@@ -7308,158 +7475,8 @@ AFRAME.registerSystem('singleAsset', {
       });
     });
   },
-  // handle change in reality btw "Magic Window", AR, and VR
-  realityChanged: function realityChanged(data) {
-    console.log('--- reality changed', data);
-    console.log('--- pinSelected', this.pinSelected);
-    document.getElementById('status').innerText = this.currentReality;
 
-    if (data.detail !== this.currentReality) {
-      this.currentReality = data.detail;
-      this.changeReality();
-    }
-  },
-  changeReality: function changeReality() {
-    var productOptionArr = document.getElementsByClassName('productOption');
-    document.getElementById('status').innerText = this.pinSelected + ' ' + this.currentReality;
-    console.log('--- currentReality', this.currentReality);
-    console.log('--- pinSelected2', this.pinSelected); // currentReality is actually the new reality we are switching to
-    // b/c we set on realityChanged event above before calling changeReality.
-
-    switch (this.currentReality) {
-      case 'ar':
-        // remove title and add "ar" class to to everything that stays
-        document.getElementById('header').classList.add('ar'); // document.getElementById('title').style.display = 'none';
-
-        document.getElementById('visualSheet').classList.add('ar');
-        document.getElementById('content3D').classList.add('ar');
-        document.getElementById('productOptions').classList.add('ar');
-
-        for (var i = 0; i < productOptionArr.length; i++) {
-          productOptionArr[i].classList.add('ar');
-        } // remove more stuff. this should probably be wrapped
-        // document.getElementById('brand').style.display = 'none';
-        // document.getElementById('productName').style.display = 'none';
-        // document.getElementById('price').style.display = 'none';
-        // document.getElementById('comments').style.display = 'none';
-        // document.getElementById('thumbs').classList.add('ar');
-        // document.getElementById('buttonCart').classList.add('ar');
-        // document.getElementById('footer').style.display = 'none';
-
-
-        document.getElementById('status').innerText = 'mthfkr' + ' ' + this.pinSelected + ' ' + this.currentReality;
-
-        if (!this.pinSelected) {
-          // object not yet placed.
-          document.getElementById('status').innerText = 'show it';
-          document.getElementById('arui').style.display = 'block';
-          document.getElementById('header').style.display = 'none';
-          document.getElementById('productOptions').style.display = 'none'; // document.getElementById('buttonCart').style.display = 'none';
-          // hide mesh for now, will show it again after item is placed
-          // this happens inside touched event handler.
-
-          this.meshContainer.setAttribute('visible', false);
-        } else {
-          // object already placed.
-          // product option control panel only shows after object placed.
-          document.getElementById('productOptions').style.display = 'flex'; // just used to change background on container after item placed.
-
-          document.getElementById('container').classList.add('ar');
-        }
-
-        if (this.pinDetected) {
-          // ???
-          this.planeDetected();
-        }
-
-        break;
-
-      case 'magicWindow':
-        // show all the stuff on detail page thats gets hidden during ar
-        // and remote all the ar class on everything else
-        document.getElementById('header').classList.remove('ar');
-        document.getElementById('title').style.display = 'block';
-        document.getElementById('visualSheet').classList.remove('ar');
-        document.getElementById('content3D').classList.remove('ar');
-        document.getElementById('productOptions').classList.remove('ar');
-
-        for (var i = 0; i < productOptionArr.length; i++) {
-          productOptionArr[i].classList.remove('ar');
-        }
-
-        document.getElementById('brand').style.display = 'block';
-        document.getElementById('productName').style.display = 'block';
-        document.getElementById('price').style.display = 'block';
-        document.getElementById('comments').style.display = 'block'; // document.getElementById('thumbs').classList.remove('ar');
-        // document.getElementById('buttonCart').classList.remove('ar');
-
-        document.getElementById('container').classList.remove('ar');
-        document.getElementById('footer').style.display = 'block';
-        document.getElementById('header').style.display = 'block';
-        document.getElementById('productOptions').style.display = 'block'; // document.getElementById('buttonCart').style.display = 'block';
-
-        document.getElementById('arui').style.display = 'none'; // put mesh back to default magic window position
-        // show it incase it is hidden, ie in ar but not yet placed!
-
-        this.meshContainer.setAttribute('visible', true);
-        this.meshContainer.setAttribute('position', this.meshContainerOrigPosition); // item not yet placed
-
-        this.pinSelected = false; // save reticle and hide <---------------- ???
-
-        if (this.reticleParent) {
-          this.reticleParent.appendChild(this.reticle);
-        }
-
-        this.reticle.setAttribute('visible', false); // hide VR store panel
-
-        this.storePanelVR.setAttribute('visible', false);
-        break;
-
-      case 'vr':
-        // show vr panel
-        this.storePanelVR.setAttribute('visible', true); // why not visibiliy settings here ???
-
-        break;
-    }
-  },
-  // function to add click handlers to DOM elements
-  addEvents: function addEvents() {
-    this.isAdded = false;
-    this.buttonCartClicked = this.buttonCartClicked.bind(this); // document.getElementById('buttonCart').addEventListener('click', this.buttonCartClicked);
-  },
-  buttonCartClicked: function buttonCartClicked() {
-    if (this.isAdded) {
-      document.getElementById('cart').innerHTML = '(0) Cart';
-      document.getElementById('cart').style.color = '#181818';
-      document.getElementById('cart').style.fontWeight = 'normal'; // document.getElementById('buttonCart').innerHTML = 'Add to cart';
-      // document.getElementById('buttonCart').style.backgroundColor = '#181818';
-
-      document.querySelector('#addBtn-vr-bg').setAttribute('initialColor', '#181818');
-      document.querySelector('#addBtn-vr-text').setAttribute('text', {
-        value: 'Add to cart'
-      });
-      document.querySelector('#cart-vr').setAttribute('text', {
-        value: '(0) Cart'
-      });
-    } else {
-      document.getElementById('cart').innerHTML = '(1) Cart';
-      document.getElementById('cart').style.color = '#b7374c';
-      document.getElementById('cart').style.fontWeight = 'bolder'; // document.getElementById('buttonCart').innerHTML = 'Added!';
-      // document.getElementById('buttonCart').style.backgroundColor = '#b7374c';
-
-      document.querySelector('#addBtn-vr-bg').setAttribute('initialColor', '#b7374c');
-      document.querySelector('#addBtn-vr-text').setAttribute('text', {
-        value: 'Added!'
-      });
-      document.querySelector('#cart-vr').setAttribute('text', {
-        value: '(1) Cart'
-      });
-    }
-
-    this.isAdded = !this.isAdded;
-  },
-
-  /* --- VR STORE PANEL --- */
+  /* --- VR UTILS --- */
   // add vr store panel
   addStorePanel: function addStorePanel() {
     // create an a-frame enitity for vr store panel
@@ -7756,86 +7773,176 @@ AFRAME.registerSystem('singleAsset', {
     sheet.innerHTML += '.a-enter-vr-button:active,.a-enter-vr-button:hover {background-color: rgba(0,0,0,0);opacity: 0.5}';
     document.body.appendChild(sheet);
   },
-  // handler for plane detection event
-  planeDetected: function planeDetected() {
-    console.log('----- plane detected', this.pinDetected, this.pinSelected);
-
-    if (this.pinSelected) {
-      this.showARUI();
-    } else {
-      if (!this.pinDetected) {
-        // pin NOT selected or detected
-        this.pinDetected = true; // plane is detected so hide "move to find surface" instruction
-        // and show "tap to place" instruction
-
-        document.querySelector('#arui-step1').style.display = 'none';
-        document.querySelector('#arui-step2').style.display = 'block';
-      } else {
-        // pin is detected by NOT selected
-        // why add listener again here ??? its already been added in init.
-        this.reticle.addEventListener('touched', this.touched);
-      }
-    }
+  enableVR: function enableVR() {
+    // show vr panel
+    this.storePanelVR.setAttribute('visible', true);
   },
-  // handler for touched, ie. place after plane detected, event
-  touched: function touched(evt) {
-    console.log('----- touched', evt.detail.target);
-
-    if (evt.detail.target.type !== 'submit') {
-      this.pinSelected = true; // remove the reticle, but save the parent. WHY ???
-
-      this.reticleParent = this.reticle.parentNode;
-      this.reticle.parentNode.removeChild(this.reticle); // show mesh and position at reticle and show AR UI.
-
-      this.meshContainer.setAttribute('visible', true);
-      this.meshContainer.setAttribute('position', this.reticle.getAttribute('position'));
-      this.showARUI();
-    } // why add listener again here ??? its already been added in init.
-
-
-    this.reticle.removeEventListener('touched', this.touched);
-  },
-  showARUI: function showARUI() {
-    document.getElementById('arui').style.display = 'none';
-    document.getElementById('header').style.display = 'block';
-    document.getElementById('productOptions').style.display = 'flex'; // document.getElementById('buttonCart').style.display = 'block';
-
-    document.getElementById('container').classList.add('ar');
+  disableVR: function disableVR() {
+    // hide VR store panel
+    this.storePanelVR.setAttribute('visible', false);
   }
 });
 
 /***/ }),
-/* 153 */
+/* 154 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(291);
-__webpack_require__(230);
+"use strict";
+
+
+AFRAME.registerSystem('xr-controller', {
+  // register a component named store
+  state: {
+    pinDetected: false,
+    pinSelected: false,
+    currentReality: 'magicWindow'
+  },
+  init: function init() {
+    console.log("--- init xrController");
+    /* --- init STATE  --- */
+    // 1. pin is "detected" when plane is detected.
+
+    this.state.pinDetected = false; // 2. pin is "selected" when item is placed.
+
+    this.state.pinSelected = false; // default to magic Window
+
+    this.state.currentReality = 'magicWindow';
+    /* --- REGISTER EVENT HANDLERS --- */
+    // add click handlers to DOM elements
+
+    this.addEvents(); // listen for change in reality from aframe-xr. note:
+    // threejs scene is accessible on a-frame elements as "sceneEl"
+    // a-frame element is accessible on the a-frame component as "el"
+    // so we access scene from inside any component with "this.el.sceneEl"
+    // this.el.sceneEl.setAttribute('vr-mode-ui', {enabled: false});
+
+    this.el.sceneEl.addEventListener('realityChanged', this.realityChanged.bind(this));
+  },
+  // handle change in reality btw "Magic Window", AR, and VR
+  realityChanged: function realityChanged(data) {
+    console.log('--- reality changed', data);
+    console.log('--- pinSelected', this.state.pinSelected);
+    document.getElementById('status').innerText = this.state.currentReality;
+
+    if (data.detail !== this.state.currentReality) {
+      this.state.currentReality = data.detail;
+      this.changeReality();
+    }
+  },
+  changeReality: function changeReality() {
+    var productOptionArr = document.getElementsByClassName('productOption');
+    document.getElementById('status').innerText = this.state.pinSelected + ' ' + this.state.currentReality;
+    console.log('--- currentReality', this.state.currentReality);
+    console.log('--- pinSelected2', this.state.pinSelected); // currentReality is actually the new reality we are switching to
+    // b/c we set on realityChanged event above before calling changeReality.
+
+    switch (this.state.currentReality) {
+      case 'ar':
+        document.getElementById('status').innerText = 'change to AR';
+        this.renderAr(); // update state
+
+        break;
+
+      case 'magicWindow':
+        document.getElementById('status').innerText = 'change to Magic Window';
+        this.renderMagicWindow();
+        this.disableVR(); // update state
+
+        this.state.pinSelected = false;
+        break;
+
+      case 'vr':
+        document.getElementById('status').innerText = 'change to VR';
+        this.enableVR();
+        break;
+    }
+  },
+  // function to add click handlers to DOM elements
+  addEvents: function addEvents() {
+    this.isAdded = false;
+    this.buttonCartClicked = this.buttonCartClicked.bind(this); // document.getElementById('buttonCart').addEventListener('click', this.buttonCartClicked);
+  },
+  buttonCartClicked: function buttonCartClicked() {
+    if (this.isAdded) {
+      document.getElementById('cart').innerHTML = '(0) Cart';
+      document.getElementById('cart').style.color = '#181818';
+      document.getElementById('cart').style.fontWeight = 'normal'; // document.getElementById('buttonCart').innerHTML = 'Add to cart';
+      // document.getElementById('buttonCart').style.backgroundColor = '#181818';
+
+      document.querySelector('#addBtn-vr-bg').setAttribute('initialColor', '#181818');
+      document.querySelector('#addBtn-vr-text').setAttribute('text', {
+        value: 'Add to cart'
+      });
+      document.querySelector('#cart-vr').setAttribute('text', {
+        value: '(0) Cart'
+      });
+    } else {
+      document.getElementById('cart').innerHTML = '(1) Cart';
+      document.getElementById('cart').style.color = '#b7374c';
+      document.getElementById('cart').style.fontWeight = 'bolder'; // document.getElementById('buttonCart').innerHTML = 'Added!';
+      // document.getElementById('buttonCart').style.backgroundColor = '#b7374c';
+
+      document.querySelector('#addBtn-vr-bg').setAttribute('initialColor', '#b7374c');
+      document.querySelector('#addBtn-vr-text').setAttribute('text', {
+        value: 'Added!'
+      });
+      document.querySelector('#cart-vr').setAttribute('text', {
+        value: '(1) Cart'
+      });
+    }
+
+    this.isAdded = !this.isAdded;
+  },
+  registerAr: function registerAr(el) {
+    console.log('--- ar-controller registered!'); // this.planeDetected = el.planeDetected;
+    // this.touched = el.touched;
+
+    console.log('el', el);
+    this.renderAr = el.renderAr;
+    console.log('this.renderAr', this.renderAr);
+    this.renderMagicWindow = el.renderMagicWindow;
+  },
+  registerVr: function registerVr(el) {
+    console.log('--- vr-controller registered!');
+    this.enableVR = el.enableVR;
+    this.disableVR = el.disableVR;
+  } // unregisterMe: function (el) {
+  //   var index = this.entities.indexOf(el);
+  //   this.entities.splice(index, 1);
+  // }
+
+});
+
+/***/ }),
+/* 155 */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(293);
 __webpack_require__(232);
-__webpack_require__(231);
 __webpack_require__(234);
-__webpack_require__(236);
-__webpack_require__(241);
-__webpack_require__(235);
 __webpack_require__(233);
-__webpack_require__(243);
-__webpack_require__(242);
+__webpack_require__(236);
 __webpack_require__(238);
-__webpack_require__(239);
+__webpack_require__(243);
 __webpack_require__(237);
-__webpack_require__(229);
-__webpack_require__(240);
-__webpack_require__(244);
+__webpack_require__(235);
 __webpack_require__(245);
-__webpack_require__(196);
-__webpack_require__(198);
-__webpack_require__(197);
-__webpack_require__(247);
+__webpack_require__(244);
+__webpack_require__(240);
+__webpack_require__(241);
+__webpack_require__(239);
+__webpack_require__(231);
+__webpack_require__(242);
 __webpack_require__(246);
-__webpack_require__(217);
-__webpack_require__(227);
-__webpack_require__(228);
-__webpack_require__(218);
+__webpack_require__(247);
+__webpack_require__(198);
+__webpack_require__(200);
+__webpack_require__(199);
+__webpack_require__(249);
+__webpack_require__(248);
 __webpack_require__(219);
+__webpack_require__(229);
+__webpack_require__(230);
 __webpack_require__(220);
 __webpack_require__(221);
 __webpack_require__(222);
@@ -7843,8 +7950,8 @@ __webpack_require__(223);
 __webpack_require__(224);
 __webpack_require__(225);
 __webpack_require__(226);
-__webpack_require__(200);
-__webpack_require__(201);
+__webpack_require__(227);
+__webpack_require__(228);
 __webpack_require__(202);
 __webpack_require__(203);
 __webpack_require__(204);
@@ -7860,108 +7967,94 @@ __webpack_require__(213);
 __webpack_require__(214);
 __webpack_require__(215);
 __webpack_require__(216);
-__webpack_require__(278);
+__webpack_require__(217);
+__webpack_require__(218);
+__webpack_require__(280);
+__webpack_require__(285);
+__webpack_require__(292);
 __webpack_require__(283);
-__webpack_require__(290);
-__webpack_require__(281);
-__webpack_require__(273);
-__webpack_require__(274);
-__webpack_require__(279);
-__webpack_require__(284);
-__webpack_require__(286);
-__webpack_require__(269);
-__webpack_require__(270);
-__webpack_require__(271);
-__webpack_require__(272);
 __webpack_require__(275);
 __webpack_require__(276);
-__webpack_require__(277);
-__webpack_require__(280);
-__webpack_require__(282);
-__webpack_require__(285);
-__webpack_require__(287);
+__webpack_require__(281);
+__webpack_require__(286);
 __webpack_require__(288);
+__webpack_require__(271);
+__webpack_require__(272);
+__webpack_require__(273);
+__webpack_require__(274);
+__webpack_require__(277);
+__webpack_require__(278);
+__webpack_require__(279);
+__webpack_require__(282);
+__webpack_require__(284);
+__webpack_require__(287);
 __webpack_require__(289);
-__webpack_require__(191);
+__webpack_require__(290);
+__webpack_require__(291);
 __webpack_require__(193);
-__webpack_require__(192);
 __webpack_require__(195);
 __webpack_require__(194);
+__webpack_require__(197);
+__webpack_require__(196);
+__webpack_require__(182);
 __webpack_require__(180);
-__webpack_require__(178);
-__webpack_require__(184);
-__webpack_require__(181);
-__webpack_require__(187);
-__webpack_require__(189);
-__webpack_require__(177);
+__webpack_require__(186);
 __webpack_require__(183);
+__webpack_require__(189);
+__webpack_require__(191);
+__webpack_require__(179);
+__webpack_require__(185);
+__webpack_require__(176);
+__webpack_require__(190);
 __webpack_require__(174);
 __webpack_require__(188);
-__webpack_require__(172);
-__webpack_require__(186);
-__webpack_require__(185);
-__webpack_require__(179);
-__webpack_require__(182);
-__webpack_require__(171);
+__webpack_require__(187);
+__webpack_require__(181);
+__webpack_require__(184);
 __webpack_require__(173);
-__webpack_require__(176);
 __webpack_require__(175);
-__webpack_require__(190);
+__webpack_require__(178);
+__webpack_require__(177);
+__webpack_require__(192);
 __webpack_require__(83);
-__webpack_require__(262);
-__webpack_require__(267);
-__webpack_require__(119);
-__webpack_require__(263);
 __webpack_require__(264);
+__webpack_require__(269);
+__webpack_require__(119);
 __webpack_require__(265);
 __webpack_require__(266);
-__webpack_require__(118);
-__webpack_require__(199);
+__webpack_require__(267);
 __webpack_require__(268);
-__webpack_require__(303);
-__webpack_require__(304);
-__webpack_require__(292);
-__webpack_require__(293);
-__webpack_require__(298);
-__webpack_require__(301);
-__webpack_require__(302);
-__webpack_require__(296);
-__webpack_require__(299);
-__webpack_require__(297);
-__webpack_require__(300);
+__webpack_require__(118);
+__webpack_require__(201);
+__webpack_require__(270);
+__webpack_require__(305);
+__webpack_require__(306);
 __webpack_require__(294);
 __webpack_require__(295);
-__webpack_require__(248);
-__webpack_require__(249);
+__webpack_require__(300);
+__webpack_require__(303);
+__webpack_require__(304);
+__webpack_require__(298);
+__webpack_require__(301);
+__webpack_require__(299);
+__webpack_require__(302);
+__webpack_require__(296);
+__webpack_require__(297);
 __webpack_require__(250);
 __webpack_require__(251);
 __webpack_require__(252);
-__webpack_require__(255);
 __webpack_require__(253);
 __webpack_require__(254);
-__webpack_require__(256);
 __webpack_require__(257);
+__webpack_require__(255);
+__webpack_require__(256);
 __webpack_require__(258);
 __webpack_require__(259);
-__webpack_require__(261);
 __webpack_require__(260);
+__webpack_require__(261);
+__webpack_require__(263);
+__webpack_require__(262);
 module.exports = __webpack_require__(7);
-
-
-/***/ }),
-/* 154 */
-/***/ (function(module, exports, __webpack_require__) {
-
-__webpack_require__(305);
-module.exports = __webpack_require__(7).Array.includes;
-
-
-/***/ }),
-/* 155 */
-/***/ (function(module, exports, __webpack_require__) {
-
-__webpack_require__(306);
-module.exports = __webpack_require__(7).Object.entries;
 
 
 /***/ }),
@@ -7969,7 +8062,7 @@ module.exports = __webpack_require__(7).Object.entries;
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(307);
-module.exports = __webpack_require__(7).Object.getOwnPropertyDescriptors;
+module.exports = __webpack_require__(7).Array.includes;
 
 
 /***/ }),
@@ -7977,18 +8070,15 @@ module.exports = __webpack_require__(7).Object.getOwnPropertyDescriptors;
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(308);
-module.exports = __webpack_require__(7).Object.values;
+module.exports = __webpack_require__(7).Object.entries;
 
 
 /***/ }),
 /* 158 */
 /***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
-
-__webpack_require__(118);
 __webpack_require__(309);
-module.exports = __webpack_require__(7).Promise['finally'];
+module.exports = __webpack_require__(7).Object.getOwnPropertyDescriptors;
 
 
 /***/ }),
@@ -7996,15 +8086,18 @@ module.exports = __webpack_require__(7).Promise['finally'];
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(310);
-module.exports = __webpack_require__(7).String.padEnd;
+module.exports = __webpack_require__(7).Object.values;
 
 
 /***/ }),
 /* 160 */
 /***/ (function(module, exports, __webpack_require__) {
 
+"use strict";
+
+__webpack_require__(118);
 __webpack_require__(311);
-module.exports = __webpack_require__(7).String.padStart;
+module.exports = __webpack_require__(7).Promise['finally'];
 
 
 /***/ }),
@@ -8012,11 +8105,27 @@ module.exports = __webpack_require__(7).String.padStart;
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(312);
-module.exports = __webpack_require__(81).f('asyncIterator');
+module.exports = __webpack_require__(7).String.padEnd;
 
 
 /***/ }),
 /* 162 */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(313);
+module.exports = __webpack_require__(7).String.padStart;
+
+
+/***/ }),
+/* 163 */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(314);
+module.exports = __webpack_require__(81).f('asyncIterator');
+
+
+/***/ }),
+/* 164 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var isObject = __webpack_require__(3);
@@ -8038,11 +8147,11 @@ module.exports = function (original) {
 
 
 /***/ }),
-/* 163 */
+/* 165 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 9.4.2.3 ArraySpeciesCreate(originalArray, length)
-var speciesConstructor = __webpack_require__(162);
+var speciesConstructor = __webpack_require__(164);
 
 module.exports = function (original, length) {
   return new (speciesConstructor(original))(length);
@@ -8050,7 +8159,7 @@ module.exports = function (original, length) {
 
 
 /***/ }),
-/* 164 */
+/* 166 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8083,7 +8192,7 @@ module.exports = (fails(function () {
 
 
 /***/ }),
-/* 165 */
+/* 167 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8099,7 +8208,7 @@ module.exports = function (hint) {
 
 
 /***/ }),
-/* 166 */
+/* 168 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // all enumerable object keys, includes symbols
@@ -8120,7 +8229,7 @@ module.exports = function (it) {
 
 
 /***/ }),
-/* 167 */
+/* 169 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 20.2.2.16 Math.fround(x)
@@ -8149,7 +8258,7 @@ module.exports = Math.fround || function fround(x) {
 
 
 /***/ }),
-/* 168 */
+/* 170 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var global = __webpack_require__(2);
@@ -8224,7 +8333,7 @@ module.exports = function () {
 
 
 /***/ }),
-/* 169 */
+/* 171 */
 /***/ (function(module, exports) {
 
 module.exports = function (exec) {
@@ -8237,7 +8346,7 @@ module.exports = function (exec) {
 
 
 /***/ }),
-/* 170 */
+/* 172 */
 /***/ (function(module, exports) {
 
 // 7.2.9 SameValue(x, y)
@@ -8248,7 +8357,7 @@ module.exports = Object.is || function is(x, y) {
 
 
 /***/ }),
-/* 171 */
+/* 173 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 22.1.3.3 Array.prototype.copyWithin(target, start, end = this.length)
@@ -8260,7 +8369,7 @@ __webpack_require__(37)('copyWithin');
 
 
 /***/ }),
-/* 172 */
+/* 174 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8277,7 +8386,7 @@ $export($export.P + $export.F * !__webpack_require__(17)([].every, true), 'Array
 
 
 /***/ }),
-/* 173 */
+/* 175 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 22.1.3.6 Array.prototype.fill(value, start = 0, end = this.length)
@@ -8289,7 +8398,7 @@ __webpack_require__(37)('fill');
 
 
 /***/ }),
-/* 174 */
+/* 176 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8306,7 +8415,7 @@ $export($export.P + $export.F * !__webpack_require__(17)([].filter, true), 'Arra
 
 
 /***/ }),
-/* 175 */
+/* 177 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8327,7 +8436,7 @@ __webpack_require__(37)(KEY);
 
 
 /***/ }),
-/* 176 */
+/* 178 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8348,7 +8457,7 @@ __webpack_require__(37)(KEY);
 
 
 /***/ }),
-/* 177 */
+/* 179 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8366,7 +8475,7 @@ $export($export.P + $export.F * !STRICT, 'Array', {
 
 
 /***/ }),
-/* 178 */
+/* 180 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8410,7 +8519,7 @@ $export($export.S + $export.F * !__webpack_require__(52)(function (iter) { Array
 
 
 /***/ }),
-/* 179 */
+/* 181 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8432,7 +8541,7 @@ $export($export.P + $export.F * (NEGATIVE_ZERO || !__webpack_require__(17)($nati
 
 
 /***/ }),
-/* 180 */
+/* 182 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 22.1.2.2 / 15.4.3.2 Array.isArray(arg)
@@ -8442,7 +8551,7 @@ $export($export.S, 'Array', { isArray: __webpack_require__(68) });
 
 
 /***/ }),
-/* 181 */
+/* 183 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8461,7 +8570,7 @@ $export($export.P + $export.F * (__webpack_require__(44) != Object || !__webpack
 
 
 /***/ }),
-/* 182 */
+/* 184 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8490,7 +8599,7 @@ $export($export.P + $export.F * (NEGATIVE_ZERO || !__webpack_require__(17)($nati
 
 
 /***/ }),
-/* 183 */
+/* 185 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8507,7 +8616,7 @@ $export($export.P + $export.F * !__webpack_require__(17)([].map, true), 'Array',
 
 
 /***/ }),
-/* 184 */
+/* 186 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8533,7 +8642,7 @@ $export($export.S + $export.F * __webpack_require__(1)(function () {
 
 
 /***/ }),
-/* 185 */
+/* 187 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8550,7 +8659,7 @@ $export($export.P + $export.F * !__webpack_require__(17)([].reduceRight, true), 
 
 
 /***/ }),
-/* 186 */
+/* 188 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8567,7 +8676,7 @@ $export($export.P + $export.F * !__webpack_require__(17)([].reduce, true), 'Arra
 
 
 /***/ }),
-/* 187 */
+/* 189 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8602,7 +8711,7 @@ $export($export.P + $export.F * __webpack_require__(1)(function () {
 
 
 /***/ }),
-/* 188 */
+/* 190 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8619,7 +8728,7 @@ $export($export.P + $export.F * !__webpack_require__(17)([].some, true), 'Array'
 
 
 /***/ }),
-/* 189 */
+/* 191 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8649,14 +8758,14 @@ $export($export.P + $export.F * (fails(function () {
 
 
 /***/ }),
-/* 190 */
+/* 192 */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(41)('Array');
 
 
 /***/ }),
-/* 191 */
+/* 193 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 20.3.3.1 / 15.9.4.4 Date.now()
@@ -8666,12 +8775,12 @@ $export($export.S, 'Date', { now: function () { return new Date().getTime(); } }
 
 
 /***/ }),
-/* 192 */
+/* 194 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 20.3.4.36 / 15.9.5.43 Date.prototype.toISOString()
 var $export = __webpack_require__(0);
-var toISOString = __webpack_require__(164);
+var toISOString = __webpack_require__(166);
 
 // PhantomJS / old WebKit has a broken implementations
 $export($export.P + $export.F * (Date.prototype.toISOString !== toISOString), 'Date', {
@@ -8680,7 +8789,7 @@ $export($export.P + $export.F * (Date.prototype.toISOString !== toISOString), 'D
 
 
 /***/ }),
-/* 193 */
+/* 195 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8703,17 +8812,17 @@ $export($export.P + $export.F * __webpack_require__(1)(function () {
 
 
 /***/ }),
-/* 194 */
+/* 196 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var TO_PRIMITIVE = __webpack_require__(5)('toPrimitive');
 var proto = Date.prototype;
 
-if (!(TO_PRIMITIVE in proto)) __webpack_require__(14)(proto, TO_PRIMITIVE, __webpack_require__(165));
+if (!(TO_PRIMITIVE in proto)) __webpack_require__(14)(proto, TO_PRIMITIVE, __webpack_require__(167));
 
 
 /***/ }),
-/* 195 */
+/* 197 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var DateProto = Date.prototype;
@@ -8731,7 +8840,7 @@ if (new Date(NaN) + '' != INVALID_DATE) {
 
 
 /***/ }),
-/* 196 */
+/* 198 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.2.3.2 / 15.3.4.5 Function.prototype.bind(thisArg, args...)
@@ -8741,7 +8850,7 @@ $export($export.P, 'Function', { bind: __webpack_require__(94) });
 
 
 /***/ }),
-/* 197 */
+/* 199 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8761,7 +8870,7 @@ if (!(HAS_INSTANCE in FunctionProto)) __webpack_require__(6).f(FunctionProto, HA
 
 
 /***/ }),
-/* 198 */
+/* 200 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var dP = __webpack_require__(6).f;
@@ -8783,7 +8892,7 @@ NAME in FProto || __webpack_require__(8) && dP(FProto, NAME, {
 
 
 /***/ }),
-/* 199 */
+/* 201 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8809,7 +8918,7 @@ module.exports = __webpack_require__(49)(MAP, function (get) {
 
 
 /***/ }),
-/* 200 */
+/* 202 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 20.2.2.3 Math.acosh(x)
@@ -8833,7 +8942,7 @@ $export($export.S + $export.F * !($acosh
 
 
 /***/ }),
-/* 201 */
+/* 203 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 20.2.2.5 Math.asinh(x)
@@ -8849,7 +8958,7 @@ $export($export.S + $export.F * !($asinh && 1 / $asinh(0) > 0), 'Math', { asinh:
 
 
 /***/ }),
-/* 202 */
+/* 204 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 20.2.2.7 Math.atanh(x)
@@ -8865,7 +8974,7 @@ $export($export.S + $export.F * !($atanh && 1 / $atanh(-0) < 0), 'Math', {
 
 
 /***/ }),
-/* 203 */
+/* 205 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 20.2.2.9 Math.cbrt(x)
@@ -8880,7 +8989,7 @@ $export($export.S, 'Math', {
 
 
 /***/ }),
-/* 204 */
+/* 206 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 20.2.2.11 Math.clz32(x)
@@ -8894,7 +9003,7 @@ $export($export.S, 'Math', {
 
 
 /***/ }),
-/* 205 */
+/* 207 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 20.2.2.12 Math.cosh(x)
@@ -8909,7 +9018,7 @@ $export($export.S, 'Math', {
 
 
 /***/ }),
-/* 206 */
+/* 208 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 20.2.2.14 Math.expm1(x)
@@ -8920,17 +9029,17 @@ $export($export.S + $export.F * ($expm1 != Math.expm1), 'Math', { expm1: $expm1 
 
 
 /***/ }),
-/* 207 */
+/* 209 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 20.2.2.16 Math.fround(x)
 var $export = __webpack_require__(0);
 
-$export($export.S, 'Math', { fround: __webpack_require__(167) });
+$export($export.S, 'Math', { fround: __webpack_require__(169) });
 
 
 /***/ }),
-/* 208 */
+/* 210 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 20.2.2.17 Math.hypot([value1[, value2[, … ]]])
@@ -8961,7 +9070,7 @@ $export($export.S, 'Math', {
 
 
 /***/ }),
-/* 209 */
+/* 211 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 20.2.2.18 Math.imul(x, y)
@@ -8984,7 +9093,7 @@ $export($export.S + $export.F * __webpack_require__(1)(function () {
 
 
 /***/ }),
-/* 210 */
+/* 212 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 20.2.2.21 Math.log10(x)
@@ -8998,7 +9107,7 @@ $export($export.S, 'Math', {
 
 
 /***/ }),
-/* 211 */
+/* 213 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 20.2.2.20 Math.log1p(x)
@@ -9008,7 +9117,7 @@ $export($export.S, 'Math', { log1p: __webpack_require__(103) });
 
 
 /***/ }),
-/* 212 */
+/* 214 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 20.2.2.22 Math.log2(x)
@@ -9022,7 +9131,7 @@ $export($export.S, 'Math', {
 
 
 /***/ }),
-/* 213 */
+/* 215 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 20.2.2.28 Math.sign(x)
@@ -9032,7 +9141,7 @@ $export($export.S, 'Math', { sign: __webpack_require__(72) });
 
 
 /***/ }),
-/* 214 */
+/* 216 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 20.2.2.30 Math.sinh(x)
@@ -9053,7 +9162,7 @@ $export($export.S + $export.F * __webpack_require__(1)(function () {
 
 
 /***/ }),
-/* 215 */
+/* 217 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 20.2.2.33 Math.tanh(x)
@@ -9071,7 +9180,7 @@ $export($export.S, 'Math', {
 
 
 /***/ }),
-/* 216 */
+/* 218 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 20.2.2.34 Math.trunc(x)
@@ -9085,7 +9194,7 @@ $export($export.S, 'Math', {
 
 
 /***/ }),
-/* 217 */
+/* 219 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9161,7 +9270,7 @@ if (!$Number(' 0o1') || !$Number('0b1') || $Number('+0x1')) {
 
 
 /***/ }),
-/* 218 */
+/* 220 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 20.1.2.1 Number.EPSILON
@@ -9171,7 +9280,7 @@ $export($export.S, 'Number', { EPSILON: Math.pow(2, -52) });
 
 
 /***/ }),
-/* 219 */
+/* 221 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 20.1.2.2 Number.isFinite(number)
@@ -9186,7 +9295,7 @@ $export($export.S, 'Number', {
 
 
 /***/ }),
-/* 220 */
+/* 222 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 20.1.2.3 Number.isInteger(number)
@@ -9196,7 +9305,7 @@ $export($export.S, 'Number', { isInteger: __webpack_require__(99) });
 
 
 /***/ }),
-/* 221 */
+/* 223 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 20.1.2.4 Number.isNaN(number)
@@ -9211,7 +9320,7 @@ $export($export.S, 'Number', {
 
 
 /***/ }),
-/* 222 */
+/* 224 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 20.1.2.5 Number.isSafeInteger(number)
@@ -9227,7 +9336,7 @@ $export($export.S, 'Number', {
 
 
 /***/ }),
-/* 223 */
+/* 225 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 20.1.2.6 Number.MAX_SAFE_INTEGER
@@ -9237,7 +9346,7 @@ $export($export.S, 'Number', { MAX_SAFE_INTEGER: 0x1fffffffffffff });
 
 
 /***/ }),
-/* 224 */
+/* 226 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 20.1.2.10 Number.MIN_SAFE_INTEGER
@@ -9247,7 +9356,7 @@ $export($export.S, 'Number', { MIN_SAFE_INTEGER: -0x1fffffffffffff });
 
 
 /***/ }),
-/* 225 */
+/* 227 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var $export = __webpack_require__(0);
@@ -9257,7 +9366,7 @@ $export($export.S + $export.F * (Number.parseFloat != $parseFloat), 'Number', { 
 
 
 /***/ }),
-/* 226 */
+/* 228 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var $export = __webpack_require__(0);
@@ -9267,7 +9376,7 @@ $export($export.S + $export.F * (Number.parseInt != $parseInt), 'Number', { pars
 
 
 /***/ }),
-/* 227 */
+/* 229 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9388,7 +9497,7 @@ $export($export.P + $export.F * (!!$toFixed && (
 
 
 /***/ }),
-/* 228 */
+/* 230 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9413,7 +9522,7 @@ $export($export.P + $export.F * ($fails(function () {
 
 
 /***/ }),
-/* 229 */
+/* 231 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.3.1 Object.assign(target, source)
@@ -9423,7 +9532,7 @@ $export($export.S + $export.F, 'Object', { assign: __webpack_require__(105) });
 
 
 /***/ }),
-/* 230 */
+/* 232 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var $export = __webpack_require__(0);
@@ -9432,7 +9541,7 @@ $export($export.S, 'Object', { create: __webpack_require__(30) });
 
 
 /***/ }),
-/* 231 */
+/* 233 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var $export = __webpack_require__(0);
@@ -9441,7 +9550,7 @@ $export($export.S + $export.F * !__webpack_require__(8), 'Object', { definePrope
 
 
 /***/ }),
-/* 232 */
+/* 234 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var $export = __webpack_require__(0);
@@ -9450,7 +9559,7 @@ $export($export.S + $export.F * !__webpack_require__(8), 'Object', { definePrope
 
 
 /***/ }),
-/* 233 */
+/* 235 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.5 Object.freeze(O)
@@ -9465,7 +9574,7 @@ __webpack_require__(20)('freeze', function ($freeze) {
 
 
 /***/ }),
-/* 234 */
+/* 236 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.6 Object.getOwnPropertyDescriptor(O, P)
@@ -9480,7 +9589,7 @@ __webpack_require__(20)('getOwnPropertyDescriptor', function () {
 
 
 /***/ }),
-/* 235 */
+/* 237 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.7 Object.getOwnPropertyNames(O)
@@ -9490,7 +9599,7 @@ __webpack_require__(20)('getOwnPropertyNames', function () {
 
 
 /***/ }),
-/* 236 */
+/* 238 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.9 Object.getPrototypeOf(O)
@@ -9505,7 +9614,7 @@ __webpack_require__(20)('getPrototypeOf', function () {
 
 
 /***/ }),
-/* 237 */
+/* 239 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.11 Object.isExtensible(O)
@@ -9519,7 +9628,7 @@ __webpack_require__(20)('isExtensible', function ($isExtensible) {
 
 
 /***/ }),
-/* 238 */
+/* 240 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.12 Object.isFrozen(O)
@@ -9533,7 +9642,7 @@ __webpack_require__(20)('isFrozen', function ($isFrozen) {
 
 
 /***/ }),
-/* 239 */
+/* 241 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.13 Object.isSealed(O)
@@ -9547,16 +9656,16 @@ __webpack_require__(20)('isSealed', function ($isSealed) {
 
 
 /***/ }),
-/* 240 */
+/* 242 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.3.10 Object.is(value1, value2)
 var $export = __webpack_require__(0);
-$export($export.S, 'Object', { is: __webpack_require__(170) });
+$export($export.S, 'Object', { is: __webpack_require__(172) });
 
 
 /***/ }),
-/* 241 */
+/* 243 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.14 Object.keys(O)
@@ -9571,7 +9680,7 @@ __webpack_require__(20)('keys', function () {
 
 
 /***/ }),
-/* 242 */
+/* 244 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.15 Object.preventExtensions(O)
@@ -9586,7 +9695,7 @@ __webpack_require__(20)('preventExtensions', function ($preventExtensions) {
 
 
 /***/ }),
-/* 243 */
+/* 245 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.17 Object.seal(O)
@@ -9601,7 +9710,7 @@ __webpack_require__(20)('seal', function ($seal) {
 
 
 /***/ }),
-/* 244 */
+/* 246 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.3.19 Object.setPrototypeOf(O, proto)
@@ -9610,7 +9719,7 @@ $export($export.S, 'Object', { setPrototypeOf: __webpack_require__(73).set });
 
 
 /***/ }),
-/* 245 */
+/* 247 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9627,7 +9736,7 @@ if (test + '' != '[object z]') {
 
 
 /***/ }),
-/* 246 */
+/* 248 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var $export = __webpack_require__(0);
@@ -9637,7 +9746,7 @@ $export($export.G + $export.F * (parseFloat != $parseFloat), { parseFloat: $pars
 
 
 /***/ }),
-/* 247 */
+/* 249 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var $export = __webpack_require__(0);
@@ -9647,7 +9756,7 @@ $export($export.G + $export.F * (parseInt != $parseInt), { parseInt: $parseInt }
 
 
 /***/ }),
-/* 248 */
+/* 250 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 26.1.1 Reflect.apply(target, thisArgument, argumentsList)
@@ -9669,7 +9778,7 @@ $export($export.S + $export.F * !__webpack_require__(1)(function () {
 
 
 /***/ }),
-/* 249 */
+/* 251 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 26.1.2 Reflect.construct(target, argumentsList [, newTarget])
@@ -9722,7 +9831,7 @@ $export($export.S + $export.F * (NEW_TARGET_BUG || ARGS_BUG), 'Reflect', {
 
 
 /***/ }),
-/* 250 */
+/* 252 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 26.1.3 Reflect.defineProperty(target, propertyKey, attributes)
@@ -9751,7 +9860,7 @@ $export($export.S + $export.F * __webpack_require__(1)(function () {
 
 
 /***/ }),
-/* 251 */
+/* 253 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 26.1.4 Reflect.deleteProperty(target, propertyKey)
@@ -9768,7 +9877,7 @@ $export($export.S, 'Reflect', {
 
 
 /***/ }),
-/* 252 */
+/* 254 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9801,7 +9910,7 @@ $export($export.S, 'Reflect', {
 
 
 /***/ }),
-/* 253 */
+/* 255 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 26.1.7 Reflect.getOwnPropertyDescriptor(target, propertyKey)
@@ -9817,7 +9926,7 @@ $export($export.S, 'Reflect', {
 
 
 /***/ }),
-/* 254 */
+/* 256 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 26.1.8 Reflect.getPrototypeOf(target)
@@ -9833,7 +9942,7 @@ $export($export.S, 'Reflect', {
 
 
 /***/ }),
-/* 255 */
+/* 257 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 26.1.6 Reflect.get(target, propertyKey [, receiver])
@@ -9860,7 +9969,7 @@ $export($export.S, 'Reflect', { get: get });
 
 
 /***/ }),
-/* 256 */
+/* 258 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 26.1.9 Reflect.has(target, propertyKey)
@@ -9874,7 +9983,7 @@ $export($export.S, 'Reflect', {
 
 
 /***/ }),
-/* 257 */
+/* 259 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 26.1.10 Reflect.isExtensible(target)
@@ -9891,7 +10000,7 @@ $export($export.S, 'Reflect', {
 
 
 /***/ }),
-/* 258 */
+/* 260 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 26.1.11 Reflect.ownKeys(target)
@@ -9901,7 +10010,7 @@ $export($export.S, 'Reflect', { ownKeys: __webpack_require__(110) });
 
 
 /***/ }),
-/* 259 */
+/* 261 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 26.1.12 Reflect.preventExtensions(target)
@@ -9923,7 +10032,7 @@ $export($export.S, 'Reflect', {
 
 
 /***/ }),
-/* 260 */
+/* 262 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 26.1.14 Reflect.setPrototypeOf(target, proto)
@@ -9944,7 +10053,7 @@ if (setProto) $export($export.S, 'Reflect', {
 
 
 /***/ }),
-/* 261 */
+/* 263 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 26.1.13 Reflect.set(target, propertyKey, V [, receiver])
@@ -9983,7 +10092,7 @@ $export($export.S, 'Reflect', { set: set });
 
 
 /***/ }),
-/* 262 */
+/* 264 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var global = __webpack_require__(2);
@@ -10032,7 +10141,7 @@ __webpack_require__(41)('RegExp');
 
 
 /***/ }),
-/* 263 */
+/* 265 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // @@match logic
@@ -10048,7 +10157,7 @@ __webpack_require__(50)('match', 1, function (defined, MATCH, $match) {
 
 
 /***/ }),
-/* 264 */
+/* 266 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // @@replace logic
@@ -10066,7 +10175,7 @@ __webpack_require__(50)('replace', 2, function (defined, REPLACE, $replace) {
 
 
 /***/ }),
-/* 265 */
+/* 267 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // @@search logic
@@ -10082,7 +10191,7 @@ __webpack_require__(50)('search', 1, function (defined, SEARCH, $search) {
 
 
 /***/ }),
-/* 266 */
+/* 268 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // @@split logic
@@ -10159,7 +10268,7 @@ __webpack_require__(50)('split', 2, function (defined, SPLIT, $split) {
 
 
 /***/ }),
-/* 267 */
+/* 269 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10191,7 +10300,7 @@ if (__webpack_require__(1)(function () { return $toString.call({ source: 'a', fl
 
 
 /***/ }),
-/* 268 */
+/* 270 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10212,7 +10321,7 @@ module.exports = __webpack_require__(49)(SET, function (get) {
 
 
 /***/ }),
-/* 269 */
+/* 271 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10226,7 +10335,7 @@ __webpack_require__(11)('anchor', function (createHTML) {
 
 
 /***/ }),
-/* 270 */
+/* 272 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10240,7 +10349,7 @@ __webpack_require__(11)('big', function (createHTML) {
 
 
 /***/ }),
-/* 271 */
+/* 273 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10254,7 +10363,7 @@ __webpack_require__(11)('blink', function (createHTML) {
 
 
 /***/ }),
-/* 272 */
+/* 274 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10268,7 +10377,7 @@ __webpack_require__(11)('bold', function (createHTML) {
 
 
 /***/ }),
-/* 273 */
+/* 275 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10284,7 +10393,7 @@ $export($export.P, 'String', {
 
 
 /***/ }),
-/* 274 */
+/* 276 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10311,7 +10420,7 @@ $export($export.P + $export.F * __webpack_require__(63)(ENDS_WITH), 'String', {
 
 
 /***/ }),
-/* 275 */
+/* 277 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10325,7 +10434,7 @@ __webpack_require__(11)('fixed', function (createHTML) {
 
 
 /***/ }),
-/* 276 */
+/* 278 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10339,7 +10448,7 @@ __webpack_require__(11)('fontcolor', function (createHTML) {
 
 
 /***/ }),
-/* 277 */
+/* 279 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10353,7 +10462,7 @@ __webpack_require__(11)('fontsize', function (createHTML) {
 
 
 /***/ }),
-/* 278 */
+/* 280 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var $export = __webpack_require__(0);
@@ -10382,7 +10491,7 @@ $export($export.S + $export.F * (!!$fromCodePoint && $fromCodePoint.length != 1)
 
 
 /***/ }),
-/* 279 */
+/* 281 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10401,7 +10510,7 @@ $export($export.P + $export.F * __webpack_require__(63)(INCLUDES), 'String', {
 
 
 /***/ }),
-/* 280 */
+/* 282 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10415,7 +10524,7 @@ __webpack_require__(11)('italics', function (createHTML) {
 
 
 /***/ }),
-/* 281 */
+/* 283 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10439,7 +10548,7 @@ __webpack_require__(70)(String, 'String', function (iterated) {
 
 
 /***/ }),
-/* 282 */
+/* 284 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10453,7 +10562,7 @@ __webpack_require__(11)('link', function (createHTML) {
 
 
 /***/ }),
-/* 283 */
+/* 285 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var $export = __webpack_require__(0);
@@ -10477,7 +10586,7 @@ $export($export.S, 'String', {
 
 
 /***/ }),
-/* 284 */
+/* 286 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var $export = __webpack_require__(0);
@@ -10489,7 +10598,7 @@ $export($export.P, 'String', {
 
 
 /***/ }),
-/* 285 */
+/* 287 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10503,7 +10612,7 @@ __webpack_require__(11)('small', function (createHTML) {
 
 
 /***/ }),
-/* 286 */
+/* 288 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10528,7 +10637,7 @@ $export($export.P + $export.F * __webpack_require__(63)(STARTS_WITH), 'String', 
 
 
 /***/ }),
-/* 287 */
+/* 289 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10542,7 +10651,7 @@ __webpack_require__(11)('strike', function (createHTML) {
 
 
 /***/ }),
-/* 288 */
+/* 290 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10556,7 +10665,7 @@ __webpack_require__(11)('sub', function (createHTML) {
 
 
 /***/ }),
-/* 289 */
+/* 291 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10570,7 +10679,7 @@ __webpack_require__(11)('sup', function (createHTML) {
 
 
 /***/ }),
-/* 290 */
+/* 292 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10584,7 +10693,7 @@ __webpack_require__(55)('trim', function ($trim) {
 
 
 /***/ }),
-/* 291 */
+/* 293 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10603,7 +10712,7 @@ var uid = __webpack_require__(36);
 var wks = __webpack_require__(5);
 var wksExt = __webpack_require__(81);
 var wksDefine = __webpack_require__(117);
-var enumKeys = __webpack_require__(166);
+var enumKeys = __webpack_require__(168);
 var isArray = __webpack_require__(68);
 var anObject = __webpack_require__(4);
 var isObject = __webpack_require__(3);
@@ -10825,7 +10934,7 @@ setToStringTag(global.JSON, 'JSON', true);
 
 
 /***/ }),
-/* 292 */
+/* 294 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10878,7 +10987,7 @@ __webpack_require__(41)(ARRAY_BUFFER);
 
 
 /***/ }),
-/* 293 */
+/* 295 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var $export = __webpack_require__(0);
@@ -10888,7 +10997,7 @@ $export($export.G + $export.W + $export.F * !__webpack_require__(56).ABV, {
 
 
 /***/ }),
-/* 294 */
+/* 296 */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(26)('Float32', 4, function (init) {
@@ -10899,7 +11008,7 @@ __webpack_require__(26)('Float32', 4, function (init) {
 
 
 /***/ }),
-/* 295 */
+/* 297 */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(26)('Float64', 8, function (init) {
@@ -10910,7 +11019,7 @@ __webpack_require__(26)('Float64', 8, function (init) {
 
 
 /***/ }),
-/* 296 */
+/* 298 */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(26)('Int16', 2, function (init) {
@@ -10921,7 +11030,7 @@ __webpack_require__(26)('Int16', 2, function (init) {
 
 
 /***/ }),
-/* 297 */
+/* 299 */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(26)('Int32', 4, function (init) {
@@ -10932,7 +11041,7 @@ __webpack_require__(26)('Int32', 4, function (init) {
 
 
 /***/ }),
-/* 298 */
+/* 300 */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(26)('Int8', 1, function (init) {
@@ -10943,7 +11052,7 @@ __webpack_require__(26)('Int8', 1, function (init) {
 
 
 /***/ }),
-/* 299 */
+/* 301 */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(26)('Uint16', 2, function (init) {
@@ -10954,7 +11063,7 @@ __webpack_require__(26)('Uint16', 2, function (init) {
 
 
 /***/ }),
-/* 300 */
+/* 302 */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(26)('Uint32', 4, function (init) {
@@ -10965,7 +11074,7 @@ __webpack_require__(26)('Uint32', 4, function (init) {
 
 
 /***/ }),
-/* 301 */
+/* 303 */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(26)('Uint8', 1, function (init) {
@@ -10976,7 +11085,7 @@ __webpack_require__(26)('Uint8', 1, function (init) {
 
 
 /***/ }),
-/* 302 */
+/* 304 */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(26)('Uint8', 1, function (init) {
@@ -10987,7 +11096,7 @@ __webpack_require__(26)('Uint8', 1, function (init) {
 
 
 /***/ }),
-/* 303 */
+/* 305 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11053,7 +11162,7 @@ if (fails(function () { return new $WeakMap().set((Object.freeze || Object)(tmp)
 
 
 /***/ }),
-/* 304 */
+/* 306 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11074,7 +11183,7 @@ __webpack_require__(49)(WEAK_SET, function (get) {
 
 
 /***/ }),
-/* 305 */
+/* 307 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11093,7 +11202,7 @@ __webpack_require__(37)('includes');
 
 
 /***/ }),
-/* 306 */
+/* 308 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // https://github.com/tc39/proposal-object-values-entries
@@ -11108,7 +11217,7 @@ $export($export.S, 'Object', {
 
 
 /***/ }),
-/* 307 */
+/* 309 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // https://github.com/tc39/proposal-object-getownpropertydescriptors
@@ -11136,7 +11245,7 @@ $export($export.S, 'Object', {
 
 
 /***/ }),
-/* 308 */
+/* 310 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // https://github.com/tc39/proposal-object-values-entries
@@ -11151,7 +11260,7 @@ $export($export.S, 'Object', {
 
 
 /***/ }),
-/* 309 */
+/* 311 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11178,7 +11287,7 @@ $export($export.P + $export.R, 'Promise', { 'finally': function (onFinally) {
 
 
 /***/ }),
-/* 310 */
+/* 312 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11197,7 +11306,7 @@ $export($export.P + $export.F * /Version\/10\.\d+(\.\d+)? Safari\//.test(userAge
 
 
 /***/ }),
-/* 311 */
+/* 313 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11216,14 +11325,14 @@ $export($export.P + $export.F * /Version\/10\.\d+(\.\d+)? Safari\//.test(userAge
 
 
 /***/ }),
-/* 312 */
+/* 314 */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(117)('asyncIterator');
 
 
 /***/ }),
-/* 313 */
+/* 315 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var $iterators = __webpack_require__(83);
@@ -11287,7 +11396,7 @@ for (var collections = getKeys(DOMIterables), i = 0; i < collections.length; i++
 
 
 /***/ }),
-/* 314 */
+/* 316 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var $export = __webpack_require__(0);
@@ -11299,7 +11408,7 @@ $export($export.G + $export.B, {
 
 
 /***/ }),
-/* 315 */
+/* 317 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // ie9- setTimeout & setInterval additional parameters fix
@@ -11325,17 +11434,17 @@ $export($export.G + $export.B + $export.F * MSIE, {
 
 
 /***/ }),
-/* 316 */
+/* 318 */
 /***/ (function(module, exports, __webpack_require__) {
 
+__webpack_require__(317);
+__webpack_require__(316);
 __webpack_require__(315);
-__webpack_require__(314);
-__webpack_require__(313);
 module.exports = __webpack_require__(7);
 
 
 /***/ }),
-/* 317 */
+/* 319 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(120)(false);
@@ -11349,7 +11458,7 @@ exports.push([module.i, "#login-row {\n  background-color: blue;\n}\n", ""]);
 
 
 /***/ }),
-/* 318 */
+/* 320 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(120)(false);
@@ -11363,7 +11472,7 @@ exports.push([module.i, ".footer {\n  position: fixed;\n  bottom: 0;\n  left: 0;
 
 
 /***/ }),
-/* 319 */
+/* 321 */
 /***/ (function(module, exports) {
 
 /*!
@@ -11390,11 +11499,11 @@ function isSlowBuffer (obj) {
 
 
 /***/ }),
-/* 320 */
+/* 322 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(317);
+var content = __webpack_require__(319);
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -11440,11 +11549,11 @@ if(false) {
 }
 
 /***/ }),
-/* 321 */
+/* 323 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(318);
+var content = __webpack_require__(320);
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -11490,7 +11599,7 @@ if(false) {
 }
 
 /***/ }),
-/* 322 */
+/* 324 */
 /***/ (function(module, exports) {
 
 
@@ -11585,7 +11694,7 @@ module.exports = function (css) {
 
 
 /***/ }),
-/* 323 */
+/* 325 */
 /***/ (function(module, exports) {
 
 var g;
@@ -11612,7 +11721,7 @@ module.exports = g;
 
 
 /***/ }),
-/* 324 */
+/* 326 */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(123);

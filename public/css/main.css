@@ -362,3 +362,12 @@ a{
 #thumbs {
   display: none;
 } */
+
+#status {
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 10000000000000;
+  background: black;
+  color: white;
+}
