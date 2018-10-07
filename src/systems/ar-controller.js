@@ -1,3 +1,5 @@
+const JSON = require('circular-json');
+
 AFRAME.registerComponent('ar-controller', { // register a component named store
 
   // This component will be attached to the scene element, so scene and its children
@@ -38,6 +40,8 @@ AFRAME.registerComponent('ar-controller', { // register a component named store
 
     this.renderAr = this.renderAr.bind(this);
     this.renderMagicWindow = this.renderMagicWindow.bind(this);
+
+    console.log('--- this ', JSON.stringify(this))
   },
   // handler for plane detection event
   planeDetected: function () {
@@ -189,20 +193,19 @@ AFRAME.registerComponent('ar-controller', { // register a component named store
     // put mesh back to default magic window position
     // show it incase it is hidden, ie in ar but not yet placed!
 
-    var meshContainer = document.querySelector('#meshContainer');
-    var meshContainerOrigPosition = meshContainer.getAttribute('position');
-    meshContainer.setAttribute('visible', true);
-    meshContainer.setAttribute('position', meshContainerOrigPosition);
+    this.meshContainer.setAttribute('visible', true);
+    this.meshContainer.setAttribute('position', this.meshContainerOrigPosition);
 
     // this.meshContainer.setAttribute('visible', true);
     // this.meshContainer.setAttribute('position', this.meshContainerOrigPosition);
 
-    document.getElementById('status').innerHTML += '<div> --- 3 </div>';
+    document.getElementById('status').innerHTML += `<div> renderMagicWindow this: ${JSON.stringify(this)} </div>`;
     // save reticle and hide <---------------- ???
     if (this.reticleParent) {
       this.reticleParent.appendChild(this.reticle);
     }
     this.reticle.setAttribute('visible', false);
+
 
     // hide VR store panel
     // this.storePanelVR.setAttribute('visible', false);

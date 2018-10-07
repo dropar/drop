@@ -61,6 +61,7 @@ AFRAME.registerSystem('xr-controller', { // register a component named store
         break;
 
       case 'magicWindow':
+
         document.getElementById('status').innerText = 'change to Magic Window';
         this.renderMagicWindow();
         this.disableVR();
