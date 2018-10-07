@@ -28,9 +28,9 @@ const users = [
 const ownership = [];
 
 const isGLTF = asset =>
-  asset.formats.filter(format => format.formatType === "GLTF").length > 0;
+  asset.formats.filter(format => format.formatType === "GLTF2").length > 0;
 const assetUrlFilter = asset =>
-  asset.formats.filter(asset => asset.formatType === "GLTF")[0].root.url;
+  asset.formats.filter(asset => asset.formatType === "GLTF2")[0].root.url;
 
 let validAssets = [];
 
