@@ -54,12 +54,12 @@ const { runSplash } = require('../src/components/splash');
        .then(() => {allAssets.getAllAssets()
       })
       },
-    'assets/:category': (params) => {
-      loadHTML('./templates/allAssets.html','view')
-      .then(() => {
-        allAssets.getAllAssetsCategory(params.category)
-      })
-    },
+    // 'assets/:category': (params) => {
+    //   loadHTML('./templates/allAssets.html','view')
+    //   .then(() => {
+    //     allAssets.getAllAssetsCategory(params.category)
+    //   })
+    // },
     'firstroute': () => { loadHTML('./templates/first.html', 'view'); },
     'secondroute': () => { loadHTML('./templates/second.html', 'view'); },
     'thirdroute': () => { loadHTML('./templates/third.html', 'view'); },

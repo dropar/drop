@@ -1,5 +1,4 @@
 module.exports = {
-  assetsArr: [],
   getAllAssets: () => {
     const assetGlobalDiv = document.getElementById('all-assets');
     const environment = window.location.href.startsWith('http://localhost:8080') ? 'development' : 'production';
@@ -9,7 +8,6 @@ module.exports = {
       .then((resData) => {
         console.log('all assets result',resData)
         resData.forEach((asset) => {
-        this.assetsArr.push(asset);
         const allAssetDiv = document.createElement('div');
         allAssetDiv.id = 'one-asset'
         allAssetDiv.addEventListener('click', () => {
@@ -31,9 +29,12 @@ module.exports = {
   getAllAssetsCategory: (category) => {
     const assetGlobalDiv = document.getElementById('all-assets');
     const environment = window.location.href.startsWith('http://localhost:8080') ? 'development' : 'production';
-    const allAssets = fetch(`api/assets/${category}`,
-    {method: "GET"}).then((response) =>
-      response.json())
+    fetch(`/api/assets/${category}`,
+    {
+      method: "GET"
+    })
+    .then((response) =>
+      response.text())
       .then((resData) => {
         console.log('all assets result',resData)
         resData.forEach((asset) => {

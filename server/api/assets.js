@@ -14,22 +14,23 @@ router.get('/', async (req, res, next) => {
   }
 })
 
-router.get('/:category', async (req, res, next) => {
-  const category = req.params.category;
+router.get('/:assetId', async (req, res, next) => {
+  console.log(Asset)
   try {
-    const assets = await Asset.findAll({where: {category: category}})
-    res.send(assets)
+    const asset = await Asset.findById(req.params.assetId)
+    res.json(asset)
   } catch (err) {
     console.error(err)
     next(err)
   }
 })
 
-router.get('/:assetId', async (req, res, next) => {
-  console.log(Asset)
+router.get('/:category', async (req, res, next) => {
+  const category = req.params.category;
   try {
-    const asset = await Asset.findById(req.params.assetId)
-    res.json(asset)
+    const assets = await Asset.findAll({where: {category: category}})
+    console.log(assets);
+    res.send(assets)
   } catch (err) {
     console.error(err)
     next(err)
