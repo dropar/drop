@@ -12,33 +12,48 @@ module.exports = {
         resData.forEach((asset) => {
         const userDiv = document.createElement('div');
         userDiv.id = 'one-asset'
-        userDiv.addEventListener('click', () => {
-          if (environment === 'production'){
-            window.location.href = `https://dropar.herokuapp.com/?#!assets/${asset.id}`
-            console.log(window.location.href)
-          } else {
-            window.location.href = `http://localhost:8080/?#!assets/${asset.id}`
-            console.log(window.location.href)
-          }});
         const userAssetName = document.createElement('a');
         userAssetName.href='https://google.com';
         userAssetName.innerText = asset.displayName;
         const userAssetImg = new Image(100, 100);
         userAssetImg.src = asset.thumbnailUrl;
+        const removeFromUserButton = document.createElement('button');
+        removeFromUserButton.innerText = 'Remove from my assets';
+        removeFromUserButton.id = 'remove-from-my-assets-button';
+        removeFromUserButton.assetId = asset.id;
+        userDiv.addEventListener('click', (evt) => {
+          if (evt.target === removeFromUserButton) {
+            fetch('api/assets/removeFromUser', {
+              method: "PUT",
+              body: JSON.stringify({
+                id: event.target.assetId
+              }),
+              headers: {
+                "Content-Type": "application/json; charset=utf-8"
+              }
+            }).then(function () {
+              if (environment === 'production') {
+                window.location.href = "https://dropar.herokuapp.com/?#!assets";
+              } else {
+                window.location.href = "http://localhost:8080/?#!assets";
+              }
+            });
+          } else {
+            if (environment === 'production') {
+              window.location.href = `https://dropar.herokuapp.com/?#!assets/${asset.id}`;
+            } else {
+              window.location.href = `http://localhost:8080/?#!assets/${asset.id}`;
+            }
+          }
+        });
         userDiv.appendChild(userAssetName);
         userDiv.appendChild(userAssetImg);
+        userDiv.appendChild(removeFromUserButton)
         assetsDiv.appendChild(userDiv)
-        //mainDiv.appendChild(assetsDiv)
       })
     })
   }
 }
 
-//add event listener to each asset for routing to asset
 
-// create div
-// add onclick handling to //someurl.url for entire div
-//divname.onclick = fetch(someurl.url)
-
-// fetch(assets/:assetId, { method: 'GET' })
 
