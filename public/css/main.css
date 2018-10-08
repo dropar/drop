@@ -375,51 +375,22 @@ a{
   overflow: scroll;
 }
 
-@media only screen and (device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait) {
-  .splash-background {
-    background-color: #FFFFFF;
-    background-image: url('../assets/apple-startup-images/splash-640x1136.png')
-  }
+.splash-icon {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  z-index: -999;
+  background-image: url('../icon-180.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  animation-name: rotate;
+  animation-duration: 2s;
 }
 
-@media only screen and (device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait) {
-  .splash-background {
-    background-color: #FFFFFF;
-    background-image: url('../assets/apple-startup-images/splash-750x1334.png')
-  }
+@keyframes rotate {
+  from {transform: rotateY(-180);}
+  to { transform: rotateY(0);}
 }
 
-@media only screen and (device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait) {
-  .splash-background {
-    background-color: #FFFFFF;
-    background-image: url('../assets/apple-startup-images/splash-1242x2208.png')
-  }
-}
-
-@media only screen and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait) {
-  .splash-background {
-    background-color: #FFFFFF;
-    background-image: url('../assets/apple-startup-images/splash-1125x2436.png')
-  }
-}
-
-@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait) {
-  .splash-background {
-    background-color: #FFFFFF;
-    background-image: url('../assets/apple-startup-images/splash-1536x2048.png')
-  }
-}
-
-@media only screen and (min-device-width: 834px) and (max-device-width: 834px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait) {
-  .splash-background {
-    background-color: #FFFFFF;
-    background-image: url('../assets/apple-startup-images/splash-1668x2224.png')
-  }
-}
-
-@media only screen and (min-device-width: 1024px) and (max-device-width: 1024px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait) {
-  .splash-background {
-    background-color: #FFFFFF;
-    background-image: url('../assets/apple-startup-images/splash-2048x2732.png')
-  }
-}
