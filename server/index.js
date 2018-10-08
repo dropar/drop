@@ -84,9 +84,13 @@ const createApp = () => {
   //   }
   // })
 
+<<<<<<< Updated upstream
   app.use(express.static(path.join(__dirname, '..', 'public')))
 
   // get routes for non HTML assets
+=======
+  // get routes for static assets
+>>>>>>> Stashed changes
   app.get("/serviceWorker.js", (req, res) => {
     res.sendFile(path.resolve(__dirname, '..', 'serviceWorker.js'))
   })
@@ -98,6 +102,13 @@ const createApp = () => {
   app.get("/public/assets/images/:iconName", (req, res) => {
     const iconName = req.params.iconName;
     res.sendFile(path.resolve(__dirname, '..', `public/assets/images/${iconName}`))
+<<<<<<< Updated upstream
+=======
+  });
+
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, '..', 'public/index.html'))
+>>>>>>> Stashed changes
   });
 
   app.get("/public/build.js", (req, res) => {
