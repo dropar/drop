@@ -21,7 +21,7 @@ module.exports = {
         removeFromUserButton.innerText = 'Remove from my assets';
         removeFromUserButton.id = 'remove-from-my-assets-button';
         removeFromUserButton.assetId = asset.id;
-        userDiv.addEventListener('click', function (evt) {
+        userDiv.addEventListener('click', (evt) => {
           if (evt.target === removeFromUserButton) {
             fetch('api/assets/removeFromUser', {
               method: "PUT",
@@ -57,32 +57,3 @@ module.exports = {
 
 
 
-        userDiv.addEventListener('click', function (evt) {
-          if (evt.target === removeFromUserButton) {
-            fetch('api/assets/removeFromUser', {
-              method: "PUT",
-              body: JSON.stringify({
-                id: event.target.assetId
-              }),
-              headers: {
-                "Content-Type": "application/json; charset=utf-8"
-              }
-            }).then(function () {
-              if (environment === 'production') {
-                window.location.href = "https://dropar.herokuapp.com/?#!userAssets/";
-              } else {
-                window.location.href = "http://localhost:8080/?#!userAssets/";
-              }
-            });
-          } else {
-            if (environment === 'production') {
-              window.location.href = "https://dropar.herokuapp.com/?#!assets/".concat(asset.id);
-            } else {
-              window.location.href = "http://localhost:8080/?#!assets/".concat(asset.id);
-            }
-          }
-        });
-        userDiv.appendChild(userAssetName);
-        userDiv.appendChild(userAssetImg);
-        userDiv.appendChild(removeFromUserButton);
-        assetsDiv.appendChild(userDiv);
