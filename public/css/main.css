@@ -374,3 +374,23 @@ a{
   color: white;
   overflow: scroll;
 }
+
+.splash-icon {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  z-index: -999;
+  background-image: url('../icon-180.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  animation-name: rotate;
+  animation-duration: 2s;
+}
+
+@keyframes rotate {
+  from {transform: rotateY(-180);}
+  to { transform: rotateY(0);}
+}
+
