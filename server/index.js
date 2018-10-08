@@ -93,10 +93,19 @@ const createApp = () => {
   //   }
   // })
 
-  // sends index.html
+  // get routes for static assets
   app.get("/serviceWorker.js", (req, res) => {
     res.sendFile(path.resolve(__dirname, '..', 'serviceWorker.js'))
   })
+
+  app.get("/manifest.json", (req, res) => {
+    res.sendFile(path.resolve(__dirname, '..', 'manifest.json'))
+  })
+
+  app.get("/public/assets/images/:iconName", (req, res) => {
+    const iconName = req.params.iconName;
+    res.sendFile(path.resolve(__dirname, '..', `public/assets/images/${iconName}`))
+  });
 
   app.get("*", (req, res) => {
     res.sendFile(path.resolve(__dirname, '..', 'public/index.html'))
