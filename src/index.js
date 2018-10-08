@@ -1,4 +1,10 @@
 
+require('./systems/xr.js');
+require('./components/ar-mode-ui.js');
+require('./components/xr.js');
+require('./components/anchor.js');
+require('./components/reticle.js');
+
 require('./components/intersect-color-change.js');
 require('./components/store-controls.js');
 // require('./systems/singleAsset.js');

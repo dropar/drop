@@ -3,6 +3,12 @@ AFRAME.registerSystem('xr-controller', { // register a component named store
     pinDetected: false,
     pinSelected: false,
     currentReality: 'magicWindow',
+    reticle: undefined,
+    reticleParent: undefined,
+    meshContainer: undefined,
+    meshContainerOrigPosition: undefined,
+    meshContainerCurPosition: undefined,
+    storePanelVR: undefined,
   },
   init: function () {
     console.log("--- init xrController")
@@ -15,6 +21,19 @@ AFRAME.registerSystem('xr-controller', { // register a component named store
     this.state.pinSelected = false;
     // default to magic Window
     this.state.currentReality = 'magicWindow';
+
+    /* --- DOM BINDINGS --- */
+
+    // reticle binding using attribute selection b/c reticle is a component provided by
+    // aframe-xr.js --> https://github.com/mozilla/aframe-xr/blob/master/src/components/reticle.js
+    this.state.reticle = document.querySelector('[reticle]');
+
+    // binding to meshContainer, aframe entity that groups all the 3d objects, which are
+    // themselves aframe entities which wrap the three.js 3d objects. Since this wraps
+    // all 3d objects, we can use it to set position of which ever 3d object is visible, and
+    // of course toggle visibility of all, eg. when user clicks schematic thumbnail.
+    this.state.meshContainer = document.querySelector('#meshContainer');
+    this.state.meshContainerOrigPosition = this.state.meshContainer.getAttribute('position');
 
 
     /* --- REGISTER EVENT HANDLERS --- */
@@ -29,32 +48,29 @@ AFRAME.registerSystem('xr-controller', { // register a component named store
     // this.el.sceneEl.setAttribute('vr-mode-ui', {enabled: false});
     this.el.sceneEl.addEventListener('realityChanged', this.realityChanged.bind(this));
 
+    console.log("--- init state", this.state)
+
   },
 
   // handle change in reality btw "Magic Window", AR, and VR
   realityChanged: function (data) {
     console.log('--- reality changed', data)
-    console.log('--- pinSelected', this.state.pinSelected);
-    document.getElementById('status').innerText = this.state.currentReality;
 
     if (data.detail !== this.state.currentReality) {
       this.state.currentReality = data.detail;
       this.changeReality();
     }
+
   },
   changeReality: function () {
     // var productOptionArr = document.getElementsByClassName('productOption');
-
-    document.getElementById('status').innerText = this.state.pinSelected + ' ' + this.state.currentReality;
-    console.log('--- currentReality', this.state.currentReality);
-    console.log('--- pinSelected2', this.state.pinSelected);
 
     // currentReality is actually the new reality we are switching to
     // b/c we set on realityChanged event above before calling changeReality.
     switch (this.state.currentReality) {
 
       case 'ar':
-        document.getElementById('status').innerText = 'change to AR';
+        document.getElementById('status').innerHTML += '<div> change to ar </div>';
         this.renderAr();
         // update state
 
@@ -62,16 +78,24 @@ AFRAME.registerSystem('xr-controller', { // register a component named store
 
       case 'magicWindow':
 
-        document.getElementById('status').innerText = 'change to Magic Window';
+        // reset
+        // this.state.pinDetected = false;
+        // this.state.pinSelected = false;
+
+        document.getElementById('status').innerHTML += '<div> change to magic window </div>';
         this.renderMagicWindow();
         this.disableVR();
         // update state
-        this.state.pinSelected = false;
+        // this.state.pinSelected = false;
+
+        // console.log("--- final state: ", this.state)
+        // document.getElementById('status').innerHTML += `<div> --- pinSelected: ${this.state.pinSelected} </div>`;
+        // document.getElementById('status').innerHTML += `<div> --- pinDetected: ${this.state.pinDetected} </div>`;
 
         break;
 
       case 'vr':
-        document.getElementById('status').innerText = 'change to VR';
+        document.getElementById('status').innerHTML += '<div> change to vr </div>';
         this.enableVR();
 
         break;

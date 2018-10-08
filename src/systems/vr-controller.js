@@ -94,7 +94,7 @@ AFRAME.registerSystem('vr-controller', { // register a component named store
     containerUI.setAttribute('visible', false);
 
     // bind to storePanelVR and add to scene
-    this.storePanelVR = containerUI;
+    this.state.storePanelVR = containerUI;
     this.el.sceneEl.appendChild(containerUI);
 
     this.addPlane({
@@ -380,11 +380,13 @@ AFRAME.registerSystem('vr-controller', { // register a component named store
   },
   enableVR: function() {
     // show vr panel
-    this.storePanelVR.setAttribute('visible', true);
+    this.state.storePanelVR.setAttribute('visible', true);
   },
   disableVR: function() {
+    document.getElementById('status').innerHTML += '<div> --- disable VR </div>';
     // hide VR store panel
-    this.storePanelVR.setAttribute('visible', false);
+    this.state.storePanelVR.setAttribute('visible', false);
+
   }
 
 });
