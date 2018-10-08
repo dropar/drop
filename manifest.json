@@ -6,7 +6,6 @@
   "lang": "en-US",
   "dir": "ltr",
   "background_color": "#FF1B44",
-  "theme_color": "#29337C",
   "description": "A progressive AR and VR capable digital asset renderer",
   "icons": [{
     "src": "./public/assets/images/Icon150.png",
@@ -26,6 +25,16 @@
   {
     "src": "./public/assets/images/Icon180.png",
     "sizes": "180x180",
+    "type": "image/png"
+  },
+  {
+    "src": "./public/assets/images/Icon192-android.png",
+    "sizes": "192x192",
+    "type": "image/png"
+  },
+  {
+    "src": "./public/assets/images/Icon512-android.png",
+    "sizes": "512x512",
     "type": "image/png"
   }
 ],
