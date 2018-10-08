@@ -107,6 +107,10 @@ const createApp = () => {
     res.sendFile(path.resolve(__dirname, '..', `public/assets/images/${iconName}`))
   });
 
+  app.get("/public/build.js", (req, res) => {
+    res.sendFile(path.resolve(__dirname, '..', 'public/build.js'));
+  })
+
   app.get("*", (req, res) => {
     res.sendFile(path.resolve(__dirname, '..', 'public/index.html'))
   });
