@@ -55,12 +55,6 @@ const createApp = () => {
   app.use(compression())
 
   //cross origin resource sharing middleware
-  app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    next();
-   });
-
 
   // session middleware with passport
   app.use(
@@ -93,7 +87,7 @@ const createApp = () => {
   //   }
   // })
 
-  // get routes for static assets
+  // get routes for non HTML assets
   app.get("/serviceWorker.js", (req, res) => {
     res.sendFile(path.resolve(__dirname, '..', 'serviceWorker.js'))
   })
@@ -107,7 +101,7 @@ const createApp = () => {
     res.sendFile(path.resolve(__dirname, '..', `public/assets/images/${iconName}`))
   });
 
-  app.get("/public/build.js", (req, res) => {
+  app.get("/build.js", (req, res) => {
     res.sendFile(path.resolve(__dirname, '..', 'public/build.js'));
   })
 
