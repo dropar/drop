@@ -1,4 +1,4 @@
-#login-title {
+#signup-title {
   font-size: 70px;
   font-weight: 800;
   text-align: center;
@@ -13,7 +13,7 @@
   text-fill-color: transparent;
 }
 
-#login-form {
+#signup-form {
   margin-top: 50px;
 }
 
@@ -24,13 +24,13 @@
   margin-bottom: 20px;
 }
 
-#password, #email {
+#signupPassword, #confirmSignupPassword, #signupEmail, #fullName {
   background-color: black;
   color: white;
   height: 50px;
 }
 
-#login-submit {
+#signup-submit {
   background: linear-gradient(to right,#FF1B44, #FF1B97);
   background: -webkit-linear-gradient(to right, #FF1B44, #FF1B97);
   text-transform: uppercase;
@@ -40,12 +40,18 @@
   margin-top: 20px;
 }
 
-#login-submit:hover {
+#signup-submit:hover {
   background: linear-gradient(to right,#D9173A, #D91780);
   background: -webkit-linear-gradient(to right, #D9173A, #D91780);
 }
 
-#login-submit:focus {
+#signup-submit:focus {
   background: linear-gradient(to right,#D9173A, #D91780);
   background: -webkit-linear-gradient(to right, #D9173A, #D91780);
+}
+
+#error-message {
+  color: red;
+  text-transform: uppercase;
+  font-size: 20px;
 }

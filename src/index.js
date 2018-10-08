@@ -16,6 +16,7 @@ require('./components/login.js');
 require('../public/router.js');
 require("../public/css/login.css");
 require("../public/css/splash.css");
+require("../public/css/signup.css");
 
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', function() {

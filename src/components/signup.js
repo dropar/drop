@@ -21,10 +21,23 @@ module.exports = {
       else {
         try {
           //if passwords match, proceed to signup post request
-          axios.post('auth/signup', {
-            name: name.value,
-            email: email.value,
-            password: password.value
+
+          // axios.post('auth/signup', {
+          //   name: name.value,
+          //   email: email.value,
+          //   password: password.value
+          // })
+
+          fetch('auth/signup', {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json; charset=utf-8"
+            },
+            body: JSON.stringify({
+              name: name.value,
+              email: email.value,
+              password: password.value
+            })
           })
           .then(() => {
             if (environment === 'production') {
