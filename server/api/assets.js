@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const Asset = require('../db/models/asset')
+const {User, Asset} = require('../db/models')
 module.exports = router
 
 
@@ -29,8 +29,8 @@ router.post('/addToUser', async (req, res, next)=>{
   const targetUser = req.user.id;
   const payload = req.body.id;
   try {
-    const userLookup = User.findById(targetUser);
-    userLookup.setAssets(payload);
+    const userLookup = await User.findById(targetUser);
+    await userLookup.setAssets(payload);
     res.status(201).end();
   } catch(err) {
     console.error(err);
@@ -42,8 +42,8 @@ router.put('/removeFromUser', async (req, res, next)=>{
   const targetUser = req.user.id;
   const payload = req.body.id;
   try {
-    const userLookup = User.findById(targetUser);
-    userLookup.removeAssets(payload);
+    const userLookup = await User.findById(targetUser);
+    await userLookup.removeAssets(payload);
     res.status(202).end();
   } catch(err) {
     console.error(err);
