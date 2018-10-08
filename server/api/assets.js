@@ -25,6 +25,32 @@ router.get('/:assetId', async (req, res, next) => {
   }
 })
 
+router.post('/addToUser', async (req, res, next)=>{
+  const targetUser = req.user.id;
+  const payload = req.body.id;
+  try {
+    const userLookup = User.findById(targetUser);
+    userLookup.setAssets(payload);
+    res.status(201).end();
+  } catch(err) {
+    console.error(err);
+    next(err);
+  }
+})
+
+router.put('/removeFromUser', async (req, res, next)=>{
+  const targetUser = req.user.id;
+  const payload = req.body.id;
+  try {
+    const userLookup = User.findById(targetUser);
+    userLookup.removeAssets(payload);
+    res.status(202).end();
+  } catch(err) {
+    console.error(err);
+    next(err);
+  }
+})
+
 router.get('/:category', async (req, res, next) => {
   const category = req.params.category;
   try {
