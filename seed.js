@@ -48,6 +48,9 @@ const seed = async () => {
     const resScenes = await axios.get("https://poly.googleapis.com/v1/assets?key=AIzaSyDbAkOgCpfiweD3ZQ3_ZyR0UBEqD17ZBs4&pageSize=100&maxComplexity=MEDIUM&category=SCENES")
     const resTechnology = await axios.get("https://poly.googleapis.com/v1/assets?key=AIzaSyDbAkOgCpfiweD3ZQ3_ZyR0UBEqD17ZBs4&pageSize=100&maxComplexity=MEDIUM&category=TECH")
     const resTransport = await axios.get("https://poly.googleapis.com/v1/assets?key=AIzaSyDbAkOgCpfiweD3ZQ3_ZyR0UBEqD17ZBs4&pageSize=100&maxComplexity=MEDIUM&category=TRANSPORT")
+    const resDropLogo = await axios.get('https://poly.googleapis.com/v1/assets/dp5PrzF0k6W?key=AIzaSyDbAkOgCpfiweD3ZQ3_ZyR0UBEqD17ZBs4')
+    const resFullstackLogo = await axios.get('https://poly.googleapis.com/v1/assets/0bJ0ctZdJV_?key=AIzaSyDbAkOgCpfiweD3ZQ3_ZyR0UBEqD17ZBs4')
+
 
     const animals = resAnimals.data.assets;
     const architecture = resArchitecture.data.assets;
@@ -59,6 +62,20 @@ const seed = async () => {
     const scenes = resScenes.data.assets
     const technology = resTechnology.data.assets
     const transport = resTransport.data.assets
+    const logos = [resDropLogo.data, resFullstackLogo.data]
+
+    logos.forEach(asset => {
+      if (isGLTF(asset)) {
+        validAssets.push({
+          displayName: asset.displayName,
+          authorName: asset.authorName,
+          thumbnailUrl: asset.thumbnail.url,
+          googleApiId: asset.name,
+          assetUrl: assetUrlFilter(asset),
+          category: "N/A"
+        });
+      }
+    });
 
     animals.forEach(asset => {
       if (isGLTF(asset)) {
@@ -189,7 +206,6 @@ const seed = async () => {
         });
       }
     });
-
     await Promise.all(users.map(user => User.create(user)));
     await Promise.all(validAssets.map(asset => Asset.create(asset)));
     const seedTestUser = await User.findById(4)
@@ -208,6 +224,7 @@ const main = async () => {
     console.log("error while seeding");
     console.log(error.stack);
   } finally {
+    console.log('The seed is sown.')
     db.close();
   }
 };
