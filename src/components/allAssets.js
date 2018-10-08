@@ -17,7 +17,7 @@ module.exports = {
           allAssetAddToUserButton.innerText = 'Add to my assets';
           allAssetAddToUserButton.id = 'add-to-assets-button';
           allAssetAddToUserButton.assetId = asset.id;
-          allAssetDiv.addEventListener('click', function (evt) {
+          allAssetDiv.addEventListener('click', (evt) => {
             if (evt.target === allAssetAddToUserButton) {
               fetch('api/assets/addToUser', {
                 method: "POST",
@@ -30,9 +30,9 @@ module.exports = {
               });
             } else {
               if (environment === 'production') {
-                window.location.href = "https://dropar.herokuapp.com/?#!assets/".concat(asset.id);
+                window.location.href = `https://dropar.herokuapp.com/?#!assets/${asset.id}`;
               } else {
-                window.location.href = "http://localhost:8080/?#!assets/".concat(asset.id);
+                window.location.href = `http://localhost:8080/?#!assets/${asset.id}`;
               }
             }
           })

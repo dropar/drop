@@ -33,16 +33,16 @@ module.exports = {
               }
             }).then(function () {
               if (environment === 'production') {
-                window.location.href = "https://dropar.herokuapp.com/?#!userAssets/";
+                window.location.href = "https://dropar.herokuapp.com/?#!userAssets";
               } else {
-                window.location.href = "http://localhost:8080/?#!userAssets/";
+                window.location.href = "http://localhost:8080/?#!userAssets";
               }
             });
           } else {
             if (environment === 'production') {
-              window.location.href = "https://dropar.herokuapp.com/?#!assets/".concat(asset.id);
+              window.location.href = `https://dropar.herokuapp.com/?#!assets/${asset.id}`;
             } else {
-              window.location.href = "http://localhost:8080/?#!assets/".concat(asset.id);
+              window.location.href = `http://localhost:8080/?#!assets/${asset.id}`;
             }
           }
         });
