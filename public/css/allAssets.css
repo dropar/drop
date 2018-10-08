@@ -1,0 +1,20 @@
+#user-assets-title-div, #api-assets-title-div {
+  background-color: black;
+  height: 40px;
+  width: 100%;
+}
+
+#assets-container, #user-assets {
+  min-height: 60px;
+  background-color: #FF1B44;
+}
+
+#user-assets-title, #api-assets-title {
+  color: white;
+  text-transform: uppercase;
+  font-size: 25px;
+}
+
+#assets-jumbotron {
+  margin-bottom: 0;
+}
