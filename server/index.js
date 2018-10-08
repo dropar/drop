@@ -84,6 +84,8 @@ const createApp = () => {
   //   }
   // })
 
+  app.use(express.static(path.join(__dirname, '..', 'public')))
+
   // get routes for non HTML assets
   app.get("/serviceWorker.js", (req, res) => {
     res.sendFile(path.resolve(__dirname, '..', 'serviceWorker.js'))
@@ -105,8 +107,6 @@ const createApp = () => {
   app.get('/', (req, res) => {
     res.sendFile(path.resolve(__dirname, '..', 'public/index.html'));
   })
-
-  app.use(express.static(path.join(__dirname, '..', 'public')))
 
   // error handling endware
   app.use((err, req, res, next) => {
