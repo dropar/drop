@@ -7,7 +7,7 @@
     "start": "node server",
     "lint": "semistandard -v | snazzy",
     "seed": "node seed.js",
-    "postinstall": "node run build"
+    "postinstall": "npm run build"
   },
   "repository": "projectSasquatchHunter/backend",
   "license": "MIT",
