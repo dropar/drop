@@ -2,7 +2,7 @@
   // window.addEventListener('load', function() {
 
   // getElementById wrapper
-const allAssets = require('../src/components/allAssets')
+const { getUserAssets, getAllAssets } = require('../src/components/allAssets')
 const { submitLoginForm }= require('../src/components/login');
 const userAssets = require('../src/components/userAssets');
 const { submitSignUpForm } = require('../src/components/signup');
@@ -51,7 +51,9 @@ const { runSplash } = require('../src/components/splash');
     },
     'assets': () => {
       loadHTML('./templates/allAssets.html','view')
-       .then(() => {allAssets.getAllAssets()
+       .then(() => {
+        getUserAssets();
+        getAllAssets();
       })
       },
     // 'assets/:category': (params) => {
@@ -63,11 +65,11 @@ const { runSplash } = require('../src/components/splash');
     'firstroute': () => { loadHTML('./templates/first.html', 'view'); },
     'secondroute': () => { loadHTML('./templates/second.html', 'view'); },
     'thirdroute': () => { loadHTML('./templates/third.html', 'view'); },
-    'userAssets': () => {
-      loadHTML('./templates/userAssets.html', 'view').then(() => {
-        userAssets.getUserAssets();
-      })
-    },
+    // 'userAssets': () => {
+    //   loadHTML('./templates/userAssets.html', 'view').then(() => {
+    //     userAssets.getUserAssets();
+    //   })
+    // },
     'login': () => {
       loadHTML('./templates/login.html', 'view')
       .then(() => {
