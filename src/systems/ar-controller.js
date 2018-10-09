@@ -1,4 +1,8 @@
 const JSON = require('circular-json');
+// const noUiSlider = require('noUiSlider');
+// const rangeslider = require('rangeslider.js')
+require('rangeslider.js')
+
 
 AFRAME.registerComponent('ar-controller', { // register a component named store
 
@@ -17,6 +21,66 @@ AFRAME.registerComponent('ar-controller', { // register a component named store
 
     this.state.reticle.addEventListener('planeDetected', this.planeDetected);
     this.state.reticle.addEventListener('touched', this.touched);
+
+    // var slider = document.getElementById('slider');
+    // noUiSlider.create(slider, {
+    //   start: [20, 80],
+    //   connect: true,
+    //   range: {
+    //       'min': 0,
+    //       'max': 100
+    //   },
+    //   format: wNumb({
+    //     decimals: 0
+    //   })
+    // });
+
+    // document.addEventListener("DOMContentLoaded", function(event) {
+    //   // sliders tmp
+    //   document.querySelector('input[type="range"]').rangeslider({
+    //   // document.getElementById('rangeslider').rangeslider({
+
+    //     // Feature detection the default is `true`.
+    //     // Set this to `false` if you want to use
+    //     // the polyfill also in Browsers which support
+    //     // the native <input type="range"> element.
+    //     polyfill: true,
+
+    //     // Default CSS classes
+    //     rangeClass: 'rangeslider',
+    //     disabledClass: 'rangeslider--disabled',
+    //     horizontalClass: 'rangeslider--horizontal',
+    //     verticalClass: 'rangeslider--vertical',
+    //     fillClass: 'rangeslider__fill',
+    //     handleClass: 'rangeslider__handle',
+
+    //     // Callback function
+    //     onInit: function() {
+    //       console.log('init rangeslider')
+    //     },
+
+    //     // Callback function
+    //     onSlide: function(position, value) {
+    //       console.log('------------- mesh container: ')
+    //       // this.state.meshContainer.setAttribute('rotation');
+    //     },
+
+    //     // Callback function
+    //     onSlideEnd: function(position, value) {}
+    //   });
+    // })
+
+    // slider: <div class="range-slider">
+    //   range:  <input class="range-slider__range" type="range" value="100" min="0" max="360">
+    //   valeu:  <span class="range-slider__value">0</span>
+    //         </div>
+
+    console.log('--- this.state.meshContainer: ', this.state.meshContainer)
+
+    rangeSlider('rotation-y-slider', this.state.meshContainer, 'rotation', 'y');
+    rangeSlider('position-y-slider', this.state.meshContainer, 'position', 'y');
+    rangeSlider2('scale-slider', this.state.meshContainer, 'scale', ['x','y','z']);
+
   },
   bindMethods: function () {
     this.planeDetected = this.planeDetected.bind(this);
@@ -197,6 +261,7 @@ AFRAME.registerComponent('ar-controller', { // register a component named store
     document.getElementById('visualSheet').classList.remove('ar');
     document.getElementById('content3D').classList.remove('ar');
     document.getElementById('productOptions').classList.remove('ar');
+
     var productOptionArr = document.getElementsByClassName('productOption');
     for (var i = 0; i < productOptionArr.length; i++) {
       productOptionArr[i].classList.remove('ar');
@@ -228,3 +293,62 @@ AFRAME.registerComponent('ar-controller', { // register a component named store
   }
 
 });
+
+// utils
+
+var rangeSlider = function(wrapper, entity, attribute, key){
+  var root = $('.' + wrapper)
+  var slider = root.find('.range-slider'),
+      range = root.find('.range-slider__range'),
+      value = root.find('.range-slider__value');
+
+  slider.each(function(){
+
+    // init value elements with each corresponding range's value attr.
+    value.each(function(){
+      // this = value
+      var value = $(this).prev().attr('value');
+      $(this).html(value);
+    });
+
+    range.on('input', function(){
+      // this = range
+      $(this).next(value).html(this.value);
+      let val = entity.getAttribute(attribute);
+      console.log('-----------val', val)
+      let newVal = {...val, [key]: Number(this.value)}
+      console.log('-----------meshcont rot bef', entity.getAttribute(attribute))
+      entity.setAttribute(attribute, newVal)
+      console.log('-----------meshcont rot aft', entity.getAttribute(attribute))
+    });
+  });
+};
+
+var rangeSlider2 = function(wrapper, entity, attribute, keys){
+  var root = $('.' +wrapper)
+  var slider = root.find('.range-slider'),
+      range = root.find('.range-slider__range'),
+      value = root.find('.range-slider__value');
+
+  slider.each(function(){
+
+    // init value elements with each corresponding range's value attr.
+    value.each(function(){
+      // this = value
+      var value = $(this).prev().attr('value');
+      $(this).html(value);
+    });
+
+    range.on('input', function(){
+      // this = range
+      $(this).next(value).html(this.value);
+      let val = entity.getAttribute(attribute);
+      console.log('-----------val', val)
+      let newVal = {}
+      keys.forEach(key => newVal[key] = Number(this.value))
+      console.log('-----------meshcont rot bef', entity.getAttribute(attribute))
+      entity.setAttribute(attribute, newVal)
+      console.log('-----------meshcont rot aft', entity.getAttribute(attribute))
+    });
+  });
+};
