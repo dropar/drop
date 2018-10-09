@@ -1,7 +1,7 @@
 const JSON = require('circular-json');
 // const noUiSlider = require('noUiSlider');
 // const rangeslider = require('rangeslider.js')
-const $ = require('jQuery');
+const $ = require('jquery');
 require('rangeslider.js');
 
 
