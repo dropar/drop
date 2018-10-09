@@ -33,7 +33,7 @@
   height: 50px;
 }
 
-#login-submit {
+#login-submit, #login-form-signup-button {
   background: linear-gradient(to right,#FF1B44, #FF1B97);
   background: -webkit-linear-gradient(to right, #FF1B44, #FF1B97);
   text-transform: uppercase;
@@ -52,4 +52,38 @@
 #login-submit:focus {
   background: linear-gradient(to right,#D9173A, #D91780);
   background: -webkit-linear-gradient(to right, #D9173A, #D91780);
+}
+
+#login-error-message {
+  color: red;
+  visibility: hidden;
+  margin-top: 1vh;
+}
+
+.footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: black;
+  height: 8vh;
+  display: flex;
+  justify-content: space-between;
+}
+
+#login-form-footer-login-button, #login-form-footer-signup-button {
+  height: 100%;
+  width: 50%;
+}
+
+#login-form-footer-login-button:hover, #login-form-footer-signup-button:hover {
+  background-color: #262626;
+}
+
+#login-form-footer-login-button-text, #login-form-footer-signup-button-text {
+  font-family: 'K2D', sans-serif;
+  margin-top: 10px;
+  color: white;
+  text-align: center;
+  font-size: 25px;
 }

@@ -114,18 +114,18 @@ AFRAME.registerSystem('xr-controller', { // register a component named store
 
   buttonCartClicked: function () {
     if (this.isAdded) {
-      document.getElementById('cart').innerHTML = '(0) Cart';
-      document.getElementById('cart').style.color = '#181818';
-      document.getElementById('cart').style.fontWeight = 'normal';
+      // document.getElementById('cart').innerHTML = '(0) Cart';
+      // document.getElementById('cart').style.color = '#181818';
+      // document.getElementById('cart').style.fontWeight = 'normal';
       // document.getElementById('buttonCart').innerHTML = 'Add to cart';
       // document.getElementById('buttonCart').style.backgroundColor = '#181818';
       document.querySelector('#addBtn-vr-bg').setAttribute('initialColor', '#181818');
       document.querySelector('#addBtn-vr-text').setAttribute('text', {value: 'Add to cart'});
       document.querySelector('#cart-vr').setAttribute('text', {value: '(0) Cart'});
     } else {
-      document.getElementById('cart').innerHTML = '(1) Cart';
-      document.getElementById('cart').style.color = '#b7374c';
-      document.getElementById('cart').style.fontWeight = 'bolder';
+      // document.getElementById('cart').innerHTML = '(1) Cart';
+      // document.getElementById('cart').style.color = '#b7374c';
+      // document.getElementById('cart').style.fontWeight = 'bolder';
       // document.getElementById('buttonCart').innerHTML = 'Added!';
       // document.getElementById('buttonCart').style.backgroundColor = '#b7374c';
       document.querySelector('#addBtn-vr-bg').setAttribute('initialColor', '#b7374c');

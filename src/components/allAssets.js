@@ -2,7 +2,11 @@ module.exports = {
   getUserAssets: () => {
     const environment = window.location.href.startsWith('http://localhost:8080') ? 'development' : 'production';
     const userAssetDiv = document.getElementById('user-assets');
-    const userId = window.user.id;
+    let userId;
+    if (window.user) {
+      userId = window.user.id;
+    }
+    else userId = null;
     fetch(`api/users/${userId}/assets`, {
       method: "GET"
     })
@@ -10,7 +14,6 @@ module.exports = {
       return response.json()
     })
     .then(resData => {
-      console.log(resData);
       resData.forEach(asset => {
         const userDiv = document.createElement('div');
         userDiv.classList.add('one-asset');
@@ -52,15 +55,12 @@ module.exports = {
             .then(() => {
               const userAssets = document.getElementsByClassName("user-asset");
               const userAssetsArr = Array.prototype.slice.call(userAssets);
-              console.log('userAssetsArr', userAssetsArr);
               let toRemove;
               for (let i = 0; i < userAssetsArr.length; i++) {
                 if (userAssetsArr[i].userAssetId == asset.id) {
-                  console.log('asset found');
                   toRemove = userAssetsArr[i];
                 }
               }
-              console.log('toRemove', toRemove);
               toRemove.style.display = 'none';
             })
           }
@@ -89,7 +89,6 @@ module.exports = {
     {method: "GET"}).then((response) =>
       response.json())
     .then((resData) => {
-      console.log("resData", resData);
         resData.forEach((asset) => {
           const assetDiv = document.createElement('div');
           assetDiv.classList.add('one-asset');
@@ -135,11 +134,9 @@ module.exports = {
               .then(() => {
                 const publicAssets = document.getElementsByClassName("public-asset");
                 const publicAssetsArr = Array.prototype.slice.call(publicAssets);
-                console.log('publicAssetsArr', publicAssetsArr);
                 let toAdd;
                 for (let i = 0; i < publicAssetsArr.length; i++) {
                   if (publicAssetsArr[i].publicAssetId == asset.id) {
-                    console.log('asset found');
                     toAdd = publicAssetsArr[i];
                   }
                 }
@@ -185,7 +182,50 @@ module.exports = {
       assetGlobalDiv.appendChild(apiAssets);
     })
   },
-  // getAllAssetsCategory: (category) => {
+  buttonListeners: () => {
+    const environment = window.location.href.startsWith('http://localhost:8080') ? 'development' : 'production';
+    const logOutButton = document.getElementById('asset-log-out-button');
+    logOutButton.addEventListener('click', evt => {
+      evt.preventDefault();
+      if (window.user) {
+        fetch('/auth/logout', {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json; charset=utf-8"
+          }
+        })
+        .then(() => {
+          window.user = null;
+          if (environment === 'production') {
+            window.location.href = `https://dropar.herokuapp.com/?#!login`;
+          }
+          else {
+            window.location.href = `http://localhost:8080/?#!login`;
+          }
+        })
+      }
+      else {
+        if (environment === 'production') {
+          window.location.href = `https://dropar.herokuapp.com/?#!login`;
+        }
+        else {
+          window.location.href = `http://localhost:8080/?#!login`;
+        }
+      }
+    });
+    const uploadButton = document.getElementById('asset-upload-button');
+    uploadButton.addEventListener('click', evt => {
+      evt.preventDefault();
+      console.log('button clicked');
+      if (environment === 'production') {
+        window.location.href = `https://dropar.herokuapp.com/?#!upload`;
+      }
+      else {
+        window.location.href = `http://localhost:8080/?#!upload`;
+      }
+    })
+  }
+    // getAllAssetsCategory: (category) => {
   //   const assetGlobalDiv = document.getElementById('all-assets');
   //   const environment = window.location.href.startsWith('http://localhost:8080') ? 'development' : 'production';
   //   fetch(`/api/assets/${category}`,
