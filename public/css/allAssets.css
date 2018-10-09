@@ -5,8 +5,8 @@
 }
 
 #assets-container, #user-assets {
-  min-height: 27vh;
-  max-height: 27vh;
+  min-height: 28vh;
+  max-height: 28vh;
   padding-right: 0 !important;
   padding-left: 0 !important;
   flex-direction: row;
