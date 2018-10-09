@@ -56,6 +56,7 @@
           class="collidable"
           id="meshContainer"
           position="0 0 0"
+          scale="1 1 1"
         ></a-entity>
 
         <!-- sky -->
@@ -83,11 +84,25 @@
   </div>
 
   <div id="productOptions">
-
-    <div class="productOption"></div>
-    <!-- <div id="buttonCart">Drop!!</div> -->
+    <div class="productOption rotation-y-slider">
+      <div class="range-slider">
+        <input class="range-slider__range" type="range" value="0" min="0" max="360">
+        <span class="range-slider__value">0</span>
+      </div>
+    </div>
+    <div class="productOption position-y-slider">
+      <div class="range-slider">
+        <input class="range-slider__range" type="range" value="0" min="-2" max="2" step=".01">
+        <span class="range-slider__value">0</span>
+      </div>
+    </div>
+    <div class="productOption scale-slider">
+      <div class="range-slider">
+        <input class="range-slider__range" type="range" value="1" min="0" max="10" step=".01">
+        <span class="range-slider__value">1</span>
+      </div>
+    </div>
   </div>
-
 </div>
 
 <!-- <div id="sheet">

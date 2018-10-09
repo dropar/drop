@@ -1,3 +1,5 @@
+// require('rangeslider.js')
+
 AFRAME.registerSystem('xr-controller', { // register a component named store
   state: {
     pinDetected: false,
@@ -48,7 +50,6 @@ AFRAME.registerSystem('xr-controller', { // register a component named store
     // this.el.sceneEl.setAttribute('vr-mode-ui', {enabled: false});
     this.el.sceneEl.addEventListener('realityChanged', this.realityChanged.bind(this));
 
-    console.log("--- init state", this.state)
 
   },
 
@@ -77,6 +78,7 @@ AFRAME.registerSystem('xr-controller', { // register a component named store
         break;
 
       case 'magicWindow':
+        this.enableVR();
 
         // reset
         // this.state.pinDetected = false;
