@@ -96,6 +96,7 @@ AFRAME.registerSystem('xr', {
     if (sceneEl.renderer.xr.totalSupportedDisplays === 0) {
       this.sceneEl.setAttribute('vr-mode-ui', {enabled: true});
       // this.sceneEl.setAttribute('ar-mode-ui', {enabled: true});
+      this.addEnterButtons(displays);
     } else {
       if (!sceneEl.renderer.xr.autoStarted) {
         this.addEnterButtons(displays);
