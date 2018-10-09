@@ -1,7 +1,8 @@
 const JSON = require('circular-json');
 // const noUiSlider = require('noUiSlider');
 // const rangeslider = require('rangeslider.js')
-require('rangeslider.js')
+const $ = require('jquery');
+require('rangeslider.js');
 
 
 AFRAME.registerComponent('ar-controller', { // register a component named store
