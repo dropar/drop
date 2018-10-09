@@ -1,8 +1,30 @@
 #productOptions {
   position: absolute;
-  top: 5em;
-  left: 2em;
+  top: 10%;
+  left: 0;
+  right: 0;
+  padding-left: 20px;
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
 }
+
+.back-button a {
+  font-weight: bold;
+  font-size: 20px;
+  position: absolute;
+  margin-bottom: 10px;
+  top: 5%;
+  left: 0;
+  right: 0;
+  padding-left: 20px;
+  opacity: 0.5;
+  color: black;
+}
+
+.back-button a:hover {
+  opacity: 0.2;
+  color: rgb(100,100,100);
+  text-decoration: none;
+}
+
