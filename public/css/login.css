@@ -3,6 +3,7 @@
   font-weight: 800;
   text-align: center;
   text-transform: uppercase;
+  font-family: 'K2D', sans-serif;
   background: linear-gradient(to right,#FF1B44, #FF1B97);
   background: -webkit-linear-gradient(to right, #FF1B44, #FF1B97);
   -webkit-background-clip: text;
@@ -19,6 +20,7 @@
 
 .form-labels {
   text-transform: uppercase;
+  font-family: 'K2D', sans-serif;
   color: white;
   text-shadow: .05em .05em .1em black;
   margin-bottom: 20px;
@@ -26,6 +28,7 @@
 
 #password, #email {
   background-color: black;
+  font-family: 'K2D', sans-serif;
   color: white;
   height: 50px;
 }
@@ -34,6 +37,7 @@
   background: linear-gradient(to right,#FF1B44, #FF1B97);
   background: -webkit-linear-gradient(to right, #FF1B44, #FF1B97);
   text-transform: uppercase;
+  font-family: 'K2D', sans-serif;
   font-size: 20px;
   color: white;
   width: 100%;
