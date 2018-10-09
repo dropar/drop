@@ -438,12 +438,19 @@ input::-moz-focus-outer {
   background-image: url('../icon-180.png');
   background-repeat: no-repeat;
   background-position: center;
-  animation-name: rotate;
-  animation-duration: 2s;
+  -webkit-animation-name: scale;
+  animation-name: scale;
+  -webkit-animation-duration: 1.5s;
+  animation-duration: 1.5s;
 }
 
-@keyframes rotate {
-  from {transform: rotateY(-180);}
-  to { transform: rotateY(0);}
+@keyframes scale {
+  from {
+    transform: scale(2.5);
+  }
+  to {
+    transform: scale(1);
+  }
 }
+
 
