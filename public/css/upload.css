@@ -1,4 +1,4 @@
-#signup-title {
+#upload-title {
   font-size: 70px;
   font-weight: 800;
   font-family: 'K2D', sans-serif;
@@ -14,7 +14,7 @@
   text-fill-color: transparent;
 }
 
-#signup-form {
+#upload-form {
   margin-top: 50px;
 }
 
@@ -26,14 +26,14 @@
   margin-bottom: 20px;
 }
 
-#signupPassword, #confirmSignupPassword, #signupEmail, #fullName {
+#displayName, #assetUrl, #thumbnailUrl {
   background-color: black;
   color: white;
   height: 50px;
   font-family: 'K2D', sans-serif;
 }
 
-#signup-submit {
+#upload-submit {
   background: linear-gradient(to right,#FF1B44, #FF1B97);
   background: -webkit-linear-gradient(to right, #FF1B44, #FF1B97);
   text-transform: uppercase;
@@ -44,21 +44,9 @@
   font-family: 'K2D', sans-serif;
 }
 
-#signup-submit:hover {
+#upload-submit:hover {
   background: linear-gradient(to right,#D9173A, #D91780);
   background: -webkit-linear-gradient(to right, #D9173A, #D91780);
-}
-
-#signup-submit:focus {
-  background: linear-gradient(to right,#D9173A, #D91780);
-  background: -webkit-linear-gradient(to right, #D9173A, #D91780);
-}
-
-#error-message {
-  color: red;
-  text-transform: uppercase;
-  font-size: 20px;
-  font-family: 'K2D', sans-serif;
 }
 
 .footer {
@@ -72,19 +60,19 @@
   justify-content: space-between;
 }
 
-#signup-form-footer-login-button, #signup-form-footer-signup-button {
+#upload-form-footer-login-button, #back-to-assets-button {
   height: 100%;
   width: 50%;
 }
 
-#signup-form-footer-login-button:hover, #signup-form-footer-signup-button:hover {
+#upload-form-footer-login-button:hover, #back-to-assets-button:hover {
   background-color: #262626;
 }
 
-#signup-form-footer-login-button-text, #signup-form-footer-signup-button-text {
+#upload-form-footer-login-button-text, #back-to-assets-button-text {
   font-family: 'K2D', sans-serif;
   margin-top: 10px;
   color: white;
   text-align: center;
-  font-size: 25px;
+  font-size: 20px;
 }

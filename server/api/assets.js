@@ -30,7 +30,7 @@ router.post('/addToUser', async (req, res, next)=>{
   const payload = req.body.id;
   try {
     const userLookup = await User.findById(targetUser);
-    await userLookup.setAssets(payload);
+    await userLookup.addAsset(payload);
     res.status(201).end();
   } catch(err) {
     console.error(err);

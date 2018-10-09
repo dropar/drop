@@ -6,6 +6,8 @@ module.exports = {
     const error = document.getElementById('error-message');
     error.innerText = '';
     const submitButton = document.getElementById('signup-submit');
+    const loginButton = document.getElementById('signup-form-footer-login-button');
+    const signUpButton = document.getElementById('signup-form-footer-signup-button');
     submitButton.addEventListener('click', event => {
       event.preventDefault();
       const name = document.getElementById('fullName');
@@ -50,6 +52,21 @@ module.exports = {
           console.error(err);
         }
       }
+    });
+    loginButton.addEventListener('click', event => {
+      event.preventDefault();
+      if (environment === 'production') {
+        window.location.href = 'https://dropar.herokuapp.com/?#!login'
+      }
+      else window.location.href = 'http://localhost:8080/?#!login';
+    })
+
+    signUpButton.addEventListener('click', event => {
+      event.preventDefault();
+      if (environment === 'production') {
+        window.location.href = 'https://dropar.herokuapp.com/?#!signup'
+      }
+      else window.location.href = 'http://localhost:8080/?#!signup';
     })
   }
 }

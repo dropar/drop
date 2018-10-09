@@ -146,7 +146,7 @@ AFRAME.registerSystem('singleAsset', { // register a component named store
 
 
       // remove title and add "ar" class to to everything that stays
-      document.getElementById('header').classList.add('ar');
+      // document.getElementById('header').classList.add('ar');
       // document.getElementById('title').style.display = 'none';
       document.getElementById('visualSheet').classList.add('ar');
       document.getElementById('content3D').classList.add('ar');
@@ -170,7 +170,7 @@ AFRAME.registerSystem('singleAsset', { // register a component named store
           document.getElementById('status').innerText = 'show it';
 
           document.getElementById('arui').style.display = 'block';
-          document.getElementById('header').style.display = 'none';
+          // document.getElementById('header').style.display = 'none';
           document.getElementById('productOptions').style.display = 'none';
           // document.getElementById('buttonCart').style.display = 'none';
 
@@ -197,7 +197,7 @@ AFRAME.registerSystem('singleAsset', { // register a component named store
 
         // show all the stuff on detail page thats gets hidden during ar
         // and remote all the ar class on everything else
-        document.getElementById('header').classList.remove('ar');
+        // document.getElementById('header').classList.remove('ar');
         document.getElementById('title').style.display = 'block';
         document.getElementById('visualSheet').classList.remove('ar');
         document.getElementById('content3D').classList.remove('ar');
@@ -214,7 +214,7 @@ AFRAME.registerSystem('singleAsset', { // register a component named store
         // document.getElementById('buttonCart').classList.remove('ar');
         document.getElementById('container').classList.remove('ar');
         document.getElementById('footer').style.display = 'block';
-        document.getElementById('header').style.display = 'block';
+        // document.getElementById('header').style.display = 'block';
         document.getElementById('productOptions').style.display = 'block';
         // document.getElementById('buttonCart').style.display = 'block';
 
@@ -626,7 +626,7 @@ AFRAME.registerSystem('singleAsset', { // register a component named store
 
   showARUI: function () {
     document.getElementById('arui').style.display = 'none';
-    document.getElementById('header').style.display = 'block';
+    // document.getElementById('header').style.display = 'block';
     document.getElementById('productOptions').style.display = 'flex';
     // document.getElementById('buttonCart').style.display = 'block';
     document.getElementById('container').classList.add('ar');
