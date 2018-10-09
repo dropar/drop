@@ -1,4 +1,5 @@
 #login-title {
+  margin-top: 40px;
   font-size: 70px;
   font-weight: 800;
   text-align: center;
@@ -24,6 +25,7 @@
   color: white;
   text-shadow: .05em .05em .1em black;
   margin-bottom: 20px;
+  font-size: 20px;
 }
 
 #password, #email {
@@ -82,8 +84,8 @@
 
 #login-form-footer-login-button-text, #login-form-footer-signup-button-text {
   font-family: 'K2D', sans-serif;
-  margin-top: 10px;
+  margin-top: 15px;
   color: white;
   text-align: center;
-  font-size: 25px;
+  font-size: 20px;
 }
