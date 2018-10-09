@@ -1,5 +1,6 @@
 #signup-title {
   font-size: 70px;
+  margin-top: 40px;
   font-weight: 800;
   font-family: 'K2D', sans-serif;
   text-align: center;
@@ -24,6 +25,7 @@
   color: white;
   text-shadow: .05em .05em .1em black;
   margin-bottom: 20px;
+  font-size: 20px;
 }
 
 #signupPassword, #confirmSignupPassword, #signupEmail, #fullName {
@@ -83,8 +85,8 @@
 
 #signup-form-footer-login-button-text, #signup-form-footer-signup-button-text {
   font-family: 'K2D', sans-serif;
-  margin-top: 10px;
+  margin-top: 15px;
   color: white;
   text-align: center;
-  font-size: 25px;
+  font-size: 20px;
 }
