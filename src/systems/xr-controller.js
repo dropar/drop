@@ -40,6 +40,7 @@ AFRAME.registerSystem('xr-controller', { // register a component named store
     this.state.meshContainer = document.querySelector('#meshContainer');
     this.state.meshContainerOrigPosition = this.state.meshContainer.getAttribute('position');
 
+
     /* --- INIT GEO LOAD --- */
 
     var self = this;
@@ -73,6 +74,8 @@ AFRAME.registerSystem('xr-controller', { // register a component named store
       document.getElementById('status').innerHTML += '<div> --- --- set to cur </div>';
       self.state.currentMesh = geo;
       document.getElementById('status').innerHTML += `<div> --- --- cur id: ${self.state.currentMesh.id} </div>`;
+
+
     });
 
     /* --- REGISTER EVENT HANDLERS --- */
@@ -87,10 +90,20 @@ AFRAME.registerSystem('xr-controller', { // register a component named store
     // this.el.sceneEl.setAttribute('vr-mode-ui', {enabled: false});
     this.el.sceneEl.addEventListener('realityChanged', this.realityChanged.bind(this));
 
-
+    // reset scene on back
+    document.querySelector('.back-button a').addEventListener('click', this.clearScene.bind(this));
   },
 
-
+  clearScene: function() {
+    document.getElementById('status').innerHTML = '<div> --- clear scene </div>';
+    while (this.state.meshContainer.firstChild) {
+      document.getElementById('status').innerHTML += `<div> --- --- remove: ${meshContainer.firstChild.id} √ </div>`;
+      meshContainer.removeChild(meshContainer.firstChild);
+    }
+    this.sceneEl.exitAR();
+    this.sceneEl.exitVR();
+    document.getElementById('status').innerHTML += '<div> --- --- done clearing scene √ </div>';
+  },
 
   // handle change in reality btw "Magic Window", AR, and VR
   realityChanged: function (data) {
