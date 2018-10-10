@@ -35,10 +35,9 @@
 }
 
 #explore-title {
-  text-shadow: .05em .05em .1em white;
   font-size: 50px;
   font-family: 'K2D', sans-serif;
-  color: #292929;
+  color: white;
   position: absolute;
   bottom: 20px;
   left: 20px;
@@ -51,7 +50,7 @@
 
 .asset-img {
   width: 100%;
-  height: 50vw;
+  height: 24vh;
 }
 
 .remove-from-my-assets-button, #add-to-assets-button {
