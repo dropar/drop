@@ -110,7 +110,7 @@ const createApp = () => {
   // })
 
   app.get('/vr', (req, res) => {
-    res.sendFile(path.resolve(__dirname, '..', 'VR/index.html'));
+    res.sendFile(path.resolve(__dirname, '..', 'vr-integrate/index.html'));
   })
 
   app.get('/', (req, res) => {
