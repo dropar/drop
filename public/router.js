@@ -96,7 +96,10 @@ const { runSplash } = require('../src/components/splash');
         uploadForm();
         console.log('upload function run');
       })
-    }
+    },
+    // '500': () => {
+    //   loadHTML('./templates/500.html', 'view')
+    // }
   });
 
   // set the default route
@@ -107,6 +110,13 @@ const { runSplash } = require('../src/components/splash');
     })
   });
 
+  // router.hooks({
+  //   after: () => {
+  //     if (res.status === 500){
+  //       loadHTML('./templates/500.html', 'view')
+  //     }
+  //   }
+  // })
   // set the 404 route
   //router.notFound((query) => { $id('view').innerHTML = '<h3>Couldn\'t find the page you\'re looking for...</h3>'; });
   router.notFound((query) => { loadHTML('./templates/404.html', 'view')})

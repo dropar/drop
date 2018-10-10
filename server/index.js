@@ -113,14 +113,22 @@ const createApp = () => {
     res.sendFile(path.resolve(__dirname, '..', 'public/index.html'));
   })
 
+  app.get('/500', (req, res, next) => {
+    //res.status(500).send();
+    Userx;
+    console.log('at 500 page')
+  })
+
   // error handling endware
   app.use((err, req, res, next) => {
     console.error(err)
     console.error(err.stack)
-    res.status(err.status || 500).send(err.message || 'Internal server error.')
+    res.status(500);
+    res.render('public/templates/500.html');
   })
 }
 
+//res.status(err.status || 500).send(error.status || 'internal server error')
 // local https
 // var fs = require('fs')
 // var https = require('https')
