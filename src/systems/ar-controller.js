@@ -129,7 +129,7 @@ AFRAME.registerComponent('ar-controller', { // register a component named store
     document.getElementById('status').innerHTML += '<div> --- show AR UI </div>';
 
     document.getElementById('arui').style.display = 'none'; // hide instructions
-    document.getElementById('header').style.display = 'block';
+    // document.getElementById('header').style.display = 'block';
     document.getElementById('productOptions').style.display = 'flex';
     document.getElementById('container').classList.add('ar');
   },
@@ -139,7 +139,7 @@ AFRAME.registerComponent('ar-controller', { // register a component named store
     document.getElementById('status').innerHTML += '<div> --- render Ar </div>';
 
     // add AR styles
-    document.getElementById('header').classList.add('ar');
+    // document.getElementById('header').classList.add('ar');
     document.getElementById('visualSheet').classList.add('ar');
     document.getElementById('content3D').classList.add('ar');
     document.getElementById('productOptions').classList.add('ar');
@@ -161,7 +161,7 @@ AFRAME.registerComponent('ar-controller', { // register a component named store
       document.getElementById('arui').style.display = 'block';
       document.querySelector('#arui-step1').style.display = 'block';
       document.querySelector('#arui-step2').style.display = 'none';
-      document.getElementById('header').style.display = 'none';
+      // document.getElementById('header').style.display = 'none';
       document.getElementById('productOptions').style.display = 'none';
       // hide mesh.
       this.state.meshContainer.setAttribute('visible', false);
@@ -173,7 +173,7 @@ AFRAME.registerComponent('ar-controller', { // register a component named store
       document.getElementById('arui').style.display = 'block';
       document.querySelector('#arui-step1').style.display = 'none';
       document.querySelector('#arui-step2').style.display = 'block';
-      document.getElementById('header').style.display = 'none';
+      // document.getElementById('header').style.display = 'none';
       document.getElementById('productOptions').style.display = 'none';
       // hide mesh.
       this.state.meshContainer.setAttribute('visible', false);
@@ -264,7 +264,7 @@ AFRAME.registerComponent('ar-controller', { // register a component named store
     document.getElementById('status').innerHTML += '<div> --- renderMagicWindow </div>';
 
     // add magic window styles
-    document.getElementById('header').classList.remove('ar');
+    // document.getElementById('header').classList.remove('ar');
     document.getElementById('visualSheet').classList.remove('ar');
     document.getElementById('content3D').classList.remove('ar');
     document.getElementById('productOptions').classList.remove('ar');
@@ -275,7 +275,7 @@ AFRAME.registerComponent('ar-controller', { // register a component named store
     }
 
     document.getElementById('container').classList.remove('ar');
-    document.getElementById('header').style.display = 'block';
+    // document.getElementById('header').style.display = 'block';
     document.getElementById('productOptions').style.display = 'block';
     document.getElementById('arui').style.display = 'none';
 

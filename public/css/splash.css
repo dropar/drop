@@ -4,7 +4,7 @@
   left: 0;
   right: 0;
   background-color: black;
-  height: 75px;
+  height: 8vh;
   display: flex;
   justify-content: space-between;
 }
@@ -19,10 +19,11 @@
 }
 
 #footer-login-button-text, #footer-signup-button-text {
-  margin-top: 20px;
+  font-family: 'K2D', sans-serif;
+  margin-top: 15px;
   color: white;
   text-align: center;
-  font-size: 25px;
+  font-size: 20px;
 }
 
 .splash-background {
