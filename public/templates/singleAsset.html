@@ -83,26 +83,37 @@
 
   </div>
 
-  <div class="back-button">
-    <a href='/?#!assets'>&lt&lt ASSETS</a>
+  <div class="productOption back-button">
+    <a href='/?#!assets'>&lt&lt BACK</a>
+  </div>
+  <div id="productOptionLabels">
+    <div id="rotation-label-div">
+      <span id="rotation-label">Rotation</span>
+    </div>
+    <div id="y-position-label-div">
+      <span id="y-position-label">Height</span>
+    </div>
+    <div id="scale-label-div">
+      <span id="scale-label">Scale</span>
+    </div>
   </div>
   <div id="productOptions">
     <div class="productOption rotation-y-slider">
       <div class="range-slider">
-        <input class="range-slider__range" type="range" value="0" min="0" max="360">
-        <span class="range-slider__value">0</span>
+        <input class="range-slider__range" type="range" value="0" min="0" max="360" name="rotation">
+        <span class="range-slider__value">0º</span>
       </div>
     </div>
     <div class="productOption position-y-slider">
       <div class="range-slider">
-        <input class="range-slider__range" type="range" value="0" min="-2" max="2" step=".01">
-        <span class="range-slider__value">0</span>
+        <input class="range-slider__range" type="range" value="0.75" min="-0.50" max="2" step=".005" name="position-y">
+        <span class="range-slider__value">0.75m</span>
       </div>
     </div>
     <div class="productOption scale-slider">
       <div class="range-slider">
-        <input class="range-slider__range" type="range" value="1" min="0" max="10" step=".01">
-        <span class="range-slider__value">1</span>
+        <input class="range-slider__range" type="range" value="1" min="0" max="10" step=".005" name="scale">
+        <span class="range-slider__value">10%</span>
       </div>
     </div>
   </div>
