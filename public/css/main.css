@@ -161,6 +161,7 @@ a{
   position: fixed;
   float: left;
   width: 30%;
+  /* background-color: rgba(1,1,1,.1); */
 }
 #productOptions.ar {
   justify-content: center;
@@ -168,6 +169,7 @@ a{
   width: 100%;
   right: 0;
   display: flex;
+
 }
 .productOption {
   margin-bottom: 20px;
@@ -474,3 +476,5 @@ input::-moz-focus-outer {
 }
 
 
+/* hide 'x' button this does't work! */
+.a-exit-ar-button {display: none !important;}

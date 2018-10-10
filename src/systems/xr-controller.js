@@ -4,6 +4,7 @@
 
 AFRAME.registerSystem('xr-controller', { // register a component named store
   state: {
+    firstPinSelected: false,
     pinDetected: false,
     pinSelected: false,
     currentReality: 'magicWindow',
