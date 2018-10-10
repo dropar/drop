@@ -114,17 +114,21 @@ const createApp = () => {
   })
 
   app.get('/500', (req, res, next) => {
-    //res.status(500).send();
-    Userx;
     console.log('at 500 page')
+    try {
+    Userx;
+    } catch (err){
+      next(err)
+    }
   })
 
   // error handling endware
   app.use((err, req, res, next) => {
     console.error(err)
     console.error(err.stack)
-    res.status(500);
-    res.render('public/templates/500.html');
+    // res.status(500);
+    // res.send('500 reached');
+    res.status(err.status || 500).sendFile(path.resolve(__dirname, '..', 'public/templates/500.html'));
   })
 }
 
