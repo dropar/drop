@@ -11,9 +11,9 @@
   padding-left: 0 !important;
   flex-direction: row;
   justify-content: flex-start;
-  overflow-x: scroll;
+  overflow-x: hidden;
   overflow-y: hidden;
-  white-space: nowrap;
+  /* white-space: nowrap; */
 }
 
 #user-assets-title, #api-assets-title {

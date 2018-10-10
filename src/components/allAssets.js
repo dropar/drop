@@ -83,7 +83,9 @@ module.exports = {
   getAllAssets: () => {
     const assetGlobalDiv = document.getElementById('assets-container');
     const environment = window.location.href.startsWith('http://localhost:8080') ? 'development' : 'production';
-    const apiAssets = document.createElement('div');
+    //const apiAssets = document.createElement('div');
+    const apiAssets = [];
+    const viewAsset = document.createElement('div');
     //fetch all assets from DB.
     fetch(`/api/assets`,
     {method: "GET"}).then((response) =>
@@ -108,6 +110,20 @@ module.exports = {
           assetImg.src = asset.thumbnailUrl;
           assetImg.classList.add('asset-img');
           imgLink.href = environment === 'production' ? `https://dropar.herokuapp.com/?#!assets/${asset.id}` : `http://localhost:8080/?#!assets/${asset.id}`
+
+          const nextAssetButton = document.createElement('button');
+          nextAssetButton.id = 'toggle-asset-button';
+          nextAssetButton.innerText = 'next asset'
+          asset.id + 1 === resData.length - 1 ? nextAssetButton.assetId = asset.id : nextAssetButton.assetId = asset.id + 1;
+          const prevAssetButton = document.createElement('button');
+          prevAssetButton.id = 'toggle-asset-button';
+          prevAssetButton.innerText = 'previous asset'
+          asset.id - 1 === 0 ? prevAssetButton.assetId = asset.id : prevAssetButton.assetId = asset.id - 1;
+
+          assetDiv.appendChild(nextAssetButton);
+          assetDiv.appendChild(prevAssetButton);
+
+
           const assetAddToUserButton = document.createElement('button');
           imgLink.appendChild(assetImg);
           assetDivImgCol.appendChild(imgLink);
@@ -121,6 +137,9 @@ module.exports = {
           assetDivButtonCol.appendChild(assetAddToUserButton);
 
           assetDiv.addEventListener('click', (evt) => {
+            if (evt.target === nextAssetButton || evt.target === prevAssetButton){
+              viewAsset.insertBefore(apiAssets[evt.target.assetId], viewAsset.childNodes[0]);
+            }
             if (evt.target === assetAddToUserButton) {
               fetch('api/assets/addToUser', {
                 method: "POST",
@@ -164,8 +183,14 @@ module.exports = {
                   })
                 })
               })
-            }
-            else {
+            } else if (evt.target === nextAssetButton || evt.target === prevAssetButton){
+                if (environment === 'production') {
+                  window.location.href = `https://dropar.herokuapp.com/?#!assets`;
+                }
+                else {
+                  window.location.href = `http://localhost:8080/?#!assets`;
+                }
+            } else {
               if (environment === 'production') {
                 window.location.href = `https://dropar.herokuapp.com/?#!assets/${asset.id}`;
               }
@@ -177,10 +202,17 @@ module.exports = {
           // assetDiv.appendChild(assetName);
           assetDiv.appendChild(assetDivImgCol);
           assetDiv.appendChild(assetDivButtonCol);
-          apiAssets.appendChild(assetDiv);
+
+          apiAssets.push(assetDiv);
       })
-      assetGlobalDiv.appendChild(apiAssets);
+      //const apiAssetsArr = [apiAssets];
+      //console.log(apiAssetsArr[0].children[0])
+      //assetGlobalDiv.appendChild(apiAssets);
+      viewAsset.appendChild(apiAssets[0]);
+      assetGlobalDiv.appendChild(viewAsset)
     })
+    //viewAsset.innerHTML =
+
   },
   buttonListeners: () => {
     const environment = window.location.href.startsWith('http://localhost:8080') ? 'development' : 'production';
