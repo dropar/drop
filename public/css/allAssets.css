@@ -108,3 +108,13 @@
   font-size: 20px;
 }
 
+#enter-vr-logo {
+  width: 60px;
+}
+
+#vr-link {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
+
