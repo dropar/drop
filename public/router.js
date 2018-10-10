@@ -38,7 +38,8 @@ const { runSplash } = require('../src/components/splash');
 
   // use #! to hash
   //change back
-  const router = new Navigo(null, true, '#!');
+  //const router = new Navigo(null, true, '#!');
+  const router = new Navigo(null, true, '?');
   // const router = new Navigo();
   console.log('ROUTER-',router);
   router.on({
@@ -77,7 +78,7 @@ const { runSplash } = require('../src/components/splash');
         submitLoginForm();
       });
     },
-    'assets/:id': (params) => {
+    'assets/:id/': (params) => {
       assetFetcher.fetchCurrentAsset(params.id)
       .then(() => {
         // assetFetcher.fetchUserAssets(window.user.id);
