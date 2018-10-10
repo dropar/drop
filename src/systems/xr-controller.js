@@ -1,5 +1,7 @@
 // require('rangeslider.js')
 
+
+
 AFRAME.registerSystem('xr-controller', { // register a component named store
   state: {
     pinDetected: false,
@@ -8,6 +10,7 @@ AFRAME.registerSystem('xr-controller', { // register a component named store
     reticle: undefined,
     reticleParent: undefined,
     meshContainer: undefined,
+    currentMesh: undefined,
     meshContainerOrigPosition: undefined,
     meshContainerCurPosition: undefined,
     storePanelVR: undefined,
@@ -37,6 +40,40 @@ AFRAME.registerSystem('xr-controller', { // register a component named store
     this.state.meshContainer = document.querySelector('#meshContainer');
     this.state.meshContainerOrigPosition = this.state.meshContainer.getAttribute('position');
 
+    /* --- INIT GEO LOAD --- */
+
+    var self = this;
+    this.sceneEl.addEventListener('loaded', function () { // inits for after scene loaded
+      //
+      // create magic window obj.
+      var currentAsset = JSON.parse(localStorage.getItem('currentAsset'));
+      document.getElementById('status').innerHTML += `<div> --- currentAsset: ${currentAsset.id} </div>`;
+
+      // append geo to container
+      // let geo = this.addGltfEntity({
+      //   id: `currentAsset`,
+      //   assetId: `#${currentAsset.id}`,
+      //   visible: true,
+      //   position: {x:0, y:0, z:0},
+      //   scale: {x:1, y:1, z:1}
+      // })
+      document.getElementById('status').innerHTML += '<div> --- addGltfEntity </div>';
+
+      //var container = document.querySelector('#meshContainer');
+      var geo = document.createElement('a-entity');
+
+      geo.setAttribute('id', `currentAsset`);
+      geo.setAttribute('gltf-model', `#${currentAsset.id}`);
+      geo.setAttribute('visible', true);
+      geo.setAttribute('position', {x:0, y:0, z:0});
+      geo.setAttribute('scale', {x:1, y:1, z:1});
+
+      document.getElementById('status').innerHTML += '<div> --- --- append geo </div>';
+      self.state.meshContainer.appendChild(geo);
+      document.getElementById('status').innerHTML += '<div> --- --- set to cur </div>';
+      self.state.currentMesh = geo;
+      document.getElementById('status').innerHTML += `<div> --- --- cur id: ${self.state.currentMesh.id} </div>`;
+    });
 
     /* --- REGISTER EVENT HANDLERS --- */
 
@@ -53,13 +90,24 @@ AFRAME.registerSystem('xr-controller', { // register a component named store
 
   },
 
+
+
   // handle change in reality btw "Magic Window", AR, and VR
   realityChanged: function (data) {
     console.log('--- reality changed', data)
+    document.getElementById('status').innerHTML = '<div> Reality Change </div>';
 
     if (data.detail !== this.state.currentReality) {
       this.state.currentReality = data.detail;
       this.changeReality();
+    } else {
+      document.getElementById('status').innerHTML += '<div> --- init magic window </div>';
+      // let geo = document.getElementById('currentAsset')
+      // this.state.currentMesh = geo;
+      // geo.setAttribute('visible', true)
+
+      // load geometry into scene for magic window
+      // this.initMagicWindow();
     }
 
   },
@@ -71,20 +119,22 @@ AFRAME.registerSystem('xr-controller', { // register a component named store
     switch (this.state.currentReality) {
 
       case 'ar':
-        document.getElementById('status').innerHTML += '<div> change to ar </div>';
+        document.getElementById('status').innerHTML += '<div> --- change to ar </div>';
+        this.cleanupMagicWindow();
         this.renderAr();
         // update state
 
         break;
 
       case 'magicWindow':
-        this.enableVR();
 
         // reset
         // this.state.pinDetected = false;
         // this.state.pinSelected = false;
 
-        document.getElementById('status').innerHTML += '<div> change to magic window </div>';
+        document.getElementById('status').innerHTML += '<div> --- change to magic window </div>';
+        // stop listening for touches
+        this.state.reticle.removeEventListener('touched', this.touched);
         this.renderMagicWindow();
         this.disableVR();
         // update state
@@ -97,7 +147,7 @@ AFRAME.registerSystem('xr-controller', { // register a component named store
         break;
 
       case 'vr':
-        document.getElementById('status').innerHTML += '<div> change to vr </div>';
+        document.getElementById('status').innerHTML += '<div> --- change to vr </div>';
         this.enableVR();
 
         break;
@@ -142,6 +192,8 @@ AFRAME.registerSystem('xr-controller', { // register a component named store
     this.renderAr = el.renderAr;
     console.log('this.renderAr', this.renderAr)
     this.renderMagicWindow = el.renderMagicWindow;
+    // this.initMagicWindow = el.initMagicWindow;
+    this.cleanupMagicWindow = el.cleanupMagicWindow;
   },
   registerVr: function (el) {
     console.log('--- vr-controller registered!')

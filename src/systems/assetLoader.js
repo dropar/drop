@@ -84,6 +84,7 @@ AFRAME.registerSystem('assetLoader', {
   //   })
   // },
   loadGeometry: function () {
+    document.getElementById('status').innerHTML += '<div> --- loadGeometry </div>';
     var currentAsset = JSON.parse(localStorage.getItem('currentAsset'));
     // console.log(`currentAsset: ${JSON.stringify(currentAsset)}`)
     this.addGltfAsset({
@@ -91,12 +92,13 @@ AFRAME.registerSystem('assetLoader', {
       name: currentAsset.name,
       url: currentAsset.assetUrl
     })
-    this.addGltfEntity({
-      id: 'currentAsset',
-      assetId: `#${currentAsset.id}`,
-      visible: true,
-      position: {x:0, y:0, z:0},
-      scale: {x:1, y:1, z:1}
-    })
+    // this.addGltfEntity({
+    //   id: `currentAsset`,
+    //   assetId: `#${currentAsset.id}`,
+    //   visible: true,
+    //   position: {x:0, y:0, z:0},
+    //   scale: {x:1, y:1, z:1}
+    // })
+    document.getElementById('status').innerHTML += '<div> --- end loadGeometry </div>';
   }
 });
