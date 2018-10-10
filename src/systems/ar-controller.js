@@ -78,9 +78,10 @@ AFRAME.registerComponent('ar-controller', { // register a component named store
 
   // handler for touched, ie. place after plane detected, event
   touched: function (evt) {
-    document.getElementById('status').innerHTML += '<div> --- touched </div>';
+    document.getElementById('status').innerHTML += `<div> --- touched ${evt.detail.target.type} </div>`;
 
     var currentAsset = JSON.parse(localStorage.getItem('currentAsset'));
+
 
     if (evt.detail.target.type !== 'submit') {
       document.getElementById('status').innerHTML += '<div> --- --- place new mesh </div>';
@@ -104,6 +105,9 @@ AFRAME.registerComponent('ar-controller', { // register a component named store
 
       // make current
       this.state.currentMesh = newMesh;
+      rangeSlider('rotation-y-slider', newMesh, 'rotation', 'y');
+      rangeSlider('position-y-slider', newMesh, 'position', 'y');
+      rangeSlider2('scale-slider', newMesh, 'scale', ['x','y','z']);
 
       // show mesh and position at reticle and show AR UI.
       this.state.meshContainer.setAttribute('visible', true);
@@ -356,6 +360,7 @@ var rangeSlider = function(wrapper, entity, attribute, key){
       $(this).html(value);
     });
 
+    range.off('input');
     range.on('input', function(){
       // this = range
       $(this).next(value).html(this.value);
@@ -384,6 +389,7 @@ var rangeSlider2 = function(wrapper, entity, attribute, keys){
       $(this).html(value);
     });
 
+    range.off('input');
     range.on('input', function(){
       // this = range
       $(this).next(value).html(this.value);
