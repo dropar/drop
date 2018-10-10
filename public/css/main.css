@@ -365,16 +365,19 @@ a{
 } */
 
 #status {
-  display: none;
+  /* display: none; */
   position: fixed;
   top: 0;
   right: 0;
   max-width: 90%;
   max-height: 87%;
+  /* max-width: 50%;
+  max-height: 20%; */
   z-index: 10000000000000;
   background: rgba(0, 0, 0, 0.5);
   color: white;
   overflow: scroll;
+  pointer-events: none
 }
 
 /* sliders */

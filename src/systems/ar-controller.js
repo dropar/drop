@@ -2,7 +2,8 @@ const JSON = require('circular-json');
 // const noUiSlider = require('noUiSlider');
 // const rangeslider = require('rangeslider.js')
 const $ = require('jquery');
-require('rangeslider.js');
+const crypto = require('crypto');
+
 
 
 AFRAME.registerComponent('ar-controller', { // register a component named store
@@ -23,64 +24,18 @@ AFRAME.registerComponent('ar-controller', { // register a component named store
     this.state.reticle.addEventListener('planeDetected', this.planeDetected);
     this.state.reticle.addEventListener('touched', this.touched);
 
-    // var slider = document.getElementById('slider');
-    // noUiSlider.create(slider, {
-    //   start: [20, 80],
-    //   connect: true,
-    //   range: {
-    //       'min': 0,
-    //       'max': 100
-    //   },
-    //   format: wNumb({
-    //     decimals: 0
-    //   })
-    // });
+    // init current mesh to meshContainer
+    // this.state.currentMesh = this.state.meshContainer
 
-    // document.addEventListener("DOMContentLoaded", function(event) {
-    //   // sliders tmp
-    //   document.querySelector('input[type="range"]').rangeslider({
-    //   // document.getElementById('rangeslider').rangeslider({
+    /* --- ON SCENE  --- */
 
-    //     // Feature detection the default is `true`.
-    //     // Set this to `false` if you want to use
-    //     // the polyfill also in Browsers which support
-    //     // the native <input type="range"> element.
-    //     polyfill: true,
-
-    //     // Default CSS classes
-    //     rangeClass: 'rangeslider',
-    //     disabledClass: 'rangeslider--disabled',
-    //     horizontalClass: 'rangeslider--horizontal',
-    //     verticalClass: 'rangeslider--vertical',
-    //     fillClass: 'rangeslider__fill',
-    //     handleClass: 'rangeslider__handle',
-
-    //     // Callback function
-    //     onInit: function() {
-    //       console.log('init rangeslider')
-    //     },
-
-    //     // Callback function
-    //     onSlide: function(position, value) {
-    //       console.log('------------- mesh container: ')
-    //       // this.state.meshContainer.setAttribute('rotation');
-    //     },
-
-    //     // Callback function
-    //     onSlideEnd: function(position, value) {}
-    //   });
-    // })
-
-    // slider: <div class="range-slider">
-    //   range:  <input class="range-slider__range" type="range" value="100" min="0" max="360">
-    //   valeu:  <span class="range-slider__value">0</span>
-    //         </div>
-
-    console.log('--- this.state.meshContainer: ', this.state.meshContainer)
-
-    rangeSlider('rotation-y-slider', this.state.meshContainer, 'rotation', 'y');
-    rangeSlider('position-y-slider', this.state.meshContainer, 'position', 'y');
-    rangeSlider2('scale-slider', this.state.meshContainer, 'scale', ['x','y','z']);
+    var self = this;
+    this.el.sceneEl.addEventListener('loaded', function () { // inits for after scene loaded
+      // add range sliders
+      rangeSlider('rotation-y-slider', self.state.currentMesh, 'rotation', 'y');
+      rangeSlider('position-y-slider', self.state.currentMesh, 'position', 'y');
+      rangeSlider2('scale-slider', self.state.currentMesh, 'scale', ['x','y','z']);
+    });
 
   },
   bindMethods: function () {
@@ -88,6 +43,8 @@ AFRAME.registerComponent('ar-controller', { // register a component named store
     this.touched = this.touched.bind(this);
     this.renderAr = this.renderAr.bind(this);
     this.renderMagicWindow = this.renderMagicWindow.bind(this);
+    this.addGltfEntity = this.addGltfEntity.bind(this);
+    this.initMagicWindow = this.initMagicWindow.bind(this);
   },
 
   // handle plane detection event
@@ -96,9 +53,9 @@ AFRAME.registerComponent('ar-controller', { // register a component named store
 
     const waiting = !this.state.pinSelected && !this.state.pinDetected;
     const pinning = !this.state.pinSelected && this.state.pinDetected;
-    // const pinned = this.state.pinSelected;
+    const pinned = this.state.pinSelected;
 
-    if (waiting) { // typical case: plane detected while waiting for it.
+    if (waiting || pinned) { // typical case: plane detected while waiting for it.
       document.getElementById('status').innerHTML += '<div> --- --- plane detected </div>';
       // go to step two.
       document.querySelector('#arui-step1').style.display = 'none';
@@ -123,21 +80,39 @@ AFRAME.registerComponent('ar-controller', { // register a component named store
   touched: function (evt) {
     document.getElementById('status').innerHTML += '<div> --- touched </div>';
 
+    var currentAsset = JSON.parse(localStorage.getItem('currentAsset'));
+
     if (evt.detail.target.type !== 'submit') {
       document.getElementById('status').innerHTML += '<div> --- --- place new mesh </div>';
 
+      // document.getElementById('status').innerHTML += `<div> --- --- --- curAss id: ${currentAsset} </div>`;
+      // document.getElementById('status').innerHTML += `<div> --- --- --- ret pos: ${this.state.reticle.getAttribute('position')} </div>`;
+      // document.getElementById('status').innerHTML += `<div> --- --- --- curMsh sc: ${this.state.currentMesh.getAttribute('scale')} </div>`;
       // remove the reticle, but save the parent.
-      this.state.reticleParent = this.state.reticle.parentNode;
-      this.state.reticle.parentNode.removeChild(this.state.reticle);
+      // this.state.reticleParent = this.state.reticle.parentNode;
+      // this.state.reticle.parentNode.removeChild(this.state.reticle);
+
+      // append geo to container with unique id
+      var id = crypto.randomBytes(20).toString('hex');
+      let newMesh = this.addGltfEntity({
+        id,
+        assetId: `#${currentAsset.id}`,
+        visible: true,
+        position: Object.assign({}, this.state.reticle.getAttribute('position')),
+        scale: Object.assign({}, this.state.currentMesh.getAttribute('scale'))
+      })
+
+      // make current
+      this.state.currentMesh = newMesh;
 
       // show mesh and position at reticle and show AR UI.
       this.state.meshContainer.setAttribute('visible', true);
-      this.state.meshContainer.setAttribute('position', this.state.reticle.getAttribute('position'));
+      // this.state.meshContainer.setAttribute('position', this.state.reticle.getAttribute('position'));
 
-      document.getElementById('status').innerHTML += `<div> --- --- --- visible: ${this.state.meshContainer.getAttribute('visible')} </div>`;
-      document.getElementById('status').innerHTML += `<div> --- --- --- x position: ${JSON.stringify(this.state.meshContainer.getAttribute('position').x)} </div>`;
-      document.getElementById('status').innerHTML += `<div> --- --- --- y position: ${JSON.stringify(this.state.meshContainer.getAttribute('position').y)} </div>`;
-      document.getElementById('status').innerHTML += `<div> --- --- --- z position: ${JSON.stringify(this.state.meshContainer.getAttribute('position').z)} </div>`;
+      // document.getElementById('status').innerHTML += `<div> --- --- --- curMesh: ${this.state.currentMesh.getAttribute('id')} </div>`;
+      // document.getElementById('status').innerHTML += `<div> --- --- --- x position: ${JSON.stringify(this.state.currentMesh.getAttribute('position').x)} </div>`;
+      // document.getElementById('status').innerHTML += `<div> --- --- --- y position: ${JSON.stringify(this.state.currentMesh.getAttribute('position').y)} </div>`;
+      // document.getElementById('status').innerHTML += `<div> --- --- --- z position: ${JSON.stringify(this.state.currentMesh.getAttribute('position').z)} </div>`;
 
       this.showARUI();
 
@@ -146,7 +121,7 @@ AFRAME.registerComponent('ar-controller', { // register a component named store
     }
 
     // stop listening whether pinned or dropped
-    this.state.reticle.removeEventListener('touched', this.touched);
+    // this.state.reticle.removeEventListener('touched', this.touched);
 
   },
 
@@ -173,11 +148,15 @@ AFRAME.registerComponent('ar-controller', { // register a component named store
       productOptionArr[i].classList.add('ar');
     }
 
+    // temp set to waiting on return to ar everytime, since have to plane detect again anyway.
+    // this.state.pinSelected = false;
+    // this.state.pinDetected = false;
+
     const waiting = !this.state.pinSelected && !this.state.pinDetected;
     const pinning = !this.state.pinSelected && this.state.pinDetected;
-    //const pinned = this.state.pinSelected;
+    const pinned = this.state.pinSelected;
 
-    if (waiting) {
+    if (waiting || pinned) {
       document.getElementById('status').innerHTML += '<div> --- --- try to detect plane </div>';
       document.getElementById('arui').style.display = 'block';
       document.querySelector('#arui-step1').style.display = 'block';
@@ -187,7 +166,7 @@ AFRAME.registerComponent('ar-controller', { // register a component named store
       // hide mesh.
       this.state.meshContainer.setAttribute('visible', false);
       // wait for plane detection
-      // this.state.reticle.addEventListener('planeDetected', this.planeDetected);
+      this.state.reticle.addEventListener('planeDetected', this.planeDetected);
 
     } else if (pinning) {
       document.getElementById('status').innerHTML += '<div> --- --- plane already detected. bad state? </div>';
@@ -224,10 +203,10 @@ AFRAME.registerComponent('ar-controller', { // register a component named store
         this.state.meshContainer.setAttribute('visible', true);
         this.state.meshContainer.setAttribute('position', this.state.meshContainerCurPosition);
 
-        document.getElementById('status').innerHTML += `<div> --- --- --- visible: ${this.state.meshContainer.getAttribute('visible')} </div>`;
-        document.getElementById('status').innerHTML += `<div> --- --- --- position: ${JSON.stringify(this.state.meshContainer.getAttribute('position').x)} </div>`;
-        document.getElementById('status').innerHTML += `<div> --- --- --- y position: ${JSON.stringify(this.state.meshContainer.getAttribute('position').y)} </div>`;
-        document.getElementById('status').innerHTML += `<div> --- --- --- z position: ${JSON.stringify(this.state.meshContainer.getAttribute('position').z)} </div>`;
+        // document.getElementById('status').innerHTML += `<div> --- --- --- visible: ${this.state.meshContainer.getAttribute('visible')} </div>`;
+        // document.getElementById('status').innerHTML += `<div> --- --- --- position: ${JSON.stringify(this.state.meshContainer.getAttribute('position').x)} </div>`;
+        // document.getElementById('status').innerHTML += `<div> --- --- --- y position: ${JSON.stringify(this.state.meshContainer.getAttribute('position').y)} </div>`;
+        // document.getElementById('status').innerHTML += `<div> --- --- --- z position: ${JSON.stringify(this.state.meshContainer.getAttribute('position').z)} </div>`;
       }
 
       this.showARUI();
@@ -245,13 +224,40 @@ AFRAME.registerComponent('ar-controller', { // register a component named store
       // this.state.meshContainer.setAttribute('position', this.state.reticle.getAttribute('position'));
       this.state.meshContainer.setAttribute('position', this.state.meshContainerCurPosition);
 
-      document.getElementById('status').innerHTML += `<div> --- --- old visible: ${this.state.meshContainer.getAttribute('visible')} </div>`;
-      document.getElementById('status').innerHTML += `<div> --- --- old x position: ${JSON.stringify(this.state.meshContainer.getAttribute('position').x)} </div>`;
-      document.getElementById('status').innerHTML += `<div> --- --- old y position: ${JSON.stringify(this.state.meshContainer.getAttribute('position').y)} </div>`;
-      document.getElementById('status').innerHTML += `<div> --- --- old z position: ${JSON.stringify(this.state.meshContainer.getAttribute('position').z)} </div>`;
+      // document.getElementById('status').innerHTML += `<div> --- --- old visible: ${this.state.meshContainer.getAttribute('visible')} </div>`;
+      // document.getElementById('status').innerHTML += `<div> --- --- old x position: ${JSON.stringify(this.state.meshContainer.getAttribute('position').x)} </div>`;
+      // document.getElementById('status').innerHTML += `<div> --- --- old y position: ${JSON.stringify(this.state.meshContainer.getAttribute('position').y)} </div>`;
+      // document.getElementById('status').innerHTML += `<div> --- --- old z position: ${JSON.stringify(this.state.meshContainer.getAttribute('position').z)} </div>`;
 
       this.showARUI();
     //}
+  },
+
+  cleanupMagicWindow: function() {
+    document.getElementById('status').innerHTML += '<div> --- cleanupMagicWindow </div>';
+    // create magic window obj.
+    // var currentAsset = JSON.parse(localStorage.getItem('currentAsset'));
+    var geo = document.getElementById('currentAsset')
+    geo.setAttribute('visible', false)
+    // this.state.meshContainer.removeChild(geo);
+  },
+
+  initMagicWindow: function() {
+    // create magic window obj.
+    var currentAsset = JSON.parse(localStorage.getItem('currentAsset'));
+    document.getElementById('status').innerHTML += `<div> --- currentAsset.id: ${currentAsset.id} </div>`;
+
+    // append geo to container
+    let geo = this.addGltfEntity({
+      id: `currentAsset`,
+      assetId: `#${currentAsset.id}`,
+      visible: true,
+      position: {x:0, y:0, z:0},
+      scale: {x:1, y:1, z:1}
+    })
+
+    // set currentMesh to new entity
+    this.state.currentMesh = geo;
   },
 
   renderMagicWindow: function() {
@@ -276,14 +282,21 @@ AFRAME.registerComponent('ar-controller', { // register a component named store
     // save current position
     this.state.meshContainerCurPosition = Object.assign({}, this.state.meshContainer.getAttribute('position'));
 
-    document.getElementById('status').innerHTML += `<div> --- --- cur x position: ${JSON.stringify(this.state.meshContainerCurPosition.x)} </div>`;
-    document.getElementById('status').innerHTML += `<div> --- --- cur y position: ${JSON.stringify(this.state.meshContainerCurPosition.y)} </div>`;
-    document.getElementById('status').innerHTML += `<div> --- --- cur z position: ${JSON.stringify(this.state.meshContainerCurPosition.z)} </div>`;
+    // document.getElementById('status').innerHTML += `<div> --- --- cur x position: ${JSON.stringify(this.state.meshContainerCurPosition.x)} </div>`;
+    // document.getElementById('status').innerHTML += `<div> --- --- cur y position: ${JSON.stringify(this.state.meshContainerCurPosition.y)} </div>`;
+    // document.getElementById('status').innerHTML += `<div> --- --- cur z position: ${JSON.stringify(this.state.meshContainerCurPosition.z)} </div>`;
 
     // put mesh back to default magic window position
     // show it incase it is hidden, ie in ar but not yet placed!
-    this.state.meshContainer.setAttribute('position', this.state.meshContainerOrigPosition);
-    this.state.meshContainer.setAttribute('visible', true);
+    // this.state.meshContainer.setAttribute('position', this.state.meshContainerOrigPosition);
+    // this.state.meshContainer.setAttribute('visible', true);
+
+    // restore currentAsset for magic window
+    var geo = document.getElementById('currentAsset')
+    geo.setAttribute('position', this.state.meshContainerOrigPosition);
+    geo.setAttribute('visible', true)
+
+    // should we hide all other meshes???
 
     // restore reticle and hide
     if (this.state.reticleParent) {
@@ -291,8 +304,39 @@ AFRAME.registerComponent('ar-controller', { // register a component named store
     }
     this.state.reticle.setAttribute('visible', false);
 
-  }
+  },
 
+  addGltfEntity: function (params) {
+    document.getElementById('status').innerHTML += '<div> --- addGltfEntity </div>';
+
+    //var container = document.querySelector('#meshContainer');
+    var geo = document.createElement('a-entity');
+
+    geo.setAttribute('id', params.id);
+    geo.setAttribute('visible', params.visible);
+
+    // updating position/scale directly via the three.js Object3D
+    // position/scale vectors is recommended but not working, so
+    // using set Attribute instead
+
+    // geo.object3D.position.set(...params.position);
+    // geo.object3D.scale.set(...params.scale);
+
+    geo.setAttribute('position', params.position);
+    geo.setAttribute('scale', params.scale);
+
+    // using gltf-model-legacy format instead of gltf
+    // geo.setAttribute('gltf-model-legacy', "url(" + params.url + ")");
+    geo.setAttribute('gltf-model', params.assetId);
+
+    document.getElementById('status').innerHTML += '<div> --- --- append geo </div>';
+    this.state.meshContainer.appendChild(geo);
+    document.getElementById('status').innerHTML += '<div> --- --- set to cur </div>';
+    this.state.currentMesh = geo;
+    document.getElementById('status').innerHTML += `<div> --- --- cur id: ${this.state.currentMesh.id} </div>`;
+
+    return geo;
+  },
 });
 
 // utils
