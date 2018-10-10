@@ -474,3 +474,5 @@ input::-moz-focus-outer {
 }
 
 
+/* hide 'x' button this does't work! */
+.a-exit-ar-button {display: none !important;}
