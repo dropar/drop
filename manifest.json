@@ -2,7 +2,7 @@
   "name": "Drop",
   "start_url": "/",
   "display": "standalone",
-  "orientation": "portrait-primary",
+  "orientation": "portrait",
   "lang": "en-US",
   "dir": "ltr",
   "background_color": "#FF1B44",
