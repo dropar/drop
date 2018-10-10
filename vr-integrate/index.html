@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>vrTest</title>
+  <meta name="description" content="vrTest">
+  <script src="https://aframe.io/releases/0.8.2/aframe.min.js"></script>
+  <script src="//cdn.rawgit.com/donmccurdy/aframe-extras/v4.2.0/dist/aframe-extras.min.js"></script>
+</head>
+
+<body>
+  <a-scene>
+    <!-- Asset Store -->
+    <a-assets>
+
+      <!-- Checkpoints -->
+      <a-mixin id="checkpoint"></a-mixin>
+      <a-mixin id="checkpoint-hovered" color="#6CEEB5"></a-mixin>
+
+
+      <!-- logos -->
+      <a-asset-item id="drop-logo" src="https://poly.googleapis.com/downloads/dp5PrzF0k6W/bybIj6jkbX-/logo-drop-lowpoly.gltf">
+        <a-asset-item id="fullstack-logo" src="https://poly.googleapis.com/downloads/0bJ0ctZdJV_/8ordCNfLgAl/logo-fs-lowpoly.gltf">
+
+          <!-- animals -->
+          <a-asset-item id="beagle" src="https://poly.googleapis.com/downloads/0BnDT3T1wTE/85QOHCZOvov/Mesh_Beagle.gltf">
+            <a-asset-item id="cow" src="https://poly.googleapis.com/downloads/0OToIgkcVM7/48loxcU-Obv/Cow.gltf">
+              <a-asset-item id="unicorn" src="https://poly.googleapis.com/downloads/0fVRHo65E-j/3FcP67Xsa_S/Unicorn_01.gltf">
+                <!-- <a-asset-item id="" src="">
+      <a-asset-item id="" src="">
+      <a-asset-item id="" src="">
+      <a-asset-item id="" src="">
+      <a-asset-item id="" src="">
+      <a-asset-item id="" src="">
+      <a-asset-item id="" src=""> -->
+
+
+
+
+
+                <a-asset-item id="cliff-swallow" src="https://poly.googleapis.com/downloads/5dl4UWhvuTW/98YtknpxHd7/CliffSwallow.gltf">
+
+
+
+
+
+
+                  <img id="groundTexture" src="https://cdn.aframe.io/a-painter/images/floor.jpg" crossorigin="anonymous">
+                  <img id="skyTexture" src="https://cdn.aframe.io/a-painter/images/sky.jpg" crossorigin="anonymous">
+    </a-assets>
+    <!-- End Asset Store -->
+
+
+    <!-- Camera -->
+
+
+    <!-- Player -->
+    <a-entity id="rig" wasd-controls look-controls movement-controls="controls: checkpoint" checkpoint-controls="mode: animate">
+      <a-entity camera position="0 1.6 0" look-controls="pointerLockEnabled: true">
+        <a-entity cursor position="0 0 -1" geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.03;" material="color: #CCC; shader: flat;"></a-entity>
+      </a-entity>
+    </a-entity>
+
+
+
+    <!-- Checkpoints -->
+    <a-entity position="1 0 1">
+      <!-- Home Checkpoint  -->
+      <a-cylinder checkpoint="offset: 0 0 0" radius="1" height="1" rotation="0 0 0" position="-1 0 -1" color="white"></a-cylinder>
+      <a-text rotation="0 45 0" position="-11 4 -15" scale="5 5 5"></a-text>
+
+      <!-- Animals Checkpoint -->
+      <a-cylinder checkpoint="offset: 0 1.6 -1" radius="1" height="1" rotation="0 0 0" position="-12 0 -15" color="white"></a-cylinder>
+      <a-text value="Animals" rotation="0 45 0" position="-10 4 -15" scale="5 5 5"></a-text>
+
+      <!-- Architecture Checkpoint -->
+      <a-cylinder checkpoint="offset: 0 1.6 0" radius="1" height="1" rotation="0 0 0" position="9 0 -15" color="white"></a-cylinder>
+      <a-text value="Architecture" rotation="0 -60 0" position="9 4 -17" scale="5 5 5"></a-text>
+
+      <!-- Art Checkpoint -->
+      <a-cylinder checkpoint="offset: 0 1.6 0" radius="1" height="1" rotation="0 0 0" position="15 0 -6" color="white"></a-cylinder>
+      <a-text value="Art" rotation="0 -75 0" position="15 4 -6" scale="5 5 5"></a-text>
+
+      <!-- Food Checkpoint -->
+      <a-cylinder checkpoint="offset: 0 1.6 0" radius="1" height="1" rotation="0 0 0" position="15 0 2" color="white"></a-cylinder>
+      <a-text value="Food" rotation="0 -90 0" position="15 4 2" scale="5 5 5"></a-text>
+
+      <!-- Nature Checkpoint -->
+      <a-cylinder checkpoint="offset: 0 1.6 0" radius="1" height="1" rotation="0 0 0" position="14 0 12" color="white"></a-cylinder>
+      <a-text offset="0 -1 0" value="Nature" rotation="0 -145 0" position="16 4 12" scale="5 5 5"></a-text>
+
+      <!-- Objects Checkpoint -->
+      <a-cylinder checkpoint="offset: 0 -1 0" radius="1" height="1" rotation="0 0 0" position="3 0 15" color="white"></a-cylinder>
+      <a-text offset="0 -1 0" value="Objects" rotation="0 -180 0" position="5 4 15" scale="5 5 5"></a-text>
+
+      <!--People Checkpoint -->
+      <a-cylinder label="People" checkpoint="offset: 0 -1 0" radius="1" height="1" rotation="0 0 0" position="-7 0 15" color="white"></a-cylinder>
+      <a-text offset="0 -1 0" value="People" rotation="0 -180 0" position="-5 4 15" scale="5 5 5"></a-text>
+
+
+      <!-- Scenes Checkpoint -->
+      <a-cylinder checkpoint="offset: 0 -1 0" radius="1" height="1" rotation="0 0 0" position="-14 0 8" color="white"></a-cylinder>
+      <a-text offset="0 -1 0" value="Scenes" rotation="0 60 0" position="-14 4 8" scale="5 5 5"></a-text>
+
+      <!-- Technology Checkpoint -->
+      <a-cylinder checkpoint="offset: 0 -1 0" radius="1" height="1" rotation="0 0 0" position="-13 0 2" color="white"></a-cylinder>
+      <a-text offset="0 -1 0" value="Technology" rotation="0 70 0" position="-13 4 2" scale="5 5 5"></a-text>
+
+      <!-- Transport Checkpoint -->
+      <a-cylinder checkpoint="offset: 0 -1 0" radius="1" height="1" rotation="0 0 0" position="-15 0 -5" color="white"></a-cylinder>
+      <a-text offset="0 -1 0" value="Transport" rotation="0 75 0" position="-15 4 -5" scale="5 5 5"></a-text>
+
+    </a-entity>
+
+
+
+
+
+
+
+    <!-- Animals
+
+
+People
+Scenes
+Technology
+Transport -->
+
+
+
+
+
+    <!-- Displayed Logos -->
+
+    <a-gltf-model src="#drop-logo" position=" 0 1.2ww -3" scale='1.5 1.5 1'></a-gltf-model>
+    <a-gltf-model src="#fullstack-logo" position=" 0 2.2 -5"></a-gltf-model>
+
+    <!-- Displayed Animals -->
+    <!-- Animals center position - -10 0 -20 -->
+    <a-gltf-model src="#cliff-swallow" position="-10 0 -20"></a-gltf-model>
+    <a-gltf-model src="#beagle" scale=".01 .01 .01" position="-5 1 -20"></a-gltf-model>
+    <a-gltf-model src="#cow" scale=".1 .1 .1" position="-4 1 -10"></a-gltf-model>
+    <a-gltf-model src="#unicorn" scale=".05 .05 .05" position="-4 1 -13"></a-gltf-model>
+
+
+
+
+
+    <!-- Background sky. -->
+    <a-sky height="2048" radius="30" src="#skyTexture" theta-length="90" width="2048"></a-sky>
+
+    <!-- Ground. -->
+    <a-circle src="#groundTexture" rotation="-90 0 0" radius="32"></a-circle>
+    <a-assets>
+      <img id="backToAssets" src="exit-vr.png"/>
+    </a-assets>
+    <a-link href="/?#!assets" title="Back To Assets" image="#backToAssets" position="0 3 0"></a-link>
+  </a-scene>
+  <script>
+      const environment = window.location.href.startswith('https://dropar.herokuapp.com') ? "production" : "development";
+      if (environment === "production") {
+        document.querySelector('a-link').href = 'https://dropar.herokuapp.com/?#!assets'
+        document.querySelector('a-link').navigate('https://dropar.herokuapp.com/?#!assets')
+      }
+      else {
+        document.querySelector('a-link').href = 'http://localhost:8080/?#!assets'
+        document.querySelector('a-link').navigate('http://localhost:8080/?#!assets')
+      }
+    </script>
+</body>
+
+</html>
