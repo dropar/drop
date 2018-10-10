@@ -1,12 +1,27 @@
-#productOptions {
+#productOptions, #productOptionLabels {
   position: absolute;
-  top: 10%;
+  bottom: 5%;
   left: 0;
   right: 0;
   padding-left: 20px;
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
+}
+
+#productOptionLabels {
+  bottom: 15%;
+  padding-right: 25px;
+  padding-left: 0;
+}
+
+#y-position-label {
+  padding-right: 10px;
+}
+
+#rotation-label, #y-position-label, #scale-label {
+  color: #FF1B44;
+  text-transform: uppercase;
 }
 
 .back-button a {
@@ -18,13 +33,12 @@
   left: 0;
   right: 0;
   padding-left: 20px;
-  opacity: 0.5;
-  color: black;
+  color: #FF1B44;
 }
 
 .back-button a:hover {
   opacity: 0.2;
-  color: rgb(100,100,100);
+  color: #DE173B;
   text-decoration: none;
 }
 

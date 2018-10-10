@@ -357,14 +357,25 @@ var rangeSlider = function(wrapper, entity, attribute, key){
     // init value elements with each corresponding range's value attr.
     value.each(function(){
       // this = value
-      var value = $(this).prev().attr('value');
-      $(this).html(value);
+      // var value = $(this).prev().attr('value');
+      // $(this).html(value);
     });
 
     range.off('input');
     range.on('input', function(){
       // this = range
-      $(this).next(value).html(this.value);
+      switch (this.name) {
+        case "rotation":
+          $(this).next(value).html(this.value + "º");
+          break;
+        case "position-y":
+          $(this).next(value).html(this.value + "m");
+          break;
+        case "scale":
+        $(this).next(value).html((this.value * 10).toFixed(0) + "%");
+        break;
+      }
+      // $(this).next(value).html(this.value);
       let val = entity.getAttribute(attribute);
       console.log('-----------val', val)
       let newVal = {...val, [key]: Number(this.value)}
@@ -386,14 +397,24 @@ var rangeSlider2 = function(wrapper, entity, attribute, keys){
     // init value elements with each corresponding range's value attr.
     value.each(function(){
       // this = value
-      var value = $(this).prev().attr('value');
-      $(this).html(value);
+      // var value = $(this).prev().attr('value');
+      // $(this).html(value);
     });
 
     range.off('input');
     range.on('input', function(){
       // this = range
-      $(this).next(value).html(this.value);
+      switch (this.name) {
+        case "rotation":
+          $(this).next(value).html(this.value + "º");
+          break;
+        case "position-y":
+          $(this).next(value).html(this.value + "m");
+          break;
+        case "scale":
+        $(this).next(value).html((this.value * 10).toFixed(0) + "%");
+        break;
+      }
       let val = entity.getAttribute(attribute);
       console.log('-----------val', val)
       let newVal = {}
