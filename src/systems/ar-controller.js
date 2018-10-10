@@ -78,12 +78,13 @@ AFRAME.registerComponent('ar-controller', { // register a component named store
 
   // handler for touched, ie. place after plane detected, event
   touched: function (evt) {
-    document.getElementById('status').innerHTML += `<div> --- touched ${evt.detail.target.type} </div>`;
+    document.getElementById('status').innerHTML = `<div> --- touch: ${JSON.stringify(evt.detail.target.type)} </div>`;
 
     var currentAsset = JSON.parse(localStorage.getItem('currentAsset'));
 
 
-    if (evt.detail.target.type !== 'submit') {
+    if (evt.detail.target.type !== 'submit' &&
+        evt.detail.target.type !== 'range') {
       document.getElementById('status').innerHTML += '<div> --- --- place new mesh </div>';
 
       // document.getElementById('status').innerHTML += `<div> --- --- --- curAss id: ${currentAsset} </div>`;
