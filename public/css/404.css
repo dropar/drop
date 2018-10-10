@@ -1,0 +1,10 @@
+#404-page {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+#404-image{
+  height: 100px;
+  width: 100px
+}
