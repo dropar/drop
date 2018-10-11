@@ -37,6 +37,7 @@ let validAssets = [];
 const seed = async () => {
   try {
     const resAnimals = await axios.get(
+<<<<<<< Updated upstream
       "https://poly.googleapis.com/v1/assets?key=AIzaSyDbAkOgCpfiweD3ZQ3_ZyR0UBEqD17ZBs4&pageSize=5&maxComplexity=SIMPLE&category=ANIMALS"
     );
     const resArchitecture = await axios.get("https://poly.googleapis.com/v1/assets?key=AIzaSyDbAkOgCpfiweD3ZQ3_ZyR0UBEqD17ZBs4&pageSize=5&maxComplexity=SIMPLE&category=ARCHITECTURE")
@@ -48,6 +49,19 @@ const seed = async () => {
     const resScenes = await axios.get("https://poly.googleapis.com/v1/assets?key=AIzaSyDbAkOgCpfiweD3ZQ3_ZyR0UBEqD17ZBs4&pageSize=5&maxComplexity=SIMPLE&category=SCENES")
     const resTechnology = await axios.get("https://poly.googleapis.com/v1/assets?key=AIzaSyDbAkOgCpfiweD3ZQ3_ZyR0UBEqD17ZBs4&pageSize=5&maxComplexity=SIMPLE&category=TECH")
     const resTransport = await axios.get("https://poly.googleapis.com/v1/assets?key=AIzaSyDbAkOgCpfiweD3ZQ3_ZyR0UBEqD17ZBs4&pageSize=5&maxComplexity=SIMPLE&category=TRANSPORT")
+=======
+      "https://poly.googleapis.com/v1/assets?key=AIzaSyDbAkOgCpfiweD3ZQ3_ZyR0UBEqD17ZBs4&pageSize=100&maxComplexity=LOW&category=ANIMALS"
+    );
+    const resArchitecture = await axios.get("https://poly.googleapis.com/v1/assets?key=AIzaSyDbAkOgCpfiweD3ZQ3_ZyR0UBEqD17ZBs4&pageSize=100&maxComplexity=LOW&category=ARCHITECTURE")
+    const resArt = await axios.get("https://poly.googleapis.com/v1/assets?key=AIzaSyDbAkOgCpfiweD3ZQ3_ZyR0UBEqD17ZBs4&pageSize=100&maxComplexity=LOW&category=ART")
+    const resFood = await axios.get("https://poly.googleapis.com/v1/assets?key=AIzaSyDbAkOgCpfiweD3ZQ3_ZyR0UBEqD17ZBs4&pageSize=100&maxComplexity=LOW&category=FOOD")
+    const resNature = await axios.get("https://poly.googleapis.com/v1/assets?key=AIzaSyDbAkOgCpfiweD3ZQ3_ZyR0UBEqD17ZBs4&pageSize=100&maxComplexity=LOW&category=NATURE")
+    const resObjects = await axios.get("https://poly.googleapis.com/v1/assets?key=AIzaSyDbAkOgCpfiweD3ZQ3_ZyR0UBEqD17ZBs4&pageSize=100&maxComplexity=LOW&category=OBJECTS")
+    const resPeople = await axios.get("https://poly.googleapis.com/v1/assets?key=AIzaSyDbAkOgCpfiweD3ZQ3_ZyR0UBEqD17ZBs4&pageSize=100&maxComplexity=LOW&category=PEOPLE")
+    const resScenes = await axios.get("https://poly.googleapis.com/v1/assets?key=AIzaSyDbAkOgCpfiweD3ZQ3_ZyR0UBEqD17ZBs4&pageSize=100&maxComplexity=LOW&category=SCENES")
+    const resTechnology = await axios.get("https://poly.googleapis.com/v1/assets?key=AIzaSyDbAkOgCpfiweD3ZQ3_ZyR0UBEqD17ZBs4&pageSize=100&maxComplexity=LOW&category=TECH")
+    const resTransport = await axios.get("https://poly.googleapis.com/v1/assets?key=AIzaSyDbAkOgCpfiweD3ZQ3_ZyR0UBEqD17ZBs4&pageSize=100&maxComplexity=LOW&category=TRANSPORT")
+>>>>>>> Stashed changes
     const resDropLogo = await axios.get('https://poly.googleapis.com/v1/assets/dp5PrzF0k6W?key=AIzaSyDbAkOgCpfiweD3ZQ3_ZyR0UBEqD17ZBs4')
     const resFullstackLogo = await axios.get('https://poly.googleapis.com/v1/assets/0bJ0ctZdJV_?key=AIzaSyDbAkOgCpfiweD3ZQ3_ZyR0UBEqD17ZBs4')
 
@@ -63,6 +77,7 @@ const seed = async () => {
     const technology = resTechnology.data.assets
     const transport = resTransport.data.assets
     const logos = [resDropLogo.data, resFullstackLogo.data]
+    console.log(JSON.stringify(logos));
 
     logos.forEach(asset => {
       if (isGLTF(asset)) {
