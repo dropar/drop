@@ -113,6 +113,10 @@ const createApp = () => {
     res.sendFile(path.resolve(__dirname, '..', 'public/index.html'));
   })
 
+  // app.get('/?*', (req, res) => {
+  //   res.sendFile(path.resolve(__dirname, '..', 'public/templates/404.html'));
+  // })
+
   app.get('/500', (req, res, next) => {
     console.log('at 500 page')
     try {

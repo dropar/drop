@@ -1,7 +1,4 @@
-// document.addEventListener("DOMContentLoaded", function(event) {
-  // window.addEventListener('load', function() {
 
-  // getElementById wrapper
 const { getUserAssets, getAllAssets, buttonListeners } = require('../src/components/allAssets')
 const { submitLoginForm }= require('../src/components/login');
 const userAssets = require('../src/components/userAssets');
@@ -40,7 +37,7 @@ const { runSplash } = require('../src/components/splash');
   //change back
   //const router = new Navigo(null, true, '#!');
   const router = new Navigo(null, true, '?');
-  // const router = new Navigo();
+  //const router = new Navigo();
   console.log('ROUTER-',router);
   router.on({
     // 'view' is the id of the div element inside which we render the HTML
@@ -98,6 +95,9 @@ const { runSplash } = require('../src/components/splash');
         console.log('upload function run');
       })
     },
+    '*': () => {
+      loadHTML('./templates/404.html', 'view')
+    }
     // '500': () => {
     //   loadHTML('./templates/500.html', 'view')
     // }
@@ -120,7 +120,7 @@ const { runSplash } = require('../src/components/splash');
   // })
   // set the 404 route
   //router.notFound((query) => { $id('view').innerHTML = '<h3>Couldn\'t find the page you\'re looking for...</h3>'; });
-  router.notFound((query) => { loadHTML('./templates/404.html', 'view')})
+  router.notFound(() => { loadHTML('./templates/404.html', 'view')})
 
   router.resolve();
 // });

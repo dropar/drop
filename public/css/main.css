@@ -453,19 +453,20 @@ input::-moz-focus-outer {
   }
 }
 
-#404-page {
+#fourohfour-page {
   display: flex;
   flex-direction: column;
-  text-align: center;
+  align-items: center;
+  background: linear-gradient(180deg,rgba(255, 255, 255, 1), rgba(255, 255, 255, 0) 20%, rgba(255, 255, 255, 0) 50%);
 }
 
-#404-image{
+#fourohfour-image{
   height: 100px;
   width: 100px
 }
 
 body::-webkit-scrollbar {
-  display: block;
+  display: inline-block;
 }
 
 
