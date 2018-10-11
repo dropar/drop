@@ -458,6 +458,7 @@ input::-moz-focus-outer {
   flex-direction: column;
   align-items: center;
   background: linear-gradient(180deg,rgba(255, 255, 255, 1), rgba(255, 255, 255, 0) 20%, rgba(255, 255, 255, 0) 50%);
+  text-decoration: none;
 }
 
 #fourohfour-image{
@@ -465,8 +466,35 @@ input::-moz-focus-outer {
   width: 100px
 }
 
-body::-webkit-scrollbar {
-  display: inline-block;
+/* body::-webkit-scrollbar  {
+  -webkit-appearance: none;
+  display: block;
+  width: 10px;
+  background-color: #f5f5f5;
+} */
+
+/* body::-webkit-scrollbar-track  {
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+  display: block;
+} */
+
+-webkit-scrollbar:horizontal {
+  /* -webkit-appearance: none; */
+  display: block;
+  width: 10px;
+  height: 10px;
 }
+
+
+body {
+  overflow-x: scroll;
+}
+
+/* body::-webkit-scrollbar {
+  -webkit-appearance: none;
+  display: block;
+  width: 7px;
+} */
+
 
 
