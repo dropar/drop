@@ -83,9 +83,9 @@ module.exports = {
   getAllAssets: () => {
     const assetGlobalDiv = document.getElementById('assets-container');
     const environment = window.location.href.startsWith('http://localhost:8080') ? 'development' : 'production';
-    //const apiAssets = document.createElement('div');
-    const apiAssets = [];
-    const viewAsset = document.createElement('div');
+    const apiAssets = document.createElement('div');
+    //const apiAssets = [];
+    //const viewAsset = document.createElement('div');
     //fetch all assets from DB.
     fetch(`/api/assets`,
     {method: "GET"}).then((response) =>
@@ -203,13 +203,13 @@ module.exports = {
           assetDiv.appendChild(assetDivImgCol);
           assetDiv.appendChild(assetDivButtonCol);
 
-          apiAssets.push(assetDiv);
+          apiAssets.appendChild(assetDiv);
       })
       //const apiAssetsArr = [apiAssets];
       //console.log(apiAssetsArr[0].children[0])
-      //assetGlobalDiv.appendChild(apiAssets);
-      viewAsset.appendChild(apiAssets[0]);
-      assetGlobalDiv.appendChild(viewAsset)
+      assetGlobalDiv.appendChild(apiAssets);
+      //viewAsset.appendChild(apiAssets[0]);
+      //assetGlobalDiv.appendChild(viewAsset)
     })
     //viewAsset.innerHTML =
 

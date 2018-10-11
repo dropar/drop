@@ -12,6 +12,7 @@
   flex-direction: row;
   justify-content: flex-start;
   overflow-x: hidden;
+  /* overflow-x: visible; */
   overflow-y: hidden;
   /* white-space: nowrap; */
 }
