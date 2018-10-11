@@ -464,4 +464,8 @@ input::-moz-focus-outer {
   width: 100px
 }
 
+body::-webkit-scrollbar {
+  display: block;
+}
+
 

@@ -111,17 +111,17 @@ module.exports = {
           assetImg.classList.add('asset-img');
           imgLink.href = environment === 'production' ? `https://dropar.herokuapp.com/?#!assets/${asset.id}` : `http://localhost:8080/?#!assets/${asset.id}`
 
-          const nextAssetButton = document.createElement('button');
-          nextAssetButton.id = 'toggle-asset-button';
-          nextAssetButton.innerText = 'next asset'
-          asset.id + 1 === resData.length - 1 ? nextAssetButton.assetId = asset.id : nextAssetButton.assetId = asset.id + 1;
-          const prevAssetButton = document.createElement('button');
-          prevAssetButton.id = 'toggle-asset-button';
-          prevAssetButton.innerText = 'previous asset'
-          asset.id - 1 === 0 ? prevAssetButton.assetId = asset.id : prevAssetButton.assetId = asset.id - 1;
+          // const nextAssetButton = document.createElement('button');
+          // nextAssetButton.id = 'toggle-asset-button';
+          // nextAssetButton.innerText = 'next asset'
+          // asset.id + 1 === resData.length - 1 ? nextAssetButton.assetId = asset.id : nextAssetButton.assetId = asset.id + 1;
+          // const prevAssetButton = document.createElement('button');
+          // prevAssetButton.id = 'toggle-asset-button';
+          // prevAssetButton.innerText = 'previous asset'
+          // asset.id - 1 === 0 ? prevAssetButton.assetId = asset.id : prevAssetButton.assetId = asset.id - 1;
 
-          assetDiv.appendChild(nextAssetButton);
-          assetDiv.appendChild(prevAssetButton);
+          // assetDiv.appendChild(nextAssetButton);
+          // assetDiv.appendChild(prevAssetButton);
 
 
           const assetAddToUserButton = document.createElement('button');
@@ -183,13 +183,13 @@ module.exports = {
                   })
                 })
               })
-            } else if (evt.target === nextAssetButton || evt.target === prevAssetButton){
-                if (environment === 'production') {
-                  window.location.href = `https://dropar.herokuapp.com/?#!assets`;
-                }
-                else {
-                  window.location.href = `http://localhost:8080/?#!assets`;
-                }
+            // } else if (evt.target === nextAssetButton || evt.target === prevAssetButton){
+            //     if (environment === 'production') {
+            //       window.location.href = `https://dropar.herokuapp.com/?#!assets`;
+            //     }
+            //     else {
+            //       window.location.href = `http://localhost:8080/?#!assets`;
+            //     }
             } else {
               if (environment === 'production') {
                 window.location.href = `https://dropar.herokuapp.com/?#!assets/${asset.id}`;
@@ -211,7 +211,7 @@ module.exports = {
       //viewAsset.appendChild(apiAssets[0]);
       //assetGlobalDiv.appendChild(viewAsset)
     })
-    //viewAsset.innerHTML =
+
 
   },
   buttonListeners: () => {

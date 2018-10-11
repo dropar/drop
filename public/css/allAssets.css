@@ -11,10 +11,10 @@
   padding-left: 0 !important;
   flex-direction: row;
   justify-content: flex-start;
-  overflow-x: hidden;
+  overflow-x: scroll;
   /* overflow-x: visible; */
   overflow-y: hidden;
-  /* white-space: nowrap; */
+  white-space: nowrap;
 }
 
 #user-assets-title, #api-assets-title {
