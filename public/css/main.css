@@ -478,17 +478,17 @@ input::-moz-focus-outer {
   display: block;
 } */
 
--webkit-scrollbar:horizontal {
-  /* -webkit-appearance: none; */
+/* -webkit-scrollbar:horizontal {
+  -webkit-appearance: none;
   display: block;
   width: 10px;
   height: 10px;
-}
+} */
 
 
-body {
+/* body {
   overflow-x: scroll;
-}
+} */
 
 /* body::-webkit-scrollbar {
   -webkit-appearance: none;
