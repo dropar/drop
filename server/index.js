@@ -134,9 +134,12 @@ const createApp = () => {
     // res.status(500);
     // res.send('500 reached');
     //res.status(500).send({status:'broken'});
-    res.status(err.status || 500);
-    //res.redirect('http://localhost:8080/?500')
-    res.sendFile(path.resolve(__dirname, '..', 'public/templates/500.html'));
+    //res.status(err.status || 500);
+    //res.send('broken').end()
+    res.status(err.status || 500)
+    console.log('post error status')
+    //res.render('500.html').send()
+    res.send(path.resolve(__dirname, '..', 'public/templates/500.html'));
     //res.status(500).render('public/templates/500.html').send()
   })
 }
