@@ -128,11 +128,16 @@ const createApp = () => {
 
   // error handling endware
   app.use((err, req, res, next) => {
+    console.log('in error')
     console.error(err)
     console.error(err.stack)
     // res.status(500);
     // res.send('500 reached');
-    res.status(err.status || 500).sendFile(path.resolve(__dirname, '..', 'public/templates/500.html'));
+    //res.status(500).send({status:'broken'});
+    res.status(err.status || 500);
+    //res.redirect('http://localhost:8080/?500')
+    res.sendFile(path.resolve(__dirname, '..', 'public/templates/500.html'));
+    //res.status(500).render('public/templates/500.html').send()
   })
 }
 

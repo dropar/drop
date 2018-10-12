@@ -95,12 +95,12 @@ const { runSplash } = require('../src/components/splash');
         console.log('upload function run');
       })
     },
+    '500': () => {
+      loadHTML('./templates/500.html', 'view')
+    },
     '*': () => {
       loadHTML('./templates/404.html', 'view')
     }
-    // '500': () => {
-    //   loadHTML('./templates/500.html', 'view')
-    // }
   });
 
   // set the default route
