@@ -6,7 +6,7 @@
 
 #assets-container, #user-assets {
   min-height: 28vh;
-  max-height: 31vh;
+  max-height: 30vh;
   /* max-height: 28vh; */
   padding-right: 0 !important;
   padding-left: 0 !important;
@@ -16,19 +16,21 @@
   /* overflow-x: visible; */
   overflow-y: hidden;
   white-space: nowrap;
-  margin-bottom: 25px;
+  margin-bottom: 6px;
 }
 
 ::-webkit-scrollbar {
   -webkit-appearance: none;
   width: 7px;
   /* background: transparent; */
-  background: lime;
+  background: transparent;
+  border: solid 1px black;
 }
 ::-webkit-scrollbar-thumb {
   border-radius: 4px;
   background-color: rgba(0,0,0,.5);
   box-shadow: 0 0 1px rgba(255,255,255,.5);
+  border: solid 1px black;
 }
 
 #user-assets-title, #api-assets-title {

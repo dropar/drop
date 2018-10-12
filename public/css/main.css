@@ -453,17 +453,40 @@ input::-moz-focus-outer {
   }
 }
 
+body {
+  background: linear-gradient(180deg,rgba(255, 255, 255, 1), rgba(255, 255, 255, 0) 20%, rgba(255, 255, 255, 0) 50%);
+}
+
 #fourohfour-page {
   display: flex;
   flex-direction: column;
   align-items: center;
   background: linear-gradient(180deg,rgba(255, 255, 255, 1), rgba(255, 255, 255, 0) 20%, rgba(255, 255, 255, 0) 50%);
   text-decoration: none;
+  margin: 0 auto;
+  width: 100%;
+  height: 100%;
+}
+
+#fourohfour-page a:hover {
+  text-decoration: none;
+  color: rgb(226, 32, 32)
 }
 
 #fourohfour-image{
-  height: 100px;
-  width: 100px
+  height: 200px;
+  width: 200px;
+  margin: 25px;
+  border: 5px solid black;
+}
+
+#fourohfour-link {
+  margin-top: 25px;
+  color: black;
+}
+
+#fourohfour-message {
+  color: black;
 }
 
 /* body::-webkit-scrollbar  {
