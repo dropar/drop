@@ -5,7 +5,6 @@ AFRAME.registerComponent('xr', {
     magicWindow: { default: true }
   },
   init: function () {
-    console.log('+++ init xr component ')
     this.realityChanged = this.realityChanged.bind(this);
     this.el.sceneEl.addEventListener('realityChanged', this.realityChanged);
     this.originalVisibility = this.el.getAttribute('visible');

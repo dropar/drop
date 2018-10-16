@@ -14,7 +14,6 @@ AFRAME.registerComponent('ar-mode-ui', {
   },
 
   init: function () {
-    console.log('+++ init ar-mode-ui ')
     var self = this;
     var sceneEl = this.el;
 

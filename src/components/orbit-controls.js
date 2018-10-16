@@ -15,7 +15,6 @@ AFRAME.registerComponent('orbit-controls', {
     } else {
       setupControls();
     }
-    // this.targetObj = document.querySelector('#mainMesh').object3D;
     this.onEnterVR = this.onEnterVR.bind(this);
     this.onExitVR = this.onExitVR.bind(this);
     sceneEl.addEventListener('enter-vr', this.onEnterVR);
@@ -43,7 +42,7 @@ AFRAME.registerComponent('orbit-controls', {
     });
 
   },
-  
+
   tick: function () {
     if (this.controls.enabled) {
       this.controls.update();
@@ -58,12 +57,8 @@ AFRAME.registerComponent('orbit-controls', {
     controls.target.setX(-position.x);
     controls.target.setY(-position.y/1.75);
     controls.target.setZ(-position.z);
-    // controls.minAzimuthAngle = -Math.PI/4;
-    // controls.maxAzimuthAngle = Math.PI/4;
     controls.minPolarAngle = Math.PI / 4;
     controls.maxPolarAngle = Math.PI / 2.1;
-    // controls.enableDamping = true;
-    // controls.dampingFactor = 0.25;
     controls.enableZoom = true;
     controls.minDistance = 1;
     controls.maxDistance = 3;

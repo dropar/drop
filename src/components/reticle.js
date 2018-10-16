@@ -1,7 +1,6 @@
 
 AFRAME.registerComponent('reticle', {
   init: function () {
-    console.log('+++ init reticle component ')
     this.el.setAttribute('visible', false);
     this.el.sceneEl.addEventListener(
       'updateFrame',
