@@ -1,6 +1,4 @@
 const JSON = require('circular-json');
-// const noUiSlider = require('noUiSlider');
-// const rangeslider = require('rangeslider.js')
 const $ = require('jquery');
 const crypto = require('crypto');
 
@@ -11,7 +9,6 @@ AFRAME.registerComponent('ar-controller', { // register a component named store
   // This component will be attached to the scene element, so scene and its children
   // will be initialized before this component!!!
   init: function () {
-    console.log("--- init arController")
 
     // get the xr-controller
     this.system = document.querySelector('a-scene').systems['xr-controller'];
@@ -23,9 +20,6 @@ AFRAME.registerComponent('ar-controller', { // register a component named store
 
     this.state.reticle.addEventListener('planeDetected', this.planeDetected);
     this.state.reticle.addEventListener('touched', this.touched);
-
-    // init current mesh to meshContainer
-    // this.state.currentMesh = this.state.meshContainer
 
     /* --- ON SCENE  --- */
 
@@ -83,19 +77,8 @@ AFRAME.registerComponent('ar-controller', { // register a component named store
 
     var currentAsset = JSON.parse(localStorage.getItem('currentAsset'));
 
-    console.log(evt);
-    // if (evt.detail.target.type !== 'submit' &&
-    //     evt.detail.target.type !== 'range' &&
-    //     evt.detail.target.type !== '') {
     if (!this.state.pinSelected || evt.detail.target.hasOwnProperty('components')) {
       document.getElementById('status').innerHTML += '<div> --- --- place new mesh </div>';
-
-      // document.getElementById('status').innerHTML += `<div> --- --- --- curAss id: ${currentAsset} </div>`;
-      // document.getElementById('status').innerHTML += `<div> --- --- --- ret pos: ${this.state.reticle.getAttribute('position')} </div>`;
-      // document.getElementById('status').innerHTML += `<div> --- --- --- curMsh sc: ${this.state.currentMesh.getAttribute('scale')} </div>`;
-      // remove the reticle, but save the parent.
-      // this.state.reticleParent = this.state.reticle.parentNode;
-      // this.state.reticle.parentNode.removeChild(this.state.reticle);
 
       // append geo to container with unique id
       var id = crypto.randomBytes(20).toString('hex');
@@ -115,39 +98,26 @@ AFRAME.registerComponent('ar-controller', { // register a component named store
 
       // show mesh and position at reticle and show AR UI.
       this.state.meshContainer.setAttribute('visible', true);
-      // this.state.meshContainer.setAttribute('position', this.state.reticle.getAttribute('position'));
-
-      // document.getElementById('status').innerHTML += `<div> --- --- --- curMesh: ${this.state.currentMesh.getAttribute('id')} </div>`;
-      // document.getElementById('status').innerHTML += `<div> --- --- --- x position: ${JSON.stringify(this.state.currentMesh.getAttribute('position').x)} </div>`;
-      // document.getElementById('status').innerHTML += `<div> --- --- --- y position: ${JSON.stringify(this.state.currentMesh.getAttribute('position').y)} </div>`;
-      // document.getElementById('status').innerHTML += `<div> --- --- --- z position: ${JSON.stringify(this.state.currentMesh.getAttribute('position').z)} </div>`;
 
       this.showARUI();
 
       //update state
       this.state.pinSelected = true;
     }
-
-    // stop listening whether pinned or dropped
-    // this.state.reticle.removeEventListener('touched', this.touched);
-
   },
 
   showARUI: function () {
     document.getElementById('status').innerHTML += '<div> --- show AR UI </div>';
 
     document.getElementById('arui').style.display = 'none'; // hide instructions
-    // document.getElementById('header').style.display = 'block';
     document.getElementById('productOptions').style.display = 'flex';
     document.getElementById('container').classList.add('ar');
   },
 
   renderAr: function () {
-    // document.getElementById('status').innerText = 'mthfkr' + ' ' + this.state.pinSelected + ' ' + this.state.currentReality;
     document.getElementById('status').innerHTML += '<div> --- render Ar </div>';
 
     // add AR styles
-    // document.getElementById('header').classList.add('ar');
     document.getElementById('visualSheet').classList.add('ar');
     document.getElementById('content3D').classList.add('ar');
     document.getElementById('productOptions').classList.add('ar');
@@ -157,8 +127,6 @@ AFRAME.registerComponent('ar-controller', { // register a component named store
     }
 
     // temp set to waiting on return to ar everytime, since have to plane detect again anyway.
-    // this.state.pinSelected = false;
-    // this.state.pinDetected = false;
 
     const waiting = !this.state.pinSelected && !this.state.pinDetected;
     const pinning = !this.state.pinSelected && this.state.pinDetected;
@@ -169,7 +137,6 @@ AFRAME.registerComponent('ar-controller', { // register a component named store
       document.getElementById('arui').style.display = 'block';
       document.querySelector('#arui-step1').style.display = 'block';
       document.querySelector('#arui-step2').style.display = 'none';
-      // document.getElementById('header').style.display = 'none';
       document.getElementById('productOptions').style.display = 'none';
       // hide mesh.
       this.state.meshContainer.setAttribute('visible', false);
@@ -181,7 +148,6 @@ AFRAME.registerComponent('ar-controller', { // register a component named store
       document.getElementById('arui').style.display = 'block';
       document.querySelector('#arui-step1').style.display = 'none';
       document.querySelector('#arui-step2').style.display = 'block';
-      // document.getElementById('header').style.display = 'none';
       document.getElementById('productOptions').style.display = 'none';
       // hide mesh.
       this.state.meshContainer.setAttribute('visible', false);
@@ -210,11 +176,6 @@ AFRAME.registerComponent('ar-controller', { // register a component named store
         document.getElementById('status').innerHTML += '<div> --- --- restore mesh </div>';
         this.state.meshContainer.setAttribute('visible', true);
         this.state.meshContainer.setAttribute('position', this.state.meshContainerCurPosition);
-
-        // document.getElementById('status').innerHTML += `<div> --- --- --- visible: ${this.state.meshContainer.getAttribute('visible')} </div>`;
-        // document.getElementById('status').innerHTML += `<div> --- --- --- position: ${JSON.stringify(this.state.meshContainer.getAttribute('position').x)} </div>`;
-        // document.getElementById('status').innerHTML += `<div> --- --- --- y position: ${JSON.stringify(this.state.meshContainer.getAttribute('position').y)} </div>`;
-        // document.getElementById('status').innerHTML += `<div> --- --- --- z position: ${JSON.stringify(this.state.meshContainer.getAttribute('position').z)} </div>`;
       }
 
       this.showARUI();
@@ -229,13 +190,7 @@ AFRAME.registerComponent('ar-controller', { // register a component named store
       // show mesh and position at reticle and show AR UI.
       this.state.meshContainer.setAttribute('visible', true);
       document.getElementById('status').innerHTML += '<div> --- --- vis set </div>';
-      // this.state.meshContainer.setAttribute('position', this.state.reticle.getAttribute('position'));
       this.state.meshContainer.setAttribute('position', this.state.meshContainerCurPosition);
-
-      // document.getElementById('status').innerHTML += `<div> --- --- old visible: ${this.state.meshContainer.getAttribute('visible')} </div>`;
-      // document.getElementById('status').innerHTML += `<div> --- --- old x position: ${JSON.stringify(this.state.meshContainer.getAttribute('position').x)} </div>`;
-      // document.getElementById('status').innerHTML += `<div> --- --- old y position: ${JSON.stringify(this.state.meshContainer.getAttribute('position').y)} </div>`;
-      // document.getElementById('status').innerHTML += `<div> --- --- old z position: ${JSON.stringify(this.state.meshContainer.getAttribute('position').z)} </div>`;
 
       this.showARUI();
     //}
@@ -244,10 +199,8 @@ AFRAME.registerComponent('ar-controller', { // register a component named store
   cleanupMagicWindow: function() {
     document.getElementById('status').innerHTML += '<div> --- cleanupMagicWindow </div>';
     // create magic window obj.
-    // var currentAsset = JSON.parse(localStorage.getItem('currentAsset'));
     var geo = document.getElementById('currentAsset')
     geo.setAttribute('visible', false)
-    // this.state.meshContainer.removeChild(geo);
   },
 
   initMagicWindow: function() {
@@ -378,13 +331,9 @@ var rangeSlider = function(wrapper, entity, attribute, key){
         $(this).next(value).html((this.value * 10).toFixed(0) + "%");
         break;
       }
-      // $(this).next(value).html(this.value);
       let val = entity.getAttribute(attribute);
-      console.log('-----------val', val)
       let newVal = {...val, [key]: Number(this.value)}
-      console.log('-----------meshcont rot bef', entity.getAttribute(attribute))
       entity.setAttribute(attribute, newVal)
-      console.log('-----------meshcont rot aft', entity.getAttribute(attribute))
     });
   });
 };
@@ -422,9 +371,7 @@ var rangeSlider2 = function(wrapper, entity, attribute, keys){
       console.log('-----------val', val)
       let newVal = {}
       keys.forEach(key => newVal[key] = Number(this.value))
-      console.log('-----------meshcont rot bef', entity.getAttribute(attribute))
       entity.setAttribute(attribute, newVal)
-      console.log('-----------meshcont rot aft', entity.getAttribute(attribute))
     });
   });
 };

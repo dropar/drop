@@ -63,7 +63,6 @@ const seed = async () => {
     const technology = resTechnology.data.assets
     const transport = resTransport.data.assets
     const logos = [resDropLogo.data, resFullstackLogo.data]
-    console.log(JSON.stringify(logos));
 
     logos.forEach(asset => {
       if (isGLTF(asset)) {

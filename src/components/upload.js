@@ -18,8 +18,6 @@ module.exports = {
         thumbnailUrl: thumbnailUrl.value
       });
 
-      console.log(body);
-
       //upload post request
       try {
         fetch(`/api/users/${window.user.id}/assets`, {
@@ -30,8 +28,6 @@ module.exports = {
           body: body
         })
         .then((res) => {
-          console.log('asset', res.data);
-          console.log('asset posted');
           if (environment === 'production') {
             window.location.href = 'https://dropar.herokuapp.com/?#!userAssets'
           }

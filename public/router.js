@@ -4,7 +4,6 @@
   // getElementById wrapper
 const { getUserAssets, getAllAssets, buttonListeners } = require('../src/components/allAssets')
 const { submitLoginForm }= require('../src/components/login');
-const userAssets = require('../src/components/userAssets');
 const { submitSignUpForm } = require('../src/components/signup');
 const assetFetcher = require('../src/components/assetFetcher.js');
 const { uploadForm } = require('../src/components/upload');

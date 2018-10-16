@@ -4,7 +4,6 @@
 
 AFRAME.registerComponent('xranchor', {
   init: function () {
-    console.log('+++ init xranchor ')
     this.anchorMatrix = new THREE.Matrix4();
     this.positionVec3 = new THREE.Vector3();
     this.rotationQuat = new THREE.Quaternion();

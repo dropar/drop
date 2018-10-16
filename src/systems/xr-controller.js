@@ -51,14 +51,6 @@ AFRAME.registerSystem('xr-controller', { // register a component named store
       var currentAsset = JSON.parse(localStorage.getItem('currentAsset'));
       document.getElementById('status').innerHTML += `<div> --- currentAsset: ${currentAsset.id} </div>`;
 
-      // append geo to container
-      // let geo = this.addGltfEntity({
-      //   id: `currentAsset`,
-      //   assetId: `#${currentAsset.id}`,
-      //   visible: true,
-      //   position: {x:0, y:0, z:0},
-      //   scale: {x:1, y:1, z:1}
-      // })
       document.getElementById('status').innerHTML += '<div> --- addGltfEntity </div>';
 
       //var container = document.querySelector('#meshContainer');
@@ -108,7 +100,6 @@ AFRAME.registerSystem('xr-controller', { // register a component named store
 
   // handle change in reality btw "Magic Window", AR, and VR
   realityChanged: function (data) {
-    console.log('--- reality changed', data)
     document.getElementById('status').innerHTML = '<div> Reality Change </div>';
 
     if (data.detail !== this.state.currentReality) {
@@ -151,13 +142,6 @@ AFRAME.registerSystem('xr-controller', { // register a component named store
         this.state.reticle.removeEventListener('touched', this.touched);
         this.renderMagicWindow();
         this.disableVR();
-        // update state
-        // this.state.pinSelected = false;
-
-        // console.log("--- final state: ", this.state)
-        // document.getElementById('status').innerHTML += `<div> --- pinSelected: ${this.state.pinSelected} </div>`;
-        // document.getElementById('status').innerHTML += `<div> --- pinDetected: ${this.state.pinDetected} </div>`;
-
         break;
 
       case 'vr':
@@ -178,20 +162,10 @@ AFRAME.registerSystem('xr-controller', { // register a component named store
 
   buttonCartClicked: function () {
     if (this.isAdded) {
-      // document.getElementById('cart').innerHTML = '(0) Cart';
-      // document.getElementById('cart').style.color = '#181818';
-      // document.getElementById('cart').style.fontWeight = 'normal';
-      // document.getElementById('buttonCart').innerHTML = 'Add to cart';
-      // document.getElementById('buttonCart').style.backgroundColor = '#181818';
       document.querySelector('#addBtn-vr-bg').setAttribute('initialColor', '#181818');
       document.querySelector('#addBtn-vr-text').setAttribute('text', {value: 'Add to cart'});
       document.querySelector('#cart-vr').setAttribute('text', {value: '(0) Cart'});
     } else {
-      // document.getElementById('cart').innerHTML = '(1) Cart';
-      // document.getElementById('cart').style.color = '#b7374c';
-      // document.getElementById('cart').style.fontWeight = 'bolder';
-      // document.getElementById('buttonCart').innerHTML = 'Added!';
-      // document.getElementById('buttonCart').style.backgroundColor = '#b7374c';
       document.querySelector('#addBtn-vr-bg').setAttribute('initialColor', '#b7374c');
       document.querySelector('#addBtn-vr-text').setAttribute('text', {value: 'Added!'});
       document.querySelector('#cart-vr').setAttribute('text', {value: '(1) Cart'});
@@ -199,25 +173,13 @@ AFRAME.registerSystem('xr-controller', { // register a component named store
     this.isAdded = !this.isAdded;
   },
   registerAr: function (el) {
-    console.log('--- ar-controller registered!')
-    // this.planeDetected = el.planeDetected;
-    // this.touched = el.touched;
-    console.log('el', el)
     this.renderAr = el.renderAr;
-    console.log('this.renderAr', this.renderAr)
     this.renderMagicWindow = el.renderMagicWindow;
-    // this.initMagicWindow = el.initMagicWindow;
     this.cleanupMagicWindow = el.cleanupMagicWindow;
   },
   registerVr: function (el) {
     console.log('--- vr-controller registered!')
     this.enableVR = el.enableVR;
     this.disableVR = el.disableVR;
-  },
-
-  // unregisterMe: function (el) {
-  //   var index = this.entities.indexOf(el);
-  //   this.entities.splice(index, 1);
-  // }
-
+  }
 });

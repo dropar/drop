@@ -23,7 +23,6 @@ module.exports = {
           })
         })
         .then(res => {
-          console.log(res);
           return res.json();
         })
         .then(data => {
@@ -37,7 +36,6 @@ module.exports = {
         })
         .catch(err => {
           const errorMessage = document.getElementById('login-error-message');
-          console.log(errorMessage);
           errorMessage.style.visibility = 'visible';
           console.error(err);
         })

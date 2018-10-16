@@ -1,13 +1,10 @@
-
 require('./systems/xr.js');
 require('./components/ar-mode-ui.js');
 require('./components/xr.js');
 require('./components/anchor.js');
 require('./components/reticle.js');
-
 require('./components/intersect-color-change.js');
 require('./components/store-controls.js');
-// require('./systems/singleAsset.js');
 require('./systems/assetLoader.js');
 require('./systems/xr-controller.js');
 require('./systems/ar-controller.js');
@@ -32,16 +29,3 @@ if ('serviceWorker' in navigator) {
     })
   })
 }
-
-
-// const isIos = () => {
-//   const userAgent = window.navigator.userAgent.toLowerCase();
-//   return /iphone|ipad|ipod/.test( userAgent );
-// }
-// // Detects if device is in standalone mode
-// const isInStandaloneMode = () => ('standalone' in window.navigator) && (window.navigator.standalone);
-
-// // Checks if should display install popup notification:
-// if (isIos() && !isInStandaloneMode()) {
-//   this.setState({ showInstallMessage: true });
-// }

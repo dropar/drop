@@ -1,6 +1,5 @@
 AFRAME.registerSystem('singleAsset', { // register a component named store
   init: function () {
-    console.log("--- init FRAME.registerSystem('store', {...}")
 
     // mapping for mapping inputs to application-specific actions.
     // read about input mappings -> https://blog.mozvr.com/input-mapping/
@@ -96,10 +95,6 @@ AFRAME.registerSystem('singleAsset', { // register a component named store
       AFRAME.registerInputMappings(mappings);
       AFRAME.currentInputMapping = 'store';
 
-      // console.log(AFRAME.components['ar-mode-ui'].Component.prototype.init);
-      // this.sceneEl.setAttribute('ar-mode-ui', {enabled: false});
-      // this.sceneEl.setAttribute('vr-mode-ui', {enabled: false});
-
       // dynamicaly add store panel
       self.addStorePanel();
       //self.loadGeometry();
@@ -122,8 +117,6 @@ AFRAME.registerSystem('singleAsset', { // register a component named store
 
   // handle change in reality btw "Magic Window", AR, and VR
   realityChanged: function (data) {
-    console.log('--- reality changed', data)
-    console.log('--- pinSelected', this.pinSelected);
     document.getElementById('status').innerText = this.currentReality;
 
     if (data.detail !== this.currentReality) {
@@ -135,19 +128,12 @@ AFRAME.registerSystem('singleAsset', { // register a component named store
     var productOptionArr = document.getElementsByClassName('productOption');
 
     document.getElementById('status').innerText = this.pinSelected + ' ' + this.currentReality;
-    console.log('--- currentReality', this.currentReality);
-    console.log('--- pinSelected2', this.pinSelected);
 
     // currentReality is actually the new reality we are switching to
     // b/c we set on realityChanged event above before calling changeReality.
     switch (this.currentReality) {
 
       case 'ar':
-
-
-      // remove title and add "ar" class to to everything that stays
-      // document.getElementById('header').classList.add('ar');
-      // document.getElementById('title').style.display = 'none';
       document.getElementById('visualSheet').classList.add('ar');
       document.getElementById('content3D').classList.add('ar');
       document.getElementById('productOptions').classList.add('ar');
@@ -155,24 +141,13 @@ AFRAME.registerSystem('singleAsset', { // register a component named store
         productOptionArr[i].classList.add('ar');
       }
 
-      // remove more stuff. this should probably be wrapped
-      // document.getElementById('brand').style.display = 'none';
-      // document.getElementById('productName').style.display = 'none';
-      // document.getElementById('price').style.display = 'none';
-      // document.getElementById('comments').style.display = 'none';
-      // document.getElementById('thumbs').classList.add('ar');
-      // document.getElementById('buttonCart').classList.add('ar');
-      // document.getElementById('footer').style.display = 'none';
-
       document.getElementById('status').innerText = 'mthfkr' + ' ' + this.pinSelected + ' ' + this.currentReality;
 
         if (!this.pinSelected) { // object not yet placed.
           document.getElementById('status').innerText = 'show it';
 
           document.getElementById('arui').style.display = 'block';
-          // document.getElementById('header').style.display = 'none';
           document.getElementById('productOptions').style.display = 'none';
-          // document.getElementById('buttonCart').style.display = 'none';
 
           // hide mesh for now, will show it again after item is placed
           // this happens inside touched event handler.
@@ -187,7 +162,7 @@ AFRAME.registerSystem('singleAsset', { // register a component named store
           document.getElementById('container').classList.add('ar');
         }
 
-        if(this.pinDetected){ // ???
+        if(this.pinDetected){
           this.planeDetected();
         }
 
@@ -197,7 +172,6 @@ AFRAME.registerSystem('singleAsset', { // register a component named store
 
         // show all the stuff on detail page thats gets hidden during ar
         // and remote all the ar class on everything else
-        // document.getElementById('header').classList.remove('ar');
         document.getElementById('title').style.display = 'block';
         document.getElementById('visualSheet').classList.remove('ar');
         document.getElementById('content3D').classList.remove('ar');
@@ -210,13 +184,9 @@ AFRAME.registerSystem('singleAsset', { // register a component named store
         document.getElementById('productName').style.display = 'block';
         document.getElementById('price').style.display = 'block';
         document.getElementById('comments').style.display = 'block';
-        // document.getElementById('thumbs').classList.remove('ar');
-        // document.getElementById('buttonCart').classList.remove('ar');
         document.getElementById('container').classList.remove('ar');
         document.getElementById('footer').style.display = 'block';
-        // document.getElementById('header').style.display = 'block';
         document.getElementById('productOptions').style.display = 'block';
-        // document.getElementById('buttonCart').style.display = 'block';
 
         document.getElementById('arui').style.display = 'none';
 
@@ -240,12 +210,8 @@ AFRAME.registerSystem('singleAsset', { // register a component named store
         break;
 
       case 'vr':
-
         // show vr panel
-        this.storePanelVR.setAttribute('visible', true);
-
-        // why not visibiliy settings here ???
-
+        this.storePanelVR.setAttribute('visible', true);\
         break;
     }
   },
@@ -255,7 +221,6 @@ AFRAME.registerSystem('singleAsset', { // register a component named store
     this.isAdded = false;
 
     this.buttonCartClicked = this.buttonCartClicked.bind(this);
-    // document.getElementById('buttonCart').addEventListener('click', this.buttonCartClicked);
   },
 
   buttonCartClicked: function () {
@@ -263,8 +228,6 @@ AFRAME.registerSystem('singleAsset', { // register a component named store
       document.getElementById('cart').innerHTML = '(0) Cart';
       document.getElementById('cart').style.color = '#181818';
       document.getElementById('cart').style.fontWeight = 'normal';
-      // document.getElementById('buttonCart').innerHTML = 'Add to cart';
-      // document.getElementById('buttonCart').style.backgroundColor = '#181818';
       document.querySelector('#addBtn-vr-bg').setAttribute('initialColor', '#181818');
       document.querySelector('#addBtn-vr-text').setAttribute('text', {value: 'Add to cart'});
       document.querySelector('#cart-vr').setAttribute('text', {value: '(0) Cart'});
@@ -272,8 +235,6 @@ AFRAME.registerSystem('singleAsset', { // register a component named store
       document.getElementById('cart').innerHTML = '(1) Cart';
       document.getElementById('cart').style.color = '#b7374c';
       document.getElementById('cart').style.fontWeight = 'bolder';
-      // document.getElementById('buttonCart').innerHTML = 'Added!';
-      // document.getElementById('buttonCart').style.backgroundColor = '#b7374c';
       document.querySelector('#addBtn-vr-bg').setAttribute('initialColor', '#b7374c');
       document.querySelector('#addBtn-vr-text').setAttribute('text', {value: 'Added!'});
       document.querySelector('#cart-vr').setAttribute('text', {value: '(1) Cart'});
@@ -376,17 +337,6 @@ AFRAME.registerSystem('singleAsset', { // register a component named store
       position: '-0.25 -0.3 0',
       parent: containerUI
     });
-    // this.addButton({
-    //   id: 'addBtn-vr',
-    //   text: 'Add to cart',
-    //   textColor: '#ffffff',
-    //   width: 0.8,
-    //   height: 0.2,
-    //   color: '#181818',
-    //   parent: containerUI,
-    //   position: '-0.45 -0.5 0.01',
-    //   onclick: this.buttonCartClicked
-    // });
   },
   addPlane: function (params) {
     var uiEl = document.createElement('a-entity');
@@ -490,13 +440,10 @@ AFRAME.registerSystem('singleAsset', { // register a component named store
   },
 
   xrInitialized: function (){
-
-    // ???
     if (AFRAME.utils.getUrlParameter('ui') === 'false') {
       return;
     }
     // Add styles to support multiple buttons and to have consistent design
-    // huh? adding huge inline style element for VR styles?? WHY?? < -------------------------- ???
     var sheet = document.createElement('style');
     sheet.innerHTML = '.a-enter-ar-button {background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz48IURPQ1RZUEUgc3ZnIFBVQkxJQyAiLS8vVzNDLy9EVEQgU1ZHIDEuMS8vRU4iICJodHRwOi8vd3d3LnczLm9yZy9HcmFwaGljcy9TVkcvMS4xL0RURC9zdmcxMS5kdGQiPjxzdmcgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4PSIwcHgiIHk9IjBweCIgd2lkdGg9IjIwNDhweCIgaGVpZ2h0PSIyMDQ4cHgiIHZpZXdCb3g9IjAgMCAyMDQ4IDIwNDgiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDIwNDggMjA0OCIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+PHRpdGxlPm1hc2s8L3RpdGxlPjxjaXJjbGUgb3BhY2l0eT0iMC40IiBlbmFibGUtYmFja2dyb3VuZD0ibmV3ICAgICIgY3g9IjEwMjQiIGN5PSIxMDI0IiByPSI4ODMuNTg4Ii8+PGc+PHBhdGggZmlsbD0iI0ZGRkZGRiIgZD0iTTg0Ny43NjEsMTMxNi40OTh2LTcxLjFoNjkuM2wtMzYtOTcuMTk5SDY0NS4yNjJsLTM4LjY5OSw5Ny4xOTloNzYuNXY3MS4xaC0yMTMuM3YtNzEuMWg1NGwxODQuNDk5LTQ0Mi43OTdoLTkwdi03MS4xMDFoMTc2LjM5OWwyMTAuNTk5LDUxMy44OTdoNTcuNjAxdjcxLjFIODQ3Ljc2MXogTTc2OC41NjIsODQ5LjQwMWgtNS40bC05My42LDIzNy41OThIODU3LjY2TDc2OC41NjIsODQ5LjQwMXoiLz48cGF0aCBmaWxsPSIjRkZGRkZGIiBkPSJNMTQ4NC4wNSwxMzE2LjQ5OGwtMTIzLjI5OS0yMzguNDk5aC0xMTEuNnYxNjcuMzk5aDczLjh2NzEuMWgtMjI2Ljc5OXYtNzEuMWg3MS4xVjgwMi42MDJoLTcxLjF2LTcxLjEwMWgyNTYuNDk5YzE0NC44OTcsMCwyMDkuNjk4LDY3LjUsMjA5LjY5OCwxNjkuMTk5YzAsNzYuNS00NC4xMDEsMTM4LjU5OS0xMjEuNSwxNjEuMDk5bDk3LjE5OSwxODMuNjAxaDcyLjg5OXY3MS4xTDE0ODQuMDUsMTMxNi40OThMMTQ4NC4wNSwxMzE2LjQ5OHogTTEzNDAuMDUxLDgwMi42MDJoLTkwLjg5OHYyMDguNzk4aDkxLjhjOTguMSwwLDEzNC4wOTktNDAuNSwxMzQuMDk5LTEwOC44OTlDMTQ3NS4wNSw4MzEuNDAxLDE0MzcuMjUsODAyLjYwMiwxMzQwLjA1MSw4MDIuNjAyeiIvPjwvZz48L3N2Zz4=) 100% 100%/100% 100% no-repeat;';
     sheet.innerHTML += 'border: 0;';
@@ -596,7 +543,6 @@ AFRAME.registerSystem('singleAsset', { // register a component named store
         document.querySelector('#arui-step2').style.display = 'block';
 
       } else { // pin is detected by NOT selected
-        // why add listener again here ??? its already been added in init.
         this.reticle.addEventListener('touched', this.touched);
       }
     }
@@ -607,28 +553,21 @@ AFRAME.registerSystem('singleAsset', { // register a component named store
     console.log('----- touched', evt.detail.target);
 
     if (evt.detail.target.type !== 'submit') {
-      //this.pinSelected = true;
 
       // remove the reticle, but save the parent. WHY ???
-      //this.reticleParent = this.reticle.parentNode;
-      //this.reticle.parentNode.removeChild(this.reticle);
 
       // show mesh and position at reticle and show AR UI.
       this.meshContainer.setAttribute('visible', true);
       this.meshContainer.setAttribute('position', this.reticle.getAttribute('position'));
       this.showARUI();
     }
-    // why add listener again here ??? its already been added in init.
-    //this.reticle.removeEventListener('touched', this.touched);
     this.pinDetected = false;
     this.pinSelected = false;
   },
 
   showARUI: function () {
     document.getElementById('arui').style.display = 'none';
-    // document.getElementById('header').style.display = 'block';
     document.getElementById('productOptions').style.display = 'flex';
-    // document.getElementById('buttonCart').style.display = 'block';
     document.getElementById('container').classList.add('ar');
   }
 });
